@@ -1,0 +1,15 @@
+- an event should only span a MAX of one week
+- invalid start days
+    - ex. valid examples only?
+    - METHOD: total amount of hours between start and end dates?
+    - start and end day are EXACTLY ONE WEEK 24*7 = testing methods return amt.
+
+
+- individual schedules (each person has one)
+    - one event at any given time for an individual
+        - EXCEPTION being the end time of an event == the start time of another event
+    - someone with the same name but different schedules
+
+
+
+- a user does not have to exist (it does nothing)
