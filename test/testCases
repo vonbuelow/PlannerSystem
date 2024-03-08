@@ -1,15 +1,26 @@
 - an event should only span a MAX of one week
+    - ex. wed 4pm to wed 3:59pm (valid), 4pm to 4pm (invalid)
+    - if invalid (too long), then error in model class, message to user to adjust (controller)
 - invalid start days
     - ex. valid examples only?
     - METHOD: total amount of hours between start and end dates?
     - start and end day are EXACTLY ONE WEEK 24*7 = testing methods return amt.
 
+- two events overlapping
+    - one ends at 4pm, other starts at 3pm same day --> ?????????? throw exception or do nothing (show message)
 
-- individual schedules (each person has one)
+- individual schedules (each person has exactly one)
+    - test when user has two schedules given (exception???)
     - one event at any given time for an individual
         - EXCEPTION being the end time of an event == the start time of another event
     - someone with the same name but different schedules
 
-
+- if modifying an event, change appears on all invitees' schedules
+    - if user removes (not host), remove only from their schedule
+        - if host, remove from all invitees' and their schedules
 
 - a user does not have to exist (it does nothing)
+    - once user exists, add to list of invitees for appropriate events (keep list of doesn't exist users)
+    - if schedule initially given to user has event overlapping with already existing event, don't schedule the given event
+
+- Invariant??: time can only be btw 0000 and 2359 (constructor checks this)
