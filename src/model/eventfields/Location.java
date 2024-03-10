@@ -1,6 +1,4 @@
-package model.eventFields;
-
-import java.util.Objects;
+package model.eventfields;
 
 /**
  * Represents a location.

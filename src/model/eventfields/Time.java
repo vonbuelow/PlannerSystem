@@ -1,7 +1,8 @@
-package model.eventFields;
+package model.eventfields;
 
-import model.eventFields.Day;
-
+/**
+ * Time with a start day, start time, end day, and end time of an event.
+ */
 public class Time {
   Day start;
   Day end;

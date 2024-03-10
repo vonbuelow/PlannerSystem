@@ -1,5 +1,8 @@
-package model.eventFields;
+package model.eventfields;
 
+/**
+ * Days of the week.
+ */
 public enum Day {
 
   MONDAY("Monday"),
