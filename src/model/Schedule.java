@@ -23,7 +23,14 @@ public class Schedule {
     String userSchedule = "";
     userSchedule.concat("User: " + this.name + "\n");
     userSchedule.concat("Sunday: " + eventOfDay(Day.SUNDAY));
+    // additional days of the week
+    return userSchedule;
+  }
+
+  private String eventOfDay(Day day) {
+    
   }
 
   // filter events by days of the week
+  //
 }

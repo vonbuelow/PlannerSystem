@@ -29,4 +29,9 @@ public class NUPlannerTextView implements NUPlannerView {
     }
     return view.toString().stripTrailing();
   }
+
+  @Override
+  public void render() throws IOException {
+    // to do when implementing the controller
+  }
 }

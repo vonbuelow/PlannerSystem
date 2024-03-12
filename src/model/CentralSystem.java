@@ -38,6 +38,11 @@ public class CentralSystem implements NUPlannerSystem {
     // will add an event to all schedules when applicable for invitees/host.
   }
 
+  @Override
+  public void add(Event event) {
+    // will add an event to all schedules when applicable for invitees/host.
+  }
+
   // new user/schedule -> existing event invitees.
   // if contained && doesnt conflict with currech sched. add event.
 

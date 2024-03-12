@@ -10,11 +10,6 @@ public class Time {
   int endTime;
 
 
-  // ADD SPECIFICATIONS IN THE CONSTRUCTOR FOR A VALID TIME!!!!!!
-  int length = String.valueOf(number).length();
-  // new class for start and end times for hours and minutes!!!
-
-
   Time(Day start, int startTime, Day end, int endTime) {
     int lengthST = String.valueOf(startTime).length(); // length of the start time number
     int lengthET = String.valueOf(endTime).length(); // length of the end time number
