@@ -1,6 +1,9 @@
 package model;
 
 import java.util.List;
+import java.util.Objects;
+
+import model.eventfields.Day;
 
 /**
  * A schedule of a user.
@@ -12,7 +15,15 @@ public class Schedule {
 
   Schedule(String name, List<Event> events) {
     this.name = name;
-    this.events = events; // can be empty or have elements inside it
+    this.events = Objects.requireNonNull(events); // can be empty or have elements inside it
   }
 
+  @Override
+  public String toString() {
+    String userSchedule = "";
+    userSchedule.concat("User: " + this.name + "\n");
+    userSchedule.concat("Sunday: " + eventOfDay(Day.SUNDAY));
+  }
+
+  // filter events by days of the week
 }

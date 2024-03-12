@@ -51,4 +51,10 @@ public class CentralSystem implements NUPlannerSystem {
   public void remove(Event event) {
     // removes an event from the host and all invitees schedules.
   }
+
+  public Map<String, Schedule> usersSchedules() {
+    Map<String, Schedule> copy = new HashMap<>();
+    copy.putAll(allSchedules); // removes aliasing
+    return copy;
+  }
 }

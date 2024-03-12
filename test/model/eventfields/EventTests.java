@@ -1,3 +1,13 @@
+package model.eventfields;
+
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import model.Event;
+
 /**
  * The testing of event specific functionality.
  * Along with silly edge cases.
@@ -20,4 +30,21 @@ public class EventTests {
     - one ends at 4pm, other starts at 3pm same day --> do nothing
    */
 
+  @Test
+  public void testInvalidElements() {
+    // when reading an XML file add in a "True" and "fAlse"
+    // cannot translate into a boolean -> restrain to either "true" or "false"
+
+    // when reading an XML file add no child elements to the uid tag -> error out
+
+    // an existing schedule with an event with
+    Time time = new Time(Day.MONDAY, 0900, Day.MONDAY, 1200);
+    Location loc = new Location(false, "mother's house");
+    Event eventOverlap = new Event("party", time, loc,
+            new ArrayList<String>(Arrays.asList("emma")));
+
+    add.event(); // an event between current events
+
+    // do nothing!!
+  }
 }
