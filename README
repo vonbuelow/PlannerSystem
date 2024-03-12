@@ -47,11 +47,6 @@ model package:
     Schedule
         A schedule of a user. This contains the users name and the events in their schedule.
 
-
-
-
-
-
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,
 or explain for each directory in your codebase what components it provides.
