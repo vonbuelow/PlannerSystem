@@ -15,4 +15,19 @@ public class Location {
     }
     this.place = place;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Location) {
+      Location e = (Location)o;
+
+      return this.online.equals(e.online) && this.place.equals(e.place);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return 37 * place.length() * String.valueOf(online);
+  }
 }

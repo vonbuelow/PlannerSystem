@@ -1,5 +1,7 @@
 package model.eventfields;
 
+import model.Event;
+
 /**
  * Time with a start day, start time, end day, and end time of an event.
  */
@@ -49,6 +51,22 @@ public class Time {
   public String toString() {
     return "time: " + this.start.toString() + this.startTime + " -> "
             + this.end.toString() + this.endTime;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Time) {
+      Time e = (Time)o;
+
+      return this.start.equals(e.start) && this.startTime == e.startTime
+              && this.end.equals(e.end) && this.endTime == e.endTime;
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return 37 * (startTime + endTime);
   }
 
 }

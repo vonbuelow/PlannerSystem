@@ -29,5 +29,21 @@ public class Event {
   // set location
   // set invitees // ->> invariant would not allowing the host to be changed
 
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof Event) {
+      Event e = (Event)o;
+
+      return this.name.equals(e.name) && this.time.equals(e.time)
+              && this.loc.equals(e.loc) && this.invitees.equals(e.invitees);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return 37 * name.length() * invitees.size() * invitees.size();
+  }
+
 }
 
