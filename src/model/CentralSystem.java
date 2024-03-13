@@ -89,5 +89,8 @@ public class CentralSystem implements NUPlannerSystem {
     catch (ParserConfigurationException e) {
       throw new RuntimeException(e);
     }
+    catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }

@@ -8,6 +8,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,51 +20,35 @@ import model.Schedule;
 public class XMLReader {
   File file;
 
-  /**
-   * Allows an XML File Reader to be implemented
-   * @param     f
-   * @throws     IOException
-   * @throws     SAXException
-   * @throws     ParserConfigurationException
-   */
-  public XMLReader(File f) throws IOException, SAXException, ParserConfigurationException {
+  public XMLReader(File f) {
     this.file = f;
   }
 
-  public Map<String, Schedule> read() throws ParserConfigurationException, IOException, SAXException {
-    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    Document doc = builder.parse(this.file);
-    doc.getDocumentElement().normalize(); //  document hierarchy isn’t affected by any extra white spaces or new lines within nodes.
-
-    NodeList nodeList = doc.getElementsByTagName("schedule");
-    Node first = nodeList.item(0);
-
-    Node first2 = doc.getElementsByTagName("tutorial").item(0);
-    NamedNodeMap attrList = first2.getAttributes();
-
-    // assertEquals(4, nodeList.getLength());
-    // assertEquals(Node.ELEMENT_NODE, first.getNodeType());
-    // assertEquals("tutorial", first.getNodeName());
-    return null;
-  }
-
-  public static void readXML() {
+  public Map<String, Schedule> readXML() {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      Document xmlDoc = builder.parse(new File("tutorial.xml"));
+      Document xmlDoc = builder.parse(this.file);
       xmlDoc.getDocumentElement().normalize();
 
-      Node tutorialsNode = xmlDoc.getElementsByTagName("tutorials").item(0);
+      Node scheduleNode = xmlDoc.getElementsByTagName("schedule").item(0);
+      String name = scheduleNode.getNodeValue();
+      NamedNodeMap user = scheduleNode.getAttributes();
+      Node userID = user.getNamedItem("id"); // trying to get the id but this calls to the children
+      // which are elements not attributes
+      userID.getNodeValue();
+
       //This result isn't as nice...
       System.out.println("Investigating the textContent straight from the outermost element:");
-      System.out.println(tutorialsNode.getTextContent());
+      System.out.println(scheduleNode.getTextContent());
 
       //So let's dig deeper into the other elements!
-      NodeList nodeList = tutorialsNode.getChildNodes();
+      NodeList nodeList = scheduleNode.getChildNodes(); // nodes within schedule tags
       for (int item = 0; item < nodeList.getLength(); item++) {
-        Node current = nodeList.item(item);
+        Node current = nodeList.item(item); // the first child element (should be empty or event/s)
+        // if !current.hasChildNodes() -> skip getting event elements = valid schedule
+
         //We need to search for Elements (actual tags) and there
-        //is only one: the tutorial tag
+        //is only one: the event tag
         if (current.getNodeType() == Node.ELEMENT_NODE) {
           Element elem = (Element) current;
           //Print out the attributes of this element
@@ -99,28 +84,47 @@ public class XMLReader {
     catch (SAXException saxEx) {
       throw new IllegalStateException("Error in parsing the file");
     }
-  }
-  public void whenGetElementByTag_thenSuccess() {
-    //NodeList nodeList = doc.getElementsByTagName("tutorial");
-    //Node first = nodeList.item(0);
-
-    // assertEquals(4, nodeList.getLength());
-    // assertEquals(Node.ELEMENT_NODE, first.getNodeType());
-    // assertEquals("tutorial", first.getNodeName());
+    return null;
   }
 
-  public void whenGetFirstElementAttributes_thenSuccess() {
-    //Node first = doc.getElementsByTagName("tutorial").item(0);
-    //NamedNodeMap attrList = first.getAttributes();
+  public Map<String, Schedule> read() throws Exception {
+    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+    Document doc = builder.parse(this.file);
+    doc.getDocumentElement().normalize();
 
-    /*assertEquals(2, attrList.getLength());
+    Map<String, Schedule> schedules = new HashMap<>();
+    NodeList events = doc.getElementsByTagName("event");
 
-    assertEquals("tutId", attrList.item(0).getNodeName());
-    assertEquals("01", attrList.item(0).getNodeValue());
 
-    assertEquals("type", attrList.item(1).getNodeName());
-    assertEquals("java", attrList.item(1).getNodeValue());*/
+    for (int i = 0; i < events.getLength(); i++) {
+      Node eventNode = events.item(i);
+      if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
+        Element eventElement = (Element) eventNode;
+
+        // Extract event details
+        String eventName = eventElement.getElementsByTagName("name").item(0).getTextContent();
+        String startDay = eventElement.getElementsByTagName("start-day").item(0).getTextContent();
+        String start = eventElement.getElementsByTagName("start").item(0).getTextContent();
+        String endDay = eventElement.getElementsByTagName("end-day").item(0).getTextContent();
+        String end = eventElement.getElementsByTagName("end").item(0).getTextContent();
+        String online = eventElement.getElementsByTagName("online").item(0).getTextContent();
+        String place = eventElement.getElementsByTagName("place").item(0).getTextContent();
+
+        // Create a new Schedule object or a suitable data structure
+        // For illustration, we'll just print the details
+        System.out.println("Event Name: " + eventName);
+        System.out.println("Start Day: " + startDay);
+        System.out.println("Start: " + start);
+        System.out.println("End Day: " + endDay);
+        System.out.println("End: " + end);
+        System.out.println("Online: " + online);
+        System.out.println("Place: " + place);
+
+        // Assuming Schedule class exists and can store these details
+        // schedules.put(eventName, new Schedule(/*parameters*/));
+      }
+    }
+
+    return schedules;
   }
-
-
 }
