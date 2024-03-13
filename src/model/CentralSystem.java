@@ -1,10 +1,18 @@
 package model;
 
+import org.xml.sax.SAXException;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import xmlfunc.XMLReader;
 
 // INVARIANT CONSIDERATIONS
 
@@ -39,8 +47,10 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void add(Event event) {
+  public void add(Map<String, Schedule> newUser) {
     // will add an event to all schedules when applicable for invitees/host.
+    // INVARIANT CHECK
+    this.allSchedules.putAll(newUser);
   }
 
   // new user/schedule -> existing event invitees.
@@ -61,5 +71,23 @@ public class CentralSystem implements NUPlannerSystem {
     Map<String, Schedule> copy = new HashMap<>();
     copy.putAll(allSchedules); // removes aliasing
     return copy;
+  }
+
+
+  @Override
+  public void upload(File file) {
+    try {
+      XMLReader reader = new XMLReader(file);
+      add(reader.read());
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    catch (SAXException e) {
+      throw new RuntimeException(e);
+    }
+    catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

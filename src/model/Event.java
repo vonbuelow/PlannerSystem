@@ -15,7 +15,7 @@ public class Event {
   private Location loc;
   private List<String> invitees;
 
-  Event(String name, Time time, Location loc, List<String> invitees) {
+  public Event(String name, Time time, Location loc, List<String> invitees) {
     this.name = name;
     this.time = time;
     this.loc = loc;
@@ -23,6 +23,11 @@ public class Event {
   }
 
 
+  // add in modification methods
+  // set name
+  // set time
+  // set location
+  // set invitees // ->> invariant would not allowing the host to be changed
 
 }
 

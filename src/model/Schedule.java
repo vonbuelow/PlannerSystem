@@ -28,7 +28,7 @@ public class Schedule {
   }
 
   private String eventOfDay(Day day) {
-    
+    return "";
   }
 
   // filter events by days of the week

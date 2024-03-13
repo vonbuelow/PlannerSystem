@@ -38,12 +38,12 @@ public class EventTests {
     // when reading an XML file add no child elements to the uid tag -> error out
 
     // an existing schedule with an event with
-    Time time = new Time(Day.MONDAY, 0900, Day.MONDAY, 1200);
+    Time time = new Time(Day.MONDAY, 900, Day.MONDAY, 1200);
     Location loc = new Location(false, "mother's house");
     Event eventOverlap = new Event("party", time, loc,
             new ArrayList<String>(Arrays.asList("emma")));
 
-    add.event(); // an event between current events
+    //add.event(); // an event between current events
 
     // do nothing!!
   }

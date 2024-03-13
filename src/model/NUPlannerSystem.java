@@ -1,5 +1,6 @@
 package model;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -14,6 +15,8 @@ public interface NUPlannerSystem {
    * @param     event The added event.
    */
   void add(Event event);
+
+  void add(Map<String, Schedule> newUser);
 
   /**
    * Change an existing event that is passed in to pull up.
@@ -32,4 +35,6 @@ public interface NUPlannerSystem {
    * @return
    */
   Map<String, Schedule> usersSchedules();
+
+  void upload(File file);
 }
