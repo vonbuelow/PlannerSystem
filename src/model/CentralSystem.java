@@ -42,12 +42,12 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void add(Event event) {
+  public void addSchedule(Event event) {
     // will add an event to all schedules when applicable for invitees/host.
   }
 
   @Override
-  public void add(Map<String, Schedule> newUser) {
+  public void addSchedule(Map<String, Schedule> newUser) {
     // will add an event to all schedules when applicable for invitees/host.
     // INVARIANT CHECK
     this.allSchedules.putAll(newUser);
@@ -78,7 +78,7 @@ public class CentralSystem implements NUPlannerSystem {
   public void upload(File file) {
     try {
       XMLReader reader = new XMLReader(file);
-      add(reader.read());
+      addSchedule(reader.read());
     }
     catch (IOException e) {
       throw new RuntimeException(e);

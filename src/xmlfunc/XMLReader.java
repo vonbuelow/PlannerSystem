@@ -8,13 +8,16 @@ import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.Event;
 import model.Schedule;
 
 public class XMLReader {
@@ -25,55 +28,62 @@ public class XMLReader {
   }
 
   public Map<String, Schedule> readXML() {
+    List<Event> ret = new ArrayList<>();
+    Map<String, Schedule> schedules = new HashMap<>();
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document xmlDoc = builder.parse(this.file);
       xmlDoc.getDocumentElement().normalize();
-
+      // getting the users name from the schedule
       Node scheduleNode = xmlDoc.getElementsByTagName("schedule").item(0);
-      String name = scheduleNode.getNodeValue();
-      NamedNodeMap user = scheduleNode.getAttributes();
-      Node userID = user.getNamedItem("id"); // trying to get the id but this calls to the children
-      // which are elements not attributes
-      userID.getNodeValue();
-
-      //This result isn't as nice...
-      System.out.println("Investigating the textContent straight from the outermost element:");
-      System.out.println(scheduleNode.getTextContent());
+      NamedNodeMap name = scheduleNode.getAttributes();
+      Node nameAt = name.getNamedItem("id");
+      String userID = nameAt.getNodeValue();
 
       //So let's dig deeper into the other elements!
       NodeList nodeList = scheduleNode.getChildNodes(); // nodes within schedule tags
-      for (int item = 0; item < nodeList.getLength(); item++) {
+      for (int item = 0; item < nodeList.getLength(); item++) { // dont need if stmnt.
         Node current = nodeList.item(item); // the first child element (should be empty or event/s)
-        // if !current.hasChildNodes() -> skip getting event elements = valid schedule
 
         //We need to search for Elements (actual tags) and there
         //is only one: the event tag
         if (current.getNodeType() == Node.ELEMENT_NODE) {
-          Element elem = (Element) current;
-          //Print out the attributes of this element
-          System.out.println("Investigating the attributes:");
-          System.out.println(elem.getTagName() + " : " + elem.getAttribute("tutId") + " "
-                  + elem.getAttribute("type"));
+          Element elem = (Element) current; // this is an event tag
+          if (elem.getTagName().equals("event")) {
 
-          //Print out the text that exists inside of this element: it doesn't look pretty...
-          //and it erases the other elements
-          System.out.println("Investigating the text content inside this element:");
-          System.out.println(elem.getTagName() + " : " + elem.getTextContent());
+            // go into the children get their values
+            // make an event
+            // add to the list of events
 
-          //... so let's dig even deeper!
-          NodeList elemChildren = elem.getChildNodes();
-          for (int childIdx = 0; childIdx < elemChildren.getLength(); childIdx++ ) {
-            Node childNode = elemChildren.item(childIdx);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-              Element child = (Element) childNode;
-              //Now we're getting something more meaningful from each element!
-              System.out.println("Investigating the text content inside the innermost tags");
-              System.out.println(child.getTagName() + " : " + child.getTextContent());
+            // i know that this element should be an event
+
+            //Print out the attributes of this element
+            System.out.println("Investigating the attributes:");
+            System.out.println(elem.getTagName() + " : " + elem.getAttribute("tutId") + " "
+                    + elem.getAttribute("type"));
+
+            //Print out the text that exists inside of this element: it doesn't look pretty...
+            //and it erases the other elements
+            System.out.println("Investigating the text content inside this element:");
+            System.out.println(elem.getTagName() + " : " + elem.getTextContent());
+
+            //... so let's dig even deeper!
+            NodeList elemChildren = elem.getChildNodes();
+            for (int childIdx = 0; childIdx < elemChildren.getLength(); childIdx++) {
+              Node childNode = elemChildren.item(childIdx);
+              if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element child = (Element) childNode;
+                //Now we're getting something more meaningful from each element!
+                System.out.println("Investigating the text content inside the innermost tags");
+                System.out.println(child.getTagName() + " : " + child.getTextContent());
+              }
             }
           }
         }
       }
+      Schedule sched = new Schedule(userID, ret);
+      schedules.put(userID, sched);
+      return schedules;
     }
     catch (ParserConfigurationException ex) {
       throw new IllegalStateException("Error in creating the builder");
@@ -84,7 +94,6 @@ public class XMLReader {
     catch (SAXException saxEx) {
       throw new IllegalStateException("Error in parsing the file");
     }
-    return null;
   }
 
   public Map<String, Schedule> read() throws Exception {

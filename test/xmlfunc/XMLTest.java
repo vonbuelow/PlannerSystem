@@ -29,7 +29,7 @@ public class XMLTest {
       NamedNodeMap name = scheduleNode.getAttributes();
       Node nameAt = name.getNamedItem("id");
       String userID = nameAt.getNodeValue();
-      System.out.println(userID);
+      System.out.println(userID); // not print but to have the name
     }
     catch (ParserConfigurationException e) {
       throw new RuntimeException(e);

@@ -14,9 +14,9 @@ public interface NUPlannerSystem {
    * Affecting the user's schedules who are invited.
    * @param     event The added event.
    */
-  void add(Event event);
+  void addSchedule(Event event);
 
-  void add(Map<String, Schedule> newUser);
+  void addSchedule(Map<String, Schedule> newUser);
 
   /**
    * Change an existing event that is passed in to pull up.
