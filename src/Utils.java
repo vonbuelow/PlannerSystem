@@ -43,7 +43,8 @@ public class Utils {
       file.write("<schedule id=\"You\">");
       file.write("</schedule>");
       file.close();
-    } catch (IOException ex) {
+    }
+    catch (IOException ex) {
       throw new RuntimeException(ex.getMessage());
     }
   }
@@ -95,11 +96,14 @@ public class Utils {
           }
         }
       }
-    } catch (ParserConfigurationException ex) {
+    }
+    catch (ParserConfigurationException ex) {
       throw new IllegalStateException("Error in creating the builder");
-    } catch (IOException ioEx) {
+    }
+    catch (IOException ioEx) {
       throw new IllegalStateException("Error in opening the file");
-    } catch (SAXException saxEx) {
+    }
+    catch (SAXException saxEx) {
       throw new IllegalStateException("Error in parsing the file");
     }
   }

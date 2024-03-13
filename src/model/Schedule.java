@@ -32,5 +32,9 @@ public class Schedule {
   }
 
   // filter events by days of the week
-  //
+
+
+
+  // remove an event, based on if this user is the first in the list of the invitess
+  // then it is removed just from their schedule, where to implement this though
 }

@@ -27,6 +27,7 @@
     - one event at any given time for an individual
         - EXCEPTION being the end time of an event == the start time of another event
     - someone with the same name but different schedules
+    - if one of the users events does not list themselves as an invitee
 
 - if modifying an event, change appears on all invitees' schedules
     - if user removes (not host), remove only from their schedule
