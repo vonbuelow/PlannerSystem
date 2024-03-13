@@ -60,7 +60,7 @@ public class Time {
 
       return this.start.equals(e.start) && this.startTime == e.startTime
               && this.end.equals(e.end) && this.endTime == e.endTime;
-    }
+    } 
     return false;
   }
 
