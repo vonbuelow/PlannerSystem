@@ -29,14 +29,14 @@ public class CentralSystem implements NUPlannerSystem {
   private final List<Event> eventList; // list of all events
 
   // default
-  CentralSystem() {
+  public CentralSystem() {
     this.allSchedules = new HashMap<String, Schedule>();
     this.allUsers = this.allSchedules.keySet();
     this.eventList = new ArrayList<>();
   }
 
   // testing constructor
-  CentralSystem(Map<String, Schedule> allS, List<Event> events) {
+  public CentralSystem(Map<String, Schedule> allS, List<Event> events) {
     this.allSchedules = allS;
     this.allUsers = this.allSchedules.keySet();
     this.eventList = events;
@@ -44,12 +44,19 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public void saveSchedule(String name) {
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException("name must exist and cannot be empty");
+    }
+    if (!allUsers.contains(name)) {
+      throw new IllegalStateException("user not found");
+    }
     XMLWriter.writeToFile(this.allSchedules.get(name));
   }
 
   @Override
   public void addSchedule(Event event) {
     // will add an event to all schedules when applicable for invitees/host.
+
   }
 
   @Override
@@ -60,7 +67,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   // new user/schedule -> existing event invitees.
-  // if contained && doesnt conflict with currech sched. add event.
+  // if contained && does not conflict with current sched. add event.
 
   @Override
   public void modify(Event event) {

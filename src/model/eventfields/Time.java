@@ -11,7 +11,14 @@ public class Time {
   int endTime;
 
 
-  Time(Day start, int startTime, Day end, int endTime) {
+  /**
+   * Creates an instance of a military time as a four-digit number between 0000 and 2359.
+   * @param start start day of an event time
+   * @param startTime starting clock time of the event
+   * @param end end day of an event time
+   * @param endTime ending clock time of the event
+   */
+  public Time(Day start, int startTime, Day end, int endTime) {
     int lengthST = String.valueOf(startTime).length(); // length of the start time number
     int lengthET = String.valueOf(endTime).length(); // length of the end time number
     if (lengthST != 4 || lengthET != 4) {

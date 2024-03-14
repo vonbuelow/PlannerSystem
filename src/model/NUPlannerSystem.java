@@ -9,6 +9,12 @@ import java.util.Map;
  */
 public interface NUPlannerSystem {
 
+  /**
+   * Saves the schedule of the user with the given name to an XML file.
+   * @param name name of the user whose schedule is to be saved
+   * @throws IllegalArgumentException if the given name is empty or null
+   * @throws IllegalStateException if the given uid (name) cannot be found in the system
+   */
   void saveSchedule(String name);
 
   /**
