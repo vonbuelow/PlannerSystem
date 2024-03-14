@@ -13,7 +13,6 @@ import model.Schedule;
  */
 public class XMLWriter {
 
-
   /**
    * Write a given schedule as a file and to a specific directory.
    * @param     sched a selected users schedule.

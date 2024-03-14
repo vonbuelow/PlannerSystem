@@ -7,8 +7,8 @@ package model.eventfields;
 public class Time {
   Day start;
   Day end;
-  int startTime;
-  int endTime;
+  String startTime;
+  String endTime;
 
 
   /**
@@ -17,8 +17,12 @@ public class Time {
    * @param startTime starting clock time of the event
    * @param end end day of an event time
    * @param endTime ending clock time of the event
+   * @throws IllegalArgumentException when times are not: 4-digit numbers, in military time,
+   *     non-null.
+   * @throws IllegalStateException when times are equal
+   *
    */
-  public Time(Day start, int startTime, Day end, int endTime) {
+  public Time(Day start, String startTime, Day end, String endTime) {
     int lengthST = String.valueOf(startTime).length(); // length of the start time number
     int lengthET = String.valueOf(endTime).length(); // length of the end time number
     if (lengthST != 4 || lengthET != 4) {
@@ -34,6 +38,9 @@ public class Time {
     if (start == null || end == null) {
       throw new IllegalArgumentException("No days can be null.");
     }
+    if (startTime.equals(endTime)) {
+      throw new IllegalStateException("start and end times must be different");
+    }
     this.start = start;
     this.startTime = startTime;
     this.end = end;
@@ -47,10 +54,24 @@ public class Time {
    * @param    time valid 4 digit length.
    * @return    if the given time is a valid military time with the above specs.
    */
-  private boolean militaryTime(int time) {
-    int hours = time / 100;
-    int minutes = time % 100;
+  private boolean militaryTime(String time) {
+    int numTime = getNumTime(time);
+
+    int hours = numTime / 100;
+    int minutes = numTime % 100;
     return hours <= 23 && hours >= 0 && minutes >= 0 && minutes <= 59;
+  }
+
+  /**
+   * Gets the numerical version of a military time.
+   * @param time start or end military time of event
+   * @return time as a number
+   */
+  private static int getNumTime(String time) {
+    if (time.charAt(0) == '0') {
+      time = time.substring(1);
+    }
+    return Integer.parseInt(time);
   }
 
   @Override
@@ -72,7 +93,23 @@ public class Time {
 
   @Override
   public int hashCode() {
-    return 37 * (startTime + endTime);
+    return 37 * (getNumTime(startTime) + getNumTime(endTime));
   }
 
+  /**
+   * Returns whether the given time overlaps with the current.
+   * @param time the time whose time is being compared to the current
+   * @return
+   */
+  public boolean overlapsWith(Time time) {
+    int thisStartDay = this.start.orderOfDayInWeek();
+    int thatStartDay = time.start.orderOfDayInWeek();
+    int thisEndDay = this.end.orderOfDayInWeek();
+    int thatEndDay = time.end.orderOfDayInWeek();
+
+    return !(thisStartDay > thatStartDay && thisEndDay > thatEndDay
+            && getNumTime(this.endTime) >= getNumTime(time.startTime))
+            || (thisStartDay > thatStartDay && thisEndDay < thatEndDay)
+            || (thisStartDay < thatStartDay && thisEndDay < thatEndDay);
+  }
 }

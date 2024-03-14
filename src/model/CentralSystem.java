@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -25,20 +24,17 @@ import xmlfunc.XMLWriter;
  */
 public class CentralSystem implements NUPlannerSystem {
   private final Map<String, Schedule> allSchedules; // all users -> their respective schedules
-  private final Set<String> allUsers; // all users
   private final List<Event> eventList; // list of all events
 
   // default
   public CentralSystem() {
     this.allSchedules = new HashMap<String, Schedule>();
-    this.allUsers = this.allSchedules.keySet();
     this.eventList = new ArrayList<>();
   }
 
   // testing constructor
   public CentralSystem(Map<String, Schedule> allS, List<Event> events) {
-    this.allSchedules = allS;
-    this.allUsers = this.allSchedules.keySet();
+    this.allSchedules = allS; // consider deep copies
     this.eventList = events;
   }
 
@@ -47,20 +43,25 @@ public class CentralSystem implements NUPlannerSystem {
     if (name == null || name.isEmpty()) {
       throw new IllegalArgumentException("name must exist and cannot be empty");
     }
-    if (!allUsers.contains(name)) {
+    if (!allSchedules.containsKey(name)) {
       throw new IllegalStateException("user not found");
     }
     XMLWriter.writeToFile(this.allSchedules.get(name));
   }
 
   @Override
-  public void addSchedule(Event event) {
+  public void addEventToAllSchedules(Event event) {
     // will add an event to all schedules when applicable for invitees/host.
-
+    for (Schedule sched : allSchedules.values()) {
+      sched.addEvent(event);
+    }
+    if (!this.eventList.contains(event)) {
+      eventList.add(event);
+    }
   }
 
   @Override
-  public void addSchedule(Map<String, Schedule> newUser) {
+  public void addNewUser(Map<String, Schedule> newUser) {
     // will add an event to all schedules when applicable for invitees/host.
     // INVARIANT CHECK
     this.allSchedules.putAll(newUser);
@@ -73,6 +74,7 @@ public class CentralSystem implements NUPlannerSystem {
   public void modify(Event event) {
     // changes some aspect of an existing event to be updated.
     // and updates all who are invited to the event as well.
+
   }
 
   @Override
@@ -85,7 +87,7 @@ public class CentralSystem implements NUPlannerSystem {
   public void addUser(File file) {
     try {
       XMLReader reader = new XMLReader(file);
-      addSchedule(reader.read());
+      addNewUser(reader.read());
       // INVARIANT CHECKING EVENT OVERLAP
       // IF A USER SHOULD BE ADDED TO A NEW EVENT THAT HAS BEEN LOADED IN
       // EVERY USER IS UNIQUE

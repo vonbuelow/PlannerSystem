@@ -8,7 +8,7 @@ public class Location {
   boolean online;
   String place;
 
-  Location(boolean online, String place) {
+  public Location(boolean online, String place) {
     this.online = online;
     if (place.equals("") || place == null) {
       throw new IllegalArgumentException("cannot have null or empty location place");

@@ -9,7 +9,7 @@ import model.eventfields.Time;
  * An event in a user's schedule.
  * Has a name of the event, time, location, and list of those invited.
  */
-public class Event {
+public class Event implements EventRep {
   private String name;
   private Time time;
   private Location loc;
@@ -28,6 +28,7 @@ public class Event {
     this.loc = loc;
     this.invitees = invitees;
   }
+
 
 
   // add in modification methods
@@ -52,5 +53,14 @@ public class Event {
     return 37 * name.length() * invitees.size() * invitees.size();
   }
 
+  @Override
+  public Time getTime() {
+    return this.time;
+  }
+
+  @Override
+  public boolean overlapsWith(EventRep e) {
+    return this.time.overlapsWith(e.getTime());
+  }
 }
 

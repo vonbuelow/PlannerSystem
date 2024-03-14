@@ -56,6 +56,14 @@ public class Schedule {
     return "";
   }
 
+  public void addEvent(Event event) {
+    if (!this.events.contains(event)
+            && this.events.stream().noneMatch(f -> f.overlapsWith(event))) {
+      this.events.add(event);
+    }
+    throw new IllegalStateException("event exists already or conflicts with another");
+  }
+
   // filter events by days of the week
 
 
