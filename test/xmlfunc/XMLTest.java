@@ -15,6 +15,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Testing XML reader and writer.
+ */
 public class XMLTest {
 
   // testing the reader

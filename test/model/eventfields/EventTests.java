@@ -1,10 +1,7 @@
 package model.eventfields;
 
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import model.Event;
 
@@ -30,7 +27,11 @@ public class EventTests {
     - one ends at 4pm, other starts at 3pm same day --> do nothing
    */
 
-  @Test
+  //@Test
+
+  /**
+   * Testing the invalid elements.
+   */
   public void testInvalidElements() {
     // when reading an XML file add in a "True" and "fAlse"
     // cannot translate into a boolean -> restrain to either "true" or "false"

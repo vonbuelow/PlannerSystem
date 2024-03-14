@@ -22,6 +22,10 @@ public enum Day {
     this.startDayVal = startDayVal;
   }
 
+  public int orderOfDayInWeek() {
+    return this.startDayVal;
+  }
+
   @Override
   public String toString() {
     return this.val + ": ";

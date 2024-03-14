@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,6 +19,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import model.Event;
 import model.Schedule;
 
+/**
+ * The class used to read an XML file.
+ * This class transfers all information back to the central system.
+ * Used when a user wants to upload a file in the central system to be read in this system.
+ */
 public class XMLReader {
   File file;
 
@@ -27,6 +31,10 @@ public class XMLReader {
     this.file = f;
   }
 
+  /**
+   * A public method to be called in the central system to read XML files in a single class.
+   * @return A mapping of the user to a specific schedule created in this class.
+   */
   public Map<String, Schedule> readXML() {
     ArrayList<Event> ret = new ArrayList<>();
     Map<String, Schedule> schedules = new HashMap<>();
@@ -96,6 +104,11 @@ public class XMLReader {
     }
   }
 
+  /**
+   * A public method to be called in the central system to read XML files in a single class.
+   * @return     A mapping of the user to a specific schedule created in this class.
+   *             DELETE THIS IN FINAL SUBMISSIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   */
   public Map<String, Schedule> read() throws Exception {
     DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     Document doc = builder.parse(this.file);

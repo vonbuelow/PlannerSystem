@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.xml.parsers.ParserConfigurationException;
 
 import xmlfunc.XMLReader;
+import xmlfunc.XMLWriter;
 
 // INVARIANT CONSIDERATIONS
 
@@ -23,9 +24,9 @@ import xmlfunc.XMLReader;
  * A list of events in the system.
  */
 public class CentralSystem implements NUPlannerSystem {
-  private Map<String, Schedule> allSchedules; // all users -> their respective schedules
-  private Set<String> allUsers; // all users
-  private List<Event> eventList; // list of all events
+  private final Map<String, Schedule> allSchedules; // all users -> their respective schedules
+  private final Set<String> allUsers; // all users
+  private final List<Event> eventList; // list of all events
 
   // default
   CentralSystem() {
@@ -39,6 +40,11 @@ public class CentralSystem implements NUPlannerSystem {
     this.allSchedules = allS;
     this.allUsers = this.allSchedules.keySet();
     this.eventList = events;
+  }
+
+  @Override
+  public void saveSchedule(String name) {
+    XMLWriter.writeToFile(this.allSchedules.get(name));
   }
 
   @Override
@@ -67,12 +73,6 @@ public class CentralSystem implements NUPlannerSystem {
     // removes an event from the host and all invitees schedules.
   }
 
-  public Map<String, Schedule> usersSchedules() {
-    Map<String, Schedule> copy = new HashMap<>();
-    copy.putAll(allSchedules); // removes aliasing
-    return copy;
-  }
-
 
   @Override
   public void addUser(File file) {
@@ -95,5 +95,15 @@ public class CentralSystem implements NUPlannerSystem {
     catch (Exception e) {
       throw new RuntimeException(e);
     }
+  }
+
+  /**
+   * The users schedule for toString text display implementation.
+   * @return    a copy not direct reference to the map storing current user->schedules.
+   */
+  public Map<String, Schedule> usersSchedules() {
+    Map<String, Schedule> copy = new HashMap<>();
+    copy.putAll(allSchedules); // removes aliasing
+    return copy;
   }
 }

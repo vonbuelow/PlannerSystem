@@ -15,6 +15,13 @@ public class Event {
   private Location loc;
   private List<String> invitees;
 
+  /**
+   * An event which has a name, time, location, and those who are invited.
+   * @param     name of the event rep. by a string.
+   * @param     time of the event rep. by a class (Time).
+   * @param     loc of the event rep. by a class (Location).
+   * @param     invitees of the event rep. by a list of strings.
+   */
   public Event(String name, Time time, Location loc, List<String> invitees) {
     this.name = name;
     this.time = time;

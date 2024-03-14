@@ -1,6 +1,5 @@
 package model.eventfields;
 
-import model.Event;
 
 /**
  * Time with a start day, start time, end day, and end time of an event.
@@ -28,10 +27,10 @@ public class Time {
     if (start == null || end == null) {
       throw new IllegalArgumentException("No days can be null.");
     }
-      this.start = start;
-      this.startTime = startTime;
-      this.end = end;
-      this.endTime = endTime;
+    this.start = start;
+    this.startTime = startTime;
+    this.end = end;
+    this.endTime = endTime;
 
   }
 
@@ -42,8 +41,8 @@ public class Time {
    * @return    if the given time is a valid military time with the above specs.
    */
   private boolean militaryTime(int time) {
-    int hours = time/100;
-    int minutes = time%100;
+    int hours = time / 100;
+    int minutes = time % 100;
     return hours <= 23 && hours >= 0 && minutes >= 0 && minutes <= 59;
   }
 

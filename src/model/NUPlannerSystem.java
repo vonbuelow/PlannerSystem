@@ -9,6 +9,8 @@ import java.util.Map;
  */
 public interface NUPlannerSystem {
 
+  void saveSchedule(String name);
+
   /**
    * Add a new event to the central system.
    * Affecting the user's schedules who are invited.
