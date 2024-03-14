@@ -13,6 +13,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import static org.junit.Assert.assertEquals;
+
 public class XMLTest {
 
   // testing the reader
@@ -29,7 +31,7 @@ public class XMLTest {
       NamedNodeMap name = scheduleNode.getAttributes();
       Node nameAt = name.getNamedItem("id");
       String userID = nameAt.getNodeValue();
-      System.out.println(userID); // not print but to have the name
+      assertEquals("Prof. Lucia", userID); // testing that we were able to get attributes
     }
     catch (ParserConfigurationException e) {
       throw new RuntimeException(e);
@@ -43,6 +45,5 @@ public class XMLTest {
   }
 
   // testing the writer
-
 
 }

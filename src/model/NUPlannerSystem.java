@@ -36,5 +36,5 @@ public interface NUPlannerSystem {
    */
   Map<String, Schedule> usersSchedules();
 
-  void upload(File file);
+  void addUser(File file);
 }

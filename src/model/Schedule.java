@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +19,30 @@ public class Schedule {
     this.name = name;
     this.events = Objects.requireNonNull(events); // can be empty or have elements inside it
   }
+
+  /**
+   * Allow the system to know who the owner of this schedule is.
+   * This does not promote alteration since it is not a reference to the value of the name.
+   * Returning the name of the owner only.
+   * USED MAINLY BY THE WRITER
+   * @return    the name of the schedule owner.
+   */
+  public String scheduleOwner() {
+    return this.name;
+  }
+
+  /**
+   * Giving access to the WRITER to the events listed for the user.
+   * Attempting to minimize too many permissions for modification.
+   * @return    A clone of the existing list of events.
+   */
+  public List<Event> eventsPlanned() {
+    List<Event> ret = new ArrayList<>();
+    ret.addAll(this.events);
+    return ret;
+  }
+
+
 
   @Override
   public String toString() {

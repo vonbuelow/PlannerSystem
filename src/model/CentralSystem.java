@@ -75,10 +75,13 @@ public class CentralSystem implements NUPlannerSystem {
 
 
   @Override
-  public void upload(File file) {
+  public void addUser(File file) {
     try {
       XMLReader reader = new XMLReader(file);
       addSchedule(reader.read());
+      // INVARIANT CHECKING EVENT OVERLAP
+      // IF A USER SHOULD BE ADDED TO A NEW EVENT THAT HAS BEEN LOADED IN
+      // EVERY USER IS UNIQUE
     }
     catch (IOException e) {
       throw new RuntimeException(e);

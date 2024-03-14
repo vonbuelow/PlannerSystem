@@ -28,7 +28,7 @@ public class XMLReader {
   }
 
   public Map<String, Schedule> readXML() {
-    List<Event> ret = new ArrayList<>();
+    ArrayList<Event> ret = new ArrayList<>();
     Map<String, Schedule> schedules = new HashMap<>();
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

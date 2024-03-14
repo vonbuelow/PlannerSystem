@@ -21,13 +21,13 @@ public class Location {
     if (o instanceof Location) {
       Location e = (Location)o;
 
-      return this.online.equals(e.online) && this.place.equals(e.place);
+      return this.online == e.online && this.place.equals(e.place);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return 37 * place.length() * String.valueOf(online);
+    return 37 * place.length() * String.valueOf(online).length();
   }
 }
