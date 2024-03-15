@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -28,16 +29,22 @@ public class CentralSystem implements NUPlannerSystem {
   private final Map<String, Schedule> allSchedules; // all users -> their respective schedules
   private final List<Event> eventList; // list of all events
 
-  // default
+  /**
+   * Creates the default central system (empty) for uploading user schedules into.
+   */
   public CentralSystem() {
     this.allSchedules = new HashMap<String, Schedule>();
-    this.eventList = new ArrayList<>();
+    this.eventList = new ArrayList<Event>();
   }
 
-  // testing constructor
+  /**
+   * A testing constructor for a system with schedules loaded in.
+   * @param allS all schedules for users in the system
+   * @param events all unique events in the system
+   */
   public CentralSystem(Map<String, Schedule> allS, List<Event> events) {
-    this.allSchedules = allS; // consider deep copies
-    this.eventList = events;
+    this.allSchedules = Objects.requireNonNull(allS); // consider deep copies
+    this.eventList = Objects.requireNonNull(events);
   }
 
   @Override
@@ -69,40 +76,35 @@ public class CentralSystem implements NUPlannerSystem {
     this.allSchedules.putAll(newUser);
   }
 
+  @Override
+  public void modifyName(Event event, String eventName, String uid) {
+
+  }
+
+  @Override
+  public void modifyTime(Event event, Time time, String uid) {
+
+  }
+
+  @Override
+  public void modifyLocation(Event event, Location loc, String uid) {
+
+  }
+
+  @Override
+  public void modifyInvitees(Event event, List<String> invitees, boolean toAdd, String uid) {
+
+  }
+
+  @Override
+  public void removeEvent(Event event, String uid) {
+
+  }
+
+
   // new user/schedule -> existing event invitees.
   // if contained && does not conflict with current sched. add event.
 
-  @Override
-  public void modify(Event event) {
-    // changes some aspect of an existing event to be updated.
-    // and updates all who are invited to the event as well.
-
-  }
-
-  @Override
-  public void modifyName(Event event, String name) {
-
-  }
-
-  @Override
-  public void modifyTime(Event event, Time time) {
-
-  }
-
-  @Override
-  public void modifyLocation(Event event, Location loc) {
-
-  }
-
-  @Override
-  public void modifyInvitees(Event event, List<String> invitees, boolean toAdd) {
-
-  }
-
-  @Override
-  public void removeEvent(Event event) {
-
-  }
 
   @Override
   public void addUser(File file) {

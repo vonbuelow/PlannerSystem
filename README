@@ -29,23 +29,25 @@ view package:
 model package:
     eventfields package:
         Day
-            An enumeration to represent days of the week, restricting the user to only valid days
+            An enumeration to represent days of the week, restricting the user to only valid days.
         Location
-            considers the locations children making sure there is a boolean and string location
+            Considers the locations children making sure there is a boolean and string location.
         Time
-            enforcing military time with hours and minutes, no seconds and not in civilian time
+            Enforcing military time with hours and minutes, no seconds and not in civilian time.
     Central System
-        implements the NUPlanner system with its public methods and keeps track of all users,
+        Implements the NUPlanner system with its public methods and keeps track of all users,
         and all users schedules in the current system. Has a set of all users contained in the
         system. A list of events in the system.
     Event
         An event in a user's schedule. Has a name of the event, time, location, and list of
-        those invited. An enforces the requirements listed by the assignment.
+        those invited and enforces the requirements listed by the assignment. Names for all
+        existing events in a given user's schedule should be unique.
     NUPlannerSystem
         The interface to represent a systems behavior of add, modify, remove, and get all users
-        schedules
+        schedules.
     Schedule
-        A schedule of a user. This contains the users name and the events in their schedule.
+        A schedule of a user. This contains the users name and the events in their schedule. All
+        user ids should be unique (two with the same name are not allowed).
 
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,
