@@ -85,8 +85,8 @@ public class Time {
     if (o instanceof Time) {
       Time e = (Time)o;
 
-      return this.start.equals(e.start) && this.startTime == e.startTime
-              && this.end.equals(e.end) && this.endTime == e.endTime;
+      return this.start.equals(e.start) && this.startTime.equals(e.startTime)
+              && this.end.equals(e.end) && this.endTime.equals(e.endTime);
     } 
     return false;
   }
@@ -102,15 +102,45 @@ public class Time {
    * @return
    */
   public boolean overlapsWith(Time time) {
+    // Convert days to their order in the week
     int thisStartDay = this.start.orderOfDayInWeek();
     int thatStartDay = time.start.orderOfDayInWeek();
     int thisEndDay = this.end.orderOfDayInWeek();
     int thatEndDay = time.end.orderOfDayInWeek();
 
-    return !(thisStartDay > thatStartDay && thisEndDay > thatEndDay
-            && getNumTime(this.endTime) >= getNumTime(time.startTime))
-            || (thisStartDay > thatStartDay && thisEndDay < thatEndDay)
-            || (thisStartDay < thatStartDay && thisEndDay < thatEndDay);
+    // Adjust for week wrapping
+    if (thisEndDay < thisStartDay || (thisEndDay == thisStartDay && compareTimes(this.startTime, this.endTime) > 0)) {
+      thisEndDay += 7;
+    }
+    if (thatEndDay < thatStartDay || (thatEndDay == thatStartDay && compareTimes(time.startTime, time.endTime) > 0)) {
+      thatEndDay += 7;
+    }
+
+    // times to minutes since start of the week for comparison
+    int thisStartTime = thisStartDay * 24 * 60 + timeToMinutes(this.startTime);
+    int thisEndTime = thisEndDay * 24 * 60 + timeToMinutes(this.endTime);
+    int thatStartTime = thatStartDay * 24 * 60 + timeToMinutes(time.startTime);
+    int thatEndTime = thatEndDay * 24 * 60 + timeToMinutes(time.endTime);
+
+    // Check for overlap
+    return !(thisEndTime <= thatStartTime || thatEndTime <= thisStartTime);
+  }
+
+  /**
+   * Converts a military time string to minutes past midnight.
+   */
+  private int timeToMinutes(String time) {
+    int hours = Integer.parseInt(time.substring(0, 2));
+    int minutes = Integer.parseInt(time.substring(2));
+    return hours * 60 + minutes;
+  }
+
+  /**
+   * Compares two military times.
+   * @return positive if first is after second, negative if first is before second, 0 if equal.
+   */
+  private int compareTimes(String first, String second) {
+    return timeToMinutes(first) - timeToMinutes(second);
   }
 
   public String getStartDay() {

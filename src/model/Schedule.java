@@ -47,8 +47,8 @@ public class Schedule implements ScheduleRep {
   }
 
   private String eventsOfDay(Day day) {
-    List<Event> eventsOfGivenDay =
-            this.events.stream().filter(e -> e.getTime().getStartDay().equals(day));
+  //  List<Event> eventsOfGivenDay =
+  //          this.events.stream().filter(e -> e.getTime().getStartDay().equals(day));
     return "";
   }
 

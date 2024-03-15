@@ -75,7 +75,7 @@ public class XMLReader {
           // name of the event
           NodeList childrenName = elem.getElementsByTagName("name");
           listLengthException(childrenName);
-          String eventName = childrenName.item(0).getNodeValue();
+          String eventName = childrenName.item(0).getTextContent();
           // get the time and its elements
           NodeList childrenTime = elem.getElementsByTagName("time");
           listLengthException(childrenTime);
@@ -105,7 +105,7 @@ public class XMLReader {
 
       if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("uid")) {
         Element uidElement = (Element) node;
-        String uid = uidElement.getNodeValue();
+        String uid = uidElement.getTextContent();
         uids.add(uid);
       }
     }

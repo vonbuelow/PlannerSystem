@@ -106,10 +106,10 @@ public class XMLTest {
     </event>
        */
       Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
-      Location location = new Location(false, "Churchill Hall 101");
+      Location location = new Location(false, "\"Churchill Hall 101\"");
       List<String> invitees = new ArrayList<String>(
-              Arrays.asList("Prof. Lucia", "Student Anon", "Chat"));
-      Event event = new Event("CS3500 Morning Lecture", time, location, invitees);
+              Arrays.asList("\"Prof. Lucia\"", "\"Student Anon\"", "\"Chat\""));
+      Event event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
       Schedule schedule = new Schedule("Prof. Lucia", new ArrayList<>(Arrays.asList(event)));
       assertEquals(schedule.eventsPlanned(), profLuciaSched.get("Prof. Lucia").eventsPlanned()); // we were able to get the correct user
 

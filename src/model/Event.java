@@ -70,7 +70,7 @@ public class Event implements EventRep {
 
   @Override
   public int hashCode() {
-    return 37 * name.length() * invitees.size() * invitees.size();
+    return Objects.hashCode(this);
   }
 
   @Override

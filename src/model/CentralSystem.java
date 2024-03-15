@@ -27,7 +27,7 @@ import xmlfunc.XMLWriter;
  */
 public class CentralSystem implements NUPlannerSystem {
   private final Map<String, Schedule> allSchedules; // all users -> their respective schedules
-  private final List<Event> eventList; // list of all events
+  private final List<Event> eventList; // list of all events if it is useful -> maintain
 
   /**
    * Creates the default central system (empty) for uploading user schedules into.

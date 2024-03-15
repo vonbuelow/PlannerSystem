@@ -117,12 +117,12 @@ public class EventTests {
     event3 = new Event("CS3500", time2, loc3, invitees1);
     event4 = new Event("CS3500", time2, loc3, invitees1);
     event5 = new Event("dilly dally", time7, loc2, invitees2);
-    event6 = new Event("not BBQ", time8, loc2, invitees1);
+    event6 = new Event("not BBQ", time8, loc2, invitees1); // wed - wed
     event7 = new Event("my bday party", time1, loc7, invitees3);
     event8 = new Event("haters' bday party", time9, loc7, invitees4);
     event9 = new Event("others' bday party", time10, loc7, invitees5);
     event10 = new Event("dilly dally", time6, loc4, invitees2);
-    event11 = new Event("dilly dally", time3, loc3, invitees1);
+    event11 = new Event("dilly dally", time3, loc3, invitees1); // fri - tues
   }
 
   @Test
