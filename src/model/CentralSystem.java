@@ -97,8 +97,16 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void removeEvent(Event event, String uid) {
-
+  public void removeEvent(Event event) {
+    if (event == null) {
+      throw new IllegalArgumentException("event cannot be null");
+    }
+    if (!eventList.contains(event)) {
+      throw new IllegalStateException("event must be in system");
+    }
+    for (Schedule sched : allSchedules.values()) {
+      sched.removeEvent(event);
+    }
   }
 
 

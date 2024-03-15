@@ -10,7 +10,7 @@ import model.eventfields.Day;
  * A schedule of a user.
  * This contains the users name and the events in their schedule.
  */
-public class Schedule {
+public class Schedule implements ScheduleRep {
   String name;
   List<Event> events;
 
@@ -19,13 +19,7 @@ public class Schedule {
     this.events = Objects.requireNonNull(events); // can be empty or have elements inside it
   }
 
-  /**
-   * Allow the system to know who the owner of this schedule is.
-   * This does not promote alteration since it is not a reference to the value of the name.
-   * Returning the name of the owner only.
-   * USED MAINLY BY THE WRITER
-   * @return    the name of the schedule owner.
-   */
+  @Override
   public String scheduleOwner() {
     return this.name;
   }
@@ -62,6 +56,22 @@ public class Schedule {
       this.events.add(event);
     }
     throw new IllegalStateException("event exists already or conflicts with another");
+  }
+
+  @Override
+  public void removeEvent(Event event) {
+    if (event == null) {
+      throw new IllegalArgumentException("event cannot be null");
+    }
+    if (!this.events.contains(event)) {
+      throw new IllegalStateException("event must be in schedule");
+    }
+    if (event.getInvitedUsers().isEmpty()) {
+      throw new IllegalStateException("event must have invitees to remove");
+    }
+    if (this.name.equals(event.getInvitedUsers().get(0))) {
+
+    }
   }
 
   // filter events by days of the week

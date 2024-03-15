@@ -76,10 +76,12 @@ public interface NUPlannerSystem {
   /**
    * Remove an existing event from the system. If event is removed from host's
    * schedule, remove the event from all invitees' schedules. Otherwise, remove
-   * just from the invitees' schedule.
+   * just from the single invitee's schedule.
    * @param     event the event to be removed.
+   * @throws IllegalArgumentException if the given event is null
+   * @throws IllegalStateException if the given event is not currently in the system
    */
-  void removeEvent(Event event, String uid);
+  void removeEvent(Event event);
 
   /**
    * A copy of all users in a system and their schedules for toString purposes.

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.List;
+import java.util.Objects;
 
 import model.eventfields.Location;
 import model.eventfields.Time;
@@ -21,11 +22,16 @@ public class Event implements EventRep {
    * @param     time of the event rep. by a class (Time).
    * @param     loc of the event rep. by a class (Location).
    * @param     invitees of the event rep. by a list of strings.
+   * @throws IllegalArgumentException if the given list of invitees is null or empty
    */
   public Event(String name, Time time, Location loc, List<String> invitees) {
-    this.name = name;
-    this.time = time;
-    this.loc = loc;
+    this.name = Objects.requireNonNull(name);
+    this.time = Objects.requireNonNull(time);
+    this.loc = Objects.requireNonNull(loc);
+    if (invitees == null || invitees.isEmpty()) { // Invariant: there is always a host for an event
+      throw new IllegalArgumentException(
+              "an event cannot be null and must have at least one invitee");
+    }
     this.invitees = invitees;
   }
 

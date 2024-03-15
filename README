@@ -42,6 +42,7 @@ model package:
         An event in a user's schedule. Has a name of the event, time, location, and list of
         those invited and enforces the requirements listed by the assignment. Names for all
         existing events in a given user's schedule should be unique.
+        - Invariant: there is always a host for an event (at least one invitee per event)
     NUPlannerSystem
         The interface to represent a systems behavior of add, modify, remove, and get all users
         schedules.
