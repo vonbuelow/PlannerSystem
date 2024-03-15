@@ -12,9 +12,9 @@ import model.eventfields.Day;
  */
 public class Schedule implements ScheduleRep {
   String name;
-  List<Event> events;
+  List<EventRep> events;
 
-  public Schedule(String name, List<Event> events) {
+  public Schedule(String name, List<EventRep> events) {
     this.name = name;
     this.events = Objects.requireNonNull(events); // can be empty or have elements inside it
   }
@@ -25,8 +25,8 @@ public class Schedule implements ScheduleRep {
   }
 
   @Override
-  public List<Event> eventsPlanned() {
-    List<Event> ret = new ArrayList<>();
+  public List<EventRep> eventsPlanned() {
+    List<EventRep> ret = new ArrayList<>();
     ret.addAll(this.events);
     return ret;
   }
@@ -53,15 +53,15 @@ public class Schedule implements ScheduleRep {
    */
   private String eventsOfDay(Day day) {
     String ret = "";
-    List<Event> eventsOfGivenDay = new ArrayList<Event>();
+    List<EventRep> eventsOfGivenDay = new ArrayList<EventRep>();
 
-    for (Event e : this.events) {
+    for (EventRep e : this.events) {
       if (e.getTime().getStartDayDefault().equals(day)) {
         eventsOfGivenDay.add(e);
       }
     }
 
-    for (Event ev : eventsOfGivenDay) {
+    for (EventRep ev : eventsOfGivenDay) {
       ret += ev.toString();
     }
 
@@ -69,7 +69,7 @@ public class Schedule implements ScheduleRep {
   }
 
   @Override
-  public void addEvent(Event event) {
+  public void addEvent(EventRep event) {
     eventNullException(event);
     if (!this.events.contains(event)
             && this.events.stream().noneMatch(f -> f.overlapsWith(event))) {
@@ -79,7 +79,7 @@ public class Schedule implements ScheduleRep {
   }
 
   @Override
-  public void removeEvent(Event event) {
+  public void removeEvent(EventRep event) {
     eventNullException(event);
     if (!this.events.contains(event)) {
       throw new IllegalStateException("event must be in schedule");
@@ -97,7 +97,7 @@ public class Schedule implements ScheduleRep {
    * @param event event in question
    * @throws IllegalArgumentException if given event is null
    */
-  private static void eventNullException(Event event) {
+  private static void eventNullException(EventRep event) {
     if (event == null) {
       throw new IllegalArgumentException("event cannot be null");
     }

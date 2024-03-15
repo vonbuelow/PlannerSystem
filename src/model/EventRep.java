@@ -74,8 +74,8 @@ public interface EventRep {
    *              (if to add, true, false otherwise)
    * @throws IllegalArgumentException if the list of invitees is null
    * @throws IllegalStateException
-   * -if the given list is not among invited users, and they are not to be added
-   * -if the given invitees are invited to the event, and they are not to be added
+   * -if the given list is not among invited users already, and they are to be removed
+   * -if the given list is already invited to the event, and they are to be added
    */
   void modifyInvitees(List<String> invitees, boolean toAdd);
 }

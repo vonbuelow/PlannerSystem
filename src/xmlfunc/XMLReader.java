@@ -17,7 +17,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import model.Event;
+import model.EventRep;
 import model.Schedule;
+import model.ScheduleRep;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
@@ -38,9 +40,9 @@ public class XMLReader {
    * A public method to be called in the central system to read XML files in a single class.
    * @return A mapping of the user to a specific schedule created in this class.
    */
-  public Map<String, Schedule> readXML() {
-    ArrayList<Event> ret = new ArrayList<>();
-    Map<String, Schedule> schedules = new HashMap<>();
+  public Map<String, ScheduleRep> readXML() {
+    ArrayList<EventRep> ret = new ArrayList<EventRep>();
+    Map<String, ScheduleRep> schedules = new HashMap<>();
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document xmlDoc = builder.parse(this.file);
@@ -53,7 +55,7 @@ public class XMLReader {
 
       NodeList nodeList = scheduleNode.getChildNodes(); // nodes within schedule tags
       getEventsFromSchedule(nodeList, ret);
-      Schedule sched = new Schedule(userID, ret);
+      ScheduleRep sched = new Schedule(userID, ret);
       schedules.put(userID, sched);
       return schedules;
     } catch (ParserConfigurationException ex) {
@@ -65,7 +67,7 @@ public class XMLReader {
     }
   }
 
-  private void getEventsFromSchedule(NodeList nodeList, ArrayList<Event> ret) {
+  private void getEventsFromSchedule(NodeList nodeList, ArrayList<EventRep> ret) {
     for (int item = 0; item < nodeList.getLength(); item++) {
       Node current = nodeList.item(item); // the first child element -> should be empty/event
       //iterate through events

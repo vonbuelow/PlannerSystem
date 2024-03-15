@@ -89,5 +89,31 @@ public class Event implements EventRep {
   public Location getLocation() {
     return this.loc;
   }
+
+  @Override
+  public void modifyName(String name) {
+    if (name == null) {
+      throw new IllegalArgumentException("name cannot be null");
+    }
+    if (name.isEmpty() || name.equals(this.name)) {
+      throw new IllegalStateException("given name cannot be empty or same as the current");
+    }
+    this.name = name;
+  }
+
+  @Override
+  public void modifyTime(Time time) {
+
+  }
+
+  @Override
+  public void modifyLocation(Location loc) {
+
+  }
+
+  @Override
+  public void modifyInvitees(List<String> invitees, boolean toAdd) {
+
+  }
 }
 

@@ -19,8 +19,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import model.CentralSystem;
 import model.Event;
+import model.EventRep;
 import model.NUPlannerSystem;
 import model.Schedule;
+import model.ScheduleRep;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
@@ -39,10 +41,10 @@ public class XMLTest {
   public void testReadingElements() {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-              + "PlannerSystem\\src\\prof.xml"));
+      XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
+              "PlannerSystem\\src\\shortProf.xml"));
 
-      Map<String, Schedule> profLuciaSched = reader.readXML();
+      Map<String, ScheduleRep> profLuciaSched = reader.readXML();
       Set<String> keys = profLuciaSched.keySet();
       assertTrue(keys.contains("Prof. Lucia")); // we were able to get the correct user
     }
@@ -54,16 +56,16 @@ public class XMLTest {
   // test the reader makes an instance of a schedule
   @Test
   public void testReadingSchedule() {
-    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-            + "PlannerSystem\\src\\shortProf.xml"));
+    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
+            "PlannerSystem\\src\\shortProf.xml"));
 
-    Map<String, Schedule> profLuciaSched = reader.readXML();
+    Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
     Location location = new Location(false, "\"Churchill Hall 101\"");
     List<String> invitees = new ArrayList<String>(
             Arrays.asList("\"Prof. Lucia\"", "\"Student Anon\"", "\"Chat\""));
-    Event event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
-    Schedule schedule = new Schedule("Prof. Lucia", new ArrayList<>(Arrays.asList(event)));
+    EventRep event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
+    ScheduleRep schedule = new Schedule("Prof. Lucia", new ArrayList<>(Arrays.asList(event)));
     assertEquals(schedule.eventsPlanned(), profLuciaSched.get("Prof. Lucia").eventsPlanned());
   }
 
@@ -71,17 +73,16 @@ public class XMLTest {
   @Test
   public void testWriter() {
     XMLWriter writer = new XMLWriter();
-    File usersxmls = new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-            + "PlannerSystem\\src\\userxmls");
-    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-            + "PlannerSystem\\src\\shortProf.xml"));
+    File usersxmls = new File("C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc");
+    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
+            "PlannerSystem\\src\\shortProf.xml"));
 
-    Map<String, Schedule> profLuciaSched = reader.readXML();
+    Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
     Location location = new Location(false, "\"Churchill Hall 101\"");
     List<String> invitees = new ArrayList<String>(
             Arrays.asList("\"Prof. Lucia\"", "\"Student Anon\"", "\"Chat\""));
-    Event event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
+    EventRep event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
     NUPlannerSystem system = new CentralSystem(profLuciaSched,
             new ArrayList<>(Arrays.asList(event)));
 

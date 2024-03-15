@@ -15,8 +15,7 @@ public interface NUPlannerSystem {
   /**
    * Saves the schedule of the user with the given name to an XML file.
    * @param fileToSave place of where the users' schedule should be saved to
-   * @throws IllegalArgumentException if the given name is empty or null
-   * @throws IllegalStateException if the given uid (name) cannot be found in the system
+   * @throws IllegalArgumentException if the given folder does not exist
    */
   void saveSchedule(File fileToSave);
 
@@ -27,13 +26,15 @@ public interface NUPlannerSystem {
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if the event is already in the system
    */
-  void addEventToAllSchedules(Event event);
+  void addEventToAllSchedules(EventRep event);
 
   /**
    *
-   * @param newUser
+   * @param newUser user to be added to the system
+   * @throws IllegalArgumentException if map is null
+   * @throws IllegalStateException if new user already exists in system
    */
-  void addNewUser(Map<String, Schedule> newUser);
+  void addNewUser(Map<String, ScheduleRep> newUser);
 
   /**
    * Modifies the name of the given event in the given user's schedule.
@@ -47,7 +48,7 @@ public interface NUPlannerSystem {
    *     event in given user's schedule, or if uid is empty, not in system, or not
    *     the host of the given event.
    */
-  void modifyName(Event event, String eventName, String uid);
+  void modifyName(EventRep event, String eventName, String uid);
 
   /**
    * Change an existing event that is passed in to pull up.
@@ -55,7 +56,7 @@ public interface NUPlannerSystem {
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyTime(Event event, Time time, String uid);
+  void modifyTime(EventRep event, Time time, String uid);
 
   /**
    * Change an existing event that is passed in to pull up.
@@ -63,7 +64,7 @@ public interface NUPlannerSystem {
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyLocation(Event event, Location loc, String uid);
+  void modifyLocation(EventRep event, Location loc, String uid);
 
   /**
    * Change an existing event that is passed in to pull up.
@@ -71,7 +72,7 @@ public interface NUPlannerSystem {
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyInvitees(Event event, List<String> invitees, boolean toAdd, String uid);
+  void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid);
 
   /**
    * Remove an existing event from the system. If event is removed from host's
@@ -82,13 +83,13 @@ public interface NUPlannerSystem {
    * @throws IllegalArgumentException if the given event is null
    * @throws IllegalStateException if the given event is not currently in the system
    */
-  void removeEvent(Event event, String uid);
+  void removeEvent(EventRep event, String uid);
 
   /**
    * A copy of all users in a system and their schedules for toString purposes.
    * @return
    */
-  Map<String, Schedule> usersSchedules();
+  Map<String, ScheduleRep> usersSchedules();
 
   void addUser(File file);
 }

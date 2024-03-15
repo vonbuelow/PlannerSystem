@@ -11,8 +11,10 @@ import java.util.Map;
 
 import model.CentralSystem;
 import model.Event;
+import model.EventRep;
 import model.NUPlannerSystem;
 import model.Schedule;
+import model.ScheduleRep;
 
 /**
  * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
@@ -20,8 +22,8 @@ import model.Schedule;
  * schedules and lists of Event.
  */
 public class CentralSystemTests {
-  Map<String, Schedule> noUsersMap;
-  List<Event> noEventsList;
+  Map<String, ScheduleRep> noUsersMap;
+  List<EventRep> noEventsList;
   NUPlannerSystem emptySystem;
 
   String profLucia;
@@ -31,19 +33,19 @@ public class CentralSystemTests {
 
   //Event event1 = new Event;
 
-  List<Event> profLuciaEvents = new ArrayList<Event>(Arrays.asList());
+  List<EventRep> profLuciaEvents = new ArrayList<EventRep>(Arrays.asList());
 
   //Schedule profLuciaSched = new Schedule(profLucia, )
 
-  Map<String, Schedule> allSchedulesInSystem1;
-  List<Event> allEventsInSystem1;
+  Map<String, ScheduleRep> allSchedulesInSystem1;
+  List<EventRep> allEventsInSystem1;
 
   NUPlannerSystem system1;
 
   @Before
   public void setup() {
-    noUsersMap = new HashMap<String, Schedule>();
-    noEventsList = new ArrayList<Event>();
+    noUsersMap = new HashMap<String, ScheduleRep>();
+    noEventsList = new ArrayList<EventRep>();
     emptySystem = new CentralSystem(noUsersMap, noEventsList);
 
     profLucia = "Prof. Lucia";

@@ -5,7 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import model.Event;
+import model.EventRep;
 import model.Schedule;
+import model.ScheduleRep;
 
 /**
  * Am instance of an XMLWriter to create an XML file.
@@ -17,7 +19,7 @@ public class XMLWriter {
    * Write a given schedule as a file and to a specific directory.
    * @param     sched a selected users schedule.
    */
-  public static void writeToFile(Schedule sched, String directoryPath) {
+  public static void writeToFile(ScheduleRep sched, String directoryPath) {
     // Use the provided directory path
     File directory = new File(directoryPath);
     if (!directory.exists()) {
@@ -48,7 +50,7 @@ public class XMLWriter {
    * @param     event the current event we are writing about
    * @throws    IOException catching excpetions
    */
-  private static void eventWriter(Writer file, Event event) throws IOException {
+  private static void eventWriter(Writer file, EventRep event) throws IOException {
     file.write("<event>\n");
     // Add in the name of the event
     file.write("<name>" + event.getName() + "</name>\n");

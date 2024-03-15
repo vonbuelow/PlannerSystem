@@ -17,7 +17,7 @@ public interface ScheduleRep {
    * Attempting to minimize too many permissions for modification.
    * @return    A clone of the existing list of events.
    */
-  List<Event> eventsPlanned();
+  List<EventRep> eventsPlanned();
 
   /**
    * Adds the given event to the current schedule.
@@ -26,7 +26,7 @@ public interface ScheduleRep {
    * @throws IllegalStateException if event is already in the list of events or overlaps
    *     with another event in schedule
    */
-  void addEvent(Event event);
+  void addEvent(EventRep event);
 
   /**
    * Removes the given event from this schedule's user, if it exists in the
@@ -36,5 +36,5 @@ public interface ScheduleRep {
    * @throws IllegalStateException if event does not exist in schedule or does not have
    *     invitees
    */
-  void removeEvent(Event event);
+  void removeEvent(EventRep event);
 }

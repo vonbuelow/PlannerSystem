@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import model.NUPlannerSystem;
 import model.Schedule;
+import model.ScheduleRep;
 
 /**
  * A textual view of the NUPlannerSystem for testing purposes and correctness.
@@ -22,8 +23,8 @@ public class NUPlannerTextView implements NUPlannerView {
   @Override
   public String toString() {
     Appendable view = new StringBuilder();
-    Map<String, Schedule> schedules = this.system.usersSchedules();
-    for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
+    Map<String, ScheduleRep> schedules = this.system.usersSchedules();
+    for (Map.Entry<String, ScheduleRep> entry : schedules.entrySet()) {
       try {
         view.append(entry.getValue().toString()).append("\n");
       }
