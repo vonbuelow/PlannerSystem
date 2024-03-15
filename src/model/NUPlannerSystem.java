@@ -14,11 +14,11 @@ import model.eventfields.Time;
 public interface NUPlannerSystem {
   /**
    * Saves the schedule of the user with the given name to an XML file.
-   * @param name name of the user whose schedule is to be saved
+   * @param fileToSave place of where the users' schedule should be saved to
    * @throws IllegalArgumentException if the given name is empty or null
    * @throws IllegalStateException if the given uid (name) cannot be found in the system
    */
-  void saveSchedule(String name);
+  void saveSchedule(File fileToSave);
 
   /**
    * Add a new event to the central system.

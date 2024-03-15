@@ -48,14 +48,13 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void saveSchedule(String name) {
-    if (name == null || name.isEmpty()) {
-      throw new IllegalArgumentException("name must exist and cannot be empty");
+  public void saveSchedule(File fileToSave) {
+    if(!fileToSave.exists()) {
+      throw new IllegalArgumentException("give a valid file");
     }
-    if (!allSchedules.containsKey(name)) {
-      throw new IllegalStateException("user not found");
+    for (Schedule schedule: this.allSchedules.values()) {
+      XMLWriter.writeToFile(schedule, fileToSave.getAbsolutePath());
     }
-    XMLWriter.writeToFile(this.allSchedules.get(name));
   }
 
   @Override

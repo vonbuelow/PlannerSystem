@@ -17,9 +17,12 @@ public class XMLWriter {
    * Write a given schedule as a file and to a specific directory.
    * @param     sched a selected users schedule.
    */
-  public static void writeToFile(Schedule sched) {
-    File directory = new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-            + "PlannerSystem\\src\\userxmls"); // is this too hard coded? ->> ask on piazza
+  public static void writeToFile(Schedule sched, String directoryPath) {
+    // Use the provided directory path
+    File directory = new File(directoryPath);
+    if (!directory.exists()) {
+      directory.mkdirs(); // Create the directory if it does not exist
+    }
     File fileToWrite = new File(directory, sched.scheduleOwner() + "-sched.xml");
 
     try {
