@@ -112,4 +112,25 @@ public class Time {
             || (thisStartDay > thatStartDay && thisEndDay < thatEndDay)
             || (thisStartDay < thatStartDay && thisEndDay < thatEndDay);
   }
+
+  public String getStartDay() {
+    return getDayString(this.start);
+  }
+
+  private String getDayString(Day day) {
+    int dayLength = day.toString().length();
+    return day.toString().substring(0, dayLength - 2);
+  }
+
+  public String getEndDay() {
+    return getDayString(this.end);
+  }
+
+  public String getStartTime() {
+    return this.startTime;
+  }
+
+  public String getEndTime() {
+    return this.endTime;
+  }
 }

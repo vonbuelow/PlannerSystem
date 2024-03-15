@@ -30,4 +30,12 @@ public class Location {
   public int hashCode() {
     return 37 * place.length() * String.valueOf(online).length();
   }
+
+  public String isOnline() {
+    return Boolean.toString(this.online);
+  }
+
+  public String getPlace() {
+    return this.place;
+  }
 }

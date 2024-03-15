@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.eventfields.Location;
+import model.eventfields.Time;
 import xmlfunc.XMLReader;
 import xmlfunc.XMLWriter;
 
@@ -78,30 +80,39 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void remove(Event event) {
-    // removes an event from the host and all invitees schedules.
+  public void modifyName(Event event, String name) {
+
   }
 
+  @Override
+  public void modifyTime(Event event, Time time) {
+
+  }
+
+  @Override
+  public void modifyLocation(Event event, Location loc) {
+
+  }
+
+  @Override
+  public void modifyInvitees(Event event, List<String> invitees, boolean toAdd) {
+
+  }
+
+  @Override
+  public void removeEvent(Event event) {
+
+  }
 
   @Override
   public void addUser(File file) {
     try {
       XMLReader reader = new XMLReader(file);
-      addNewUser(reader.read());
+      addNewUser(reader.readXML());
       // INVARIANT CHECKING EVENT OVERLAP
       // IF A USER SHOULD BE ADDED TO A NEW EVENT THAT HAS BEEN LOADED IN
       // EVERY USER IS UNIQUE
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    catch (SAXException e) {
-      throw new RuntimeException(e);
-    }
-    catch (ParserConfigurationException e) {
-      throw new RuntimeException(e);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }

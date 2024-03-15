@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+
+import model.eventfields.Location;
 import model.eventfields.Time;
 
 /**
@@ -22,4 +25,9 @@ public interface EventRep {
   boolean overlapsWith(EventRep e);
 
 
+  String getName();
+
+  List<String> getInvitedUsers();
+
+  Location getLocation();
 }

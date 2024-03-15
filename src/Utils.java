@@ -21,7 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
  * XML and extract information, but also WHY we need to dive
  * really deep: text content at higher levels requires
  * more parsing than it's worth.
- * Written by Lucia A. Nunez, using the tutorial.xml file and based
+ * Written by Lucia A. Nunez, using the shortProf.xml file and based
  * on the tutorial written by Baeldung
  * Source: https://www.baeldung.com/java-xerces-dom-parsing
  * Do NOT simply copy-paste this code into your projects. It's
@@ -50,14 +50,14 @@ public class Utils {
   }
 
   /**
-   * Reads the specific tutorial.xml file, assuming it's right next to the program,
+   * Reads the specific shortProf.xml file, assuming it's right next to the program,
    * and prints useful information from the file.
    * For IntelliJ, that is the project's folder.
    */
   public static void readXML() {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      Document xmlDoc = builder.parse(new File("tutorial.xml"));
+      Document xmlDoc = builder.parse(new File("shortProf.xml"));
       xmlDoc.getDocumentElement().normalize();
 
       Node tutorialsNode = xmlDoc.getElementsByTagName("tutorials").item(0);

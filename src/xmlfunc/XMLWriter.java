@@ -19,7 +19,7 @@ public class XMLWriter {
    */
   public static void writeToFile(Schedule sched) {
     File directory = new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\"
-            + "PlannerSystem\\src\\userxmls"); // is this too hard coded?
+            + "PlannerSystem\\src\\userxmls"); // is this too hard coded? ->> ask on piazza
     File fileToWrite = new File(directory, sched.scheduleOwner() + "-sched.xml");
 
     try {
@@ -46,28 +46,28 @@ public class XMLWriter {
    * @throws    IOException catching excpetions
    */
   private static void eventWriter(Writer file, Event event) throws IOException {
-    file.write("<event>");
-    // add in the name of the event
-    file.write("<name>" + "name of event" + "</name>"); // ADD IN THE NAME
-    // time:
-    file.write("<time>");
-    file.write("<start-day>" + "name of the starting day" + "</start-day>"); // START DAY
-    file.write("<start>" + "start time" + "</start>");
-    file.write("<end-day>" + "name of the ending day" + "</end-day>");
-    file.write("<end>" + "end time" + "</end>");
-    file.write("</time>");
-    // location
-    file.write("<location>");
-    file.write("<online>" + false + "</online>");
-    file.write("<place>" + false + "</place>");
-    file.write("</location>");
-    // those who are invited
-    file.write("<users>");
-    /*for(String invited: ArrayList<String>) {
-      file.write("<uid>" + "user" + "</uid>");
-    }*/
-    // see how many users we need to be able to write
-    file.write("</users>");
-    file.write("</event>");
+    file.write("<event>\n");
+    // Add in the name of the event
+    file.write("<name>" + event.getName() + "</name>\n");
+    // Time:
+    file.write("<time>\n");
+    file.write("<start-day>" + event.getTime().getStartDay() + "</start-day>\n");
+    file.write("<start>" + event.getTime().getStartTime() + "</start>\n");
+    file.write("<end-day>" + event.getTime().getEndDay() + "</end-day>\n");
+    file.write("<end>" + event.getTime().getEndTime() + "</end>\n");
+    file.write("</time>\n");
+    // Location
+    file.write("<location>\n");
+    file.write("<online>" + event.getLocation().isOnline() + "</online>\n");
+    file.write("<place>" + event.getLocation().getPlace() + "</place>\n");
+    file.write("</location>\n");
+    // Those who are invited
+    file.write("<users>\n");
+    for(String invited: event.getInvitedUsers()) {
+      file.write("<uid>" + invited + "</uid>\n");
+    }
+    file.write("</users>\n");
+    file.write("</event>\n");
   }
+
 }

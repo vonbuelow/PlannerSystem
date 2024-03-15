@@ -9,15 +9,18 @@ import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import model.Event;
 import model.Schedule;
+import model.eventfields.Day;
+import model.eventfields.Location;
+import model.eventfields.Time;
 
 /**
  * The class used to read an XML file.
@@ -48,105 +51,175 @@ public class XMLReader {
       Node nameAt = name.getNamedItem("id");
       String userID = nameAt.getNodeValue();
 
-      //So let's dig deeper into the other elements!
       NodeList nodeList = scheduleNode.getChildNodes(); // nodes within schedule tags
-      for (int item = 0; item < nodeList.getLength(); item++) { // dont need if stmnt.
-        Node current = nodeList.item(item); // the first child element (should be empty or event/s)
-
-        //We need to search for Elements (actual tags) and there
-        //is only one: the event tag
-        if (current.getNodeType() == Node.ELEMENT_NODE) {
-          Element elem = (Element) current; // this is an event tag
-          if (elem.getTagName().equals("event")) {
-
-            // go into the children get their values
-            // make an event
-            // add to the list of events
-
-            // i know that this element should be an event
-
-            //Print out the attributes of this element
-            System.out.println("Investigating the attributes:");
-            System.out.println(elem.getTagName() + " : " + elem.getAttribute("tutId") + " "
-                    + elem.getAttribute("type"));
-
-            //Print out the text that exists inside of this element: it doesn't look pretty...
-            //and it erases the other elements
-            System.out.println("Investigating the text content inside this element:");
-            System.out.println(elem.getTagName() + " : " + elem.getTextContent());
-
-            //... so let's dig even deeper!
-            NodeList elemChildren = elem.getChildNodes();
-            for (int childIdx = 0; childIdx < elemChildren.getLength(); childIdx++) {
-              Node childNode = elemChildren.item(childIdx);
-              if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element child = (Element) childNode;
-                //Now we're getting something more meaningful from each element!
-                System.out.println("Investigating the text content inside the innermost tags");
-                System.out.println(child.getTagName() + " : " + child.getTextContent());
-              }
-            }
-          }
-        }
-      }
+      getEventsFromSchedule(nodeList, ret);
       Schedule sched = new Schedule(userID, ret);
       schedules.put(userID, sched);
       return schedules;
-    }
-    catch (ParserConfigurationException ex) {
+    } catch (ParserConfigurationException ex) {
       throw new IllegalStateException("Error in creating the builder");
-    }
-    catch (IOException ioEx) {
+    } catch (IOException ioEx) {
       throw new IllegalStateException("Error in opening the file");
-    }
-    catch (SAXException saxEx) {
+    } catch (SAXException saxEx) {
       throw new IllegalStateException("Error in parsing the file");
     }
   }
 
-  /**
-   * A public method to be called in the central system to read XML files in a single class.
-   * @return     A mapping of the user to a specific schedule created in this class.
-   *             DELETE THIS IN FINAL SUBMISSIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   */
-  public Map<String, Schedule> read() throws Exception {
-    DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-    Document doc = builder.parse(this.file);
-    doc.getDocumentElement().normalize();
+  private void getEventsFromSchedule(NodeList nodeList, ArrayList<Event> ret) {
+    for (int item = 0; item < nodeList.getLength(); item++) {
+      Node current = nodeList.item(item); // the first child element -> should be empty/event
+      //iterate through events
+      if (current.getNodeType() == Node.ELEMENT_NODE) {
+        Element elem = (Element) current; // this is an event tag
+        if (elem.getTagName().equals("event")) {
+          // name of the event
+          NodeList childrenName = elem.getElementsByTagName("name");
+          listLengthException(childrenName);
+          String eventName = childrenName.item(0).getNodeValue();
+          // get the time and its elements
+          NodeList childrenTime = elem.getElementsByTagName("time");
+          listLengthException(childrenTime);
+          Time eventTime = getTimeFields(childrenTime.item(0).getChildNodes());
+          // get the location
+          NodeList childrenLoc = elem.getElementsByTagName("location");
+          listLengthException(childrenLoc);
+          Location eventLoc = getLocation(childrenLoc);
+          // get the atendees
+          NodeList childrenAttend = elem.getElementsByTagName("users");
+          listLengthException(childrenAttend);
 
-    Map<String, Schedule> schedules = new HashMap<>();
-    NodeList events = doc.getElementsByTagName("event");
+          List<String> eventAttendees = getAttendees(childrenAttend);
 
+          ret.add(new Event(eventName, eventTime, eventLoc, eventAttendees));
+        }
+      }
+    }
+  }
 
-    for (int i = 0; i < events.getLength(); i++) {
-      Node eventNode = events.item(i);
-      if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
-        Element eventElement = (Element) eventNode;
+  private List<String> getAttendees(NodeList childrenAttend) {
+    NodeList uidNodes = childrenAttend.item(0).getChildNodes();
+    List<String> uids = new ArrayList<>();
 
-        // Extract event details
-        String eventName = eventElement.getElementsByTagName("name").item(0).getTextContent();
-        String startDay = eventElement.getElementsByTagName("start-day").item(0).getTextContent();
-        String start = eventElement.getElementsByTagName("start").item(0).getTextContent();
-        String endDay = eventElement.getElementsByTagName("end-day").item(0).getTextContent();
-        String end = eventElement.getElementsByTagName("end").item(0).getTextContent();
-        String online = eventElement.getElementsByTagName("online").item(0).getTextContent();
-        String place = eventElement.getElementsByTagName("place").item(0).getTextContent();
+    for (int i = 0; i < uidNodes.getLength(); i++) {
+      Node node = uidNodes.item(i);
 
-        // Create a new Schedule object or a suitable data structure
-        // For illustration, we'll just print the details
-        System.out.println("Event Name: " + eventName);
-        System.out.println("Start Day: " + startDay);
-        System.out.println("Start: " + start);
-        System.out.println("End Day: " + endDay);
-        System.out.println("End: " + end);
-        System.out.println("Online: " + online);
-        System.out.println("Place: " + place);
-
-        // Assuming Schedule class exists and can store these details
-        // schedules.put(eventName, new Schedule(/*parameters*/));
+      if (node.getNodeType() == Node.ELEMENT_NODE && node.getNodeName().equals("uid")) {
+        Element uidElement = (Element) node;
+        String uid = uidElement.getNodeValue();
+        uids.add(uid);
       }
     }
 
-    return schedules;
+    return uids;
   }
+
+
+  /**
+   * The location a childLoc is taking place with boolean and String representing place.
+   * @param     childrenLoc containing the location information.
+   * @return    the Location.
+   */
+  private Location getLocation(NodeList childrenLoc) {
+    NodeList locEle = childrenLoc.item(0).getChildNodes();
+
+    // Filter to only element nodes
+    List<Node> filteredNodes = new ArrayList<>();
+    for (int i = 0; i < locEle.getLength(); i++) {
+      if (locEle.item(i).getNodeType() == Node.ELEMENT_NODE) {
+        filteredNodes.add(locEle.item(i));
+      }
+    }
+
+    if (filteredNodes.size() != 2) {
+      throw new IllegalArgumentException("Invalid location");
+    }
+
+    Node onlineNode = filteredNodes.get(0);
+    Node placeNode = filteredNodes.get(1);
+
+    Boolean online = Boolean.parseBoolean(onlineNode.getTextContent());
+    String place = placeNode.getTextContent();
+    return new Location(online, place);
+  }
+
+
+  /**
+   * Get the boolean value if it is a valid one.
+   * @param     nodeValue containing the boolean value.
+   * @return    the boolean representation.
+   */
+  private Boolean getBool(String nodeValue) {
+    if (!(nodeValue.equals("true") || nodeValue.equals("false"))) {
+      throw new IllegalArgumentException("invalid boolean");
+    }
+    return Boolean.valueOf(nodeValue);
+  }
+
+  /**
+   * A recurring exception on if this length of this node list isn't 1.
+   * @param     childrenName the name of the children.
+   */
+  private static void listLengthException(NodeList childrenName) {
+    if (childrenName.getLength() != 1) {
+      throw new IllegalArgumentException("invalid file");
+    }
+  }
+
+  /**
+   * Creates an instance of time with the time tag.
+   * @param     childNodes the node containing the time information.
+   * @return    the time that should be produced.
+   */
+  private Time getTimeFields(NodeList childNodes) {
+    // Filter to only element nodes
+    List<Node> filteredNodes = new ArrayList<>();
+    for (int i = 0; i < childNodes.getLength(); i++) {
+      if (childNodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+        filteredNodes.add(childNodes.item(i));
+      }
+    }
+
+    // Now check if we have exactly 4 element nodes
+    if (filteredNodes.size() != 4) {
+      throw new IllegalArgumentException("Invalid time, expected 4 elements.");
+    }
+
+    // start-day
+    String startDayValue = filteredNodes.get(0).getTextContent();
+    if (!validDay(startDayValue)) {
+      throw new IllegalArgumentException("Invalid start day: " + startDayValue);
+    }
+    Day startDay = Day.valueOf(startDayValue.toUpperCase().trim());
+
+    // start time
+    String startTime = filteredNodes.get(1).getTextContent().trim();
+    if (startTime.length() != 4) {
+      throw new IllegalArgumentException("Invalid start time: " + startTime);
+    }
+
+    // end-day
+    String endDayValue = filteredNodes.get(2).getTextContent();
+    if (!validDay(endDayValue)) {
+      throw new IllegalArgumentException("Invalid end day: " + endDayValue);
+    }
+    Day endDay = Day.valueOf(endDayValue.toUpperCase().trim());
+
+    String endTime = filteredNodes.get(3).getTextContent().trim();
+    if (endTime.length() != 4) {
+      throw new IllegalArgumentException("Invalid end time: " + endTime);
+    }
+
+    return new Time(startDay, startTime, endDay, endTime);
+  }
+
+  /**
+   * Is the given day considered a valid day for a Time.
+   * @param     nodeValue the current string being assesed.
+   * @return    is the day valid?
+   */
+  private boolean validDay(String nodeValue) {
+    ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday",
+            "Wendnesday", "Thursday", "Friday", "Saturday", "Sunday"));
+    return days.contains(nodeValue);
+   }
 }

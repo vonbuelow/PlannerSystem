@@ -62,5 +62,20 @@ public class Event implements EventRep {
   public boolean overlapsWith(EventRep e) {
     return this.time.overlapsWith(e.getTime());
   }
+
+  @Override
+  public String getName() {
+    return this.name;
+  }
+
+  @Override
+  public List<String> getInvitedUsers() {
+    return this.invitees;
+  }
+
+  @Override
+  public Location getLocation() {
+    return this.loc;
+  }
 }
 
