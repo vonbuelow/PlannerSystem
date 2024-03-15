@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public interface ScheduleRep {
   /**
    * Returns the name of the user that owns this schedule.
@@ -8,6 +10,20 @@ public interface ScheduleRep {
    * @return the user id of the owner
    */
   String scheduleOwner();
+
+  /**
+   * Returns a list of the events from the current schedule.
+   * Giving access to the WRITER to the events listed for the user.
+   * Attempting to minimize too many permissions for modification.
+   * @return    A clone of the existing list of events.
+   */
+  List<Event> eventsPlanned();
+
+  /**
+   * Adds the given event to the current schedule
+   * @param event
+   */
+  void addEvent(Event event);
 
   /**
    * Removes the given event from this schedule's user, if it exists in the

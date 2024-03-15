@@ -24,32 +24,35 @@ public class Schedule implements ScheduleRep {
     return this.name;
   }
 
-  /**
-   * Giving access to the WRITER to the events listed for the user.
-   * Attempting to minimize too many permissions for modification.
-   * @return    A clone of the existing list of events.
-   */
+  @Override
   public List<Event> eventsPlanned() {
     List<Event> ret = new ArrayList<>();
     ret.addAll(this.events);
     return ret;
   }
 
-
-
   @Override
   public String toString() {
     String userSchedule = "";
     userSchedule.concat("User: " + this.name + "\n");
-    userSchedule.concat("Sunday: " + eventOfDay(Day.SUNDAY));
+    userSchedule.concat("Sunday: " + eventsOfDay(Day.SUNDAY));
+    userSchedule.concat("Monday: " + eventsOfDay(Day.MONDAY));
+    userSchedule.concat("Tuesday: " + eventsOfDay(Day.TUESDAY));
+    userSchedule.concat("Wednesday: " + eventsOfDay(Day.WEDNESDAY));
+    userSchedule.concat("Thursday: " + eventsOfDay(Day.THURSDAY));
+    userSchedule.concat("Friday: " + eventsOfDay(Day.FRIDAY));
+    userSchedule.concat("Saturday: " + eventsOfDay(Day.SATURDAY));
     // additional days of the week
     return userSchedule;
   }
 
-  private String eventOfDay(Day day) {
+  private String eventsOfDay(Day day) {
+    List<Event> eventsOfGivenDay =
+            this.events.stream().filter(e -> e.getTime().getStartDay().equals(day));
     return "";
   }
 
+  @Override
   public void addEvent(Event event) {
     if (!this.events.contains(event)
             && this.events.stream().noneMatch(f -> f.overlapsWith(event))) {

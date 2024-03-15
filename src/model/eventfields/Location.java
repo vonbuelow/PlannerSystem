@@ -17,6 +17,11 @@ public class Location {
   }
 
   @Override
+  public String toString() {
+    return "location: " + this.place + "\nonline: " + online;
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (o instanceof Location) {
       Location e = (Location)o;

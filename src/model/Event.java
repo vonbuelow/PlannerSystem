@@ -41,7 +41,21 @@ public class Event implements EventRep {
   // set name
   // set time
   // set location
-  // set invitees // ->> invariant would not allowing the host to be changed
+  // set invitees // ->> invariant would be not allowing the host to be changed
+
+  @Override
+  public String toString() {
+    String inviteesList = "";
+
+    for (String i : this.invitees) {
+      inviteesList += i + "\n";
+    }
+
+    return "name: " + this.name
+            + "\n" + this.time.toString()
+            + "\n" + this.loc.toString()
+            + "\ninvitees: " + inviteesList.stripTrailing();
+  }
 
   @Override
   public boolean equals(Object o) {
