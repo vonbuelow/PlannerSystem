@@ -1,6 +1,8 @@
 package model.eventfields;
 
 
+import java.util.Objects;
+
 /**
  * Time with a start day, start time, end day, and end time of an event.
  */
@@ -93,7 +95,7 @@ public class Time {
 
   @Override
   public int hashCode() {
-    return 37 * (getNumTime(startTime) + getNumTime(endTime));
+    return Objects.hashCode(this);
   }
 
   /**
@@ -141,6 +143,10 @@ public class Time {
    */
   private int compareTimes(String first, String second) {
     return timeToMinutes(first) - timeToMinutes(second);
+  }
+
+  public Day getStartDayDefault() {
+    return this.start;
   }
 
   public String getStartDay() {

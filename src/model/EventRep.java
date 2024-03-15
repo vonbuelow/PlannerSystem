@@ -24,10 +24,58 @@ public interface EventRep {
    */
   boolean overlapsWith(EventRep e);
 
-
+  /**
+   * Gets the name of the current event. *USED FOR WRITER*
+   * @return event name
+   */
   String getName();
 
+  /**
+   * Returns a list of invitees for this event. *USED IN SCHEDULE*
+   * @return list of event's invitees' names
+   */
   List<String> getInvitedUsers();
 
+  /**
+   * Returns the location of this event. *USED FOR WRITER*
+   * @return location of the event
+   */
   Location getLocation();
+
+  /**
+   * Modifies the name of the current event to the given.
+   * @param name new name of the event
+   * @throws IllegalArgumentException if the name is null
+   * @throws IllegalStateException if the name is empty or the same as the event name
+   */
+  void modifyName(String name);
+
+  /**
+   * Modifies the time of the current event to the given.
+   * @param time new time of the event
+   * @throws IllegalArgumentException if the time is null
+   * @throws IllegalStateException if the time is the same as the event's current time
+   */
+  void modifyTime(Time time);
+
+  /**
+   * Modifies the location of the current event to the given.
+   * @param loc new location of the event
+   * @throws IllegalArgumentException if the location is null
+   * @throws IllegalStateException if the location is the same as the
+   *     event's current location
+   */
+  void modifyLocation(Location loc);
+
+  /**
+   * Modifies the invitees of the current event to the given.
+   * @param invitees list of invitees to event to modify
+   * @param toAdd whether the given invitees are to be added or removed from event
+   *              (if to add, true, false otherwise)
+   * @throws IllegalArgumentException if the list of invitees is null
+   * @throws IllegalStateException
+   * -if the given list is not among invited users, and they are not to be added
+   * -if the given invitees are invited to the event, and they are not to be added
+   */
+  void modifyInvitees(List<String> invitees, boolean toAdd);
 }

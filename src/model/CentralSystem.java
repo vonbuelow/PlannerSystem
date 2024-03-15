@@ -26,6 +26,7 @@ import xmlfunc.XMLWriter;
  * A list of events in the system.
  */
 public class CentralSystem implements NUPlannerSystem {
+  // Invariant: all events in the event list are in at least one user's schedule
   private final Map<String, Schedule> allSchedules; // all users -> their respective schedules
   private final List<Event> eventList; // list of all events if it is useful -> maintain
 
@@ -96,15 +97,20 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void removeEvent(Event event) {
+  public void removeEvent(Event event, String uid) {
     if (event == null) {
       throw new IllegalArgumentException("event cannot be null");
     }
     if (!eventList.contains(event)) {
       throw new IllegalStateException("event must be in system");
     }
-    for (Schedule sched : allSchedules.values()) {
-      sched.removeEvent(event);
+    if (uid.equals(event.getInvitedUsers().get(0))) {
+      for (Schedule sched : allSchedules.values()) {
+        sched.removeEvent(event);
+      }
+    }
+    else {
+      allSchedules.get(uid).removeEvent(event);
     }
   }
 

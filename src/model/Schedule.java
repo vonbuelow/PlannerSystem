@@ -35,25 +35,42 @@ public class Schedule implements ScheduleRep {
   public String toString() {
     String userSchedule = "";
     userSchedule.concat("User: " + this.name + "\n");
-    userSchedule.concat("Sunday: " + eventsOfDay(Day.SUNDAY));
-    userSchedule.concat("Monday: " + eventsOfDay(Day.MONDAY));
-    userSchedule.concat("Tuesday: " + eventsOfDay(Day.TUESDAY));
-    userSchedule.concat("Wednesday: " + eventsOfDay(Day.WEDNESDAY));
-    userSchedule.concat("Thursday: " + eventsOfDay(Day.THURSDAY));
-    userSchedule.concat("Friday: " + eventsOfDay(Day.FRIDAY));
+    userSchedule.concat("Sunday: " + eventsOfDay(Day.SUNDAY) + "\n");
+    userSchedule.concat("Monday: " + eventsOfDay(Day.MONDAY) + "\n");
+    userSchedule.concat("Tuesday: " + eventsOfDay(Day.TUESDAY) + "\n");
+    userSchedule.concat("Wednesday: " + eventsOfDay(Day.WEDNESDAY) + "\n");
+    userSchedule.concat("Thursday: " + eventsOfDay(Day.THURSDAY) + "\n");
+    userSchedule.concat("Friday: " + eventsOfDay(Day.FRIDAY) + "\n");
     userSchedule.concat("Saturday: " + eventsOfDay(Day.SATURDAY));
-    // additional days of the week
+
     return userSchedule;
   }
 
+  /**
+   * Returns a string of the events of the given day.
+   * @param day day of the week
+   * @return string representation of events based on the day of the week.
+   */
   private String eventsOfDay(Day day) {
-  //  List<Event> eventsOfGivenDay =
-  //          this.events.stream().filter(e -> e.getTime().getStartDay().equals(day));
-    return "";
+    String ret = "";
+    List<Event> eventsOfGivenDay = new ArrayList<Event>();
+
+    for (Event e : this.events) {
+      if (e.getTime().getStartDayDefault().equals(day)) {
+        eventsOfGivenDay.add(e);
+      }
+    }
+
+    for (Event ev : eventsOfGivenDay) {
+      ret += ev.toString();
+    }
+
+    return ret;
   }
 
   @Override
   public void addEvent(Event event) {
+    eventNullException(event);
     if (!this.events.contains(event)
             && this.events.stream().noneMatch(f -> f.overlapsWith(event))) {
       this.events.add(event);
@@ -63,9 +80,7 @@ public class Schedule implements ScheduleRep {
 
   @Override
   public void removeEvent(Event event) {
-    if (event == null) {
-      throw new IllegalArgumentException("event cannot be null");
-    }
+    eventNullException(event);
     if (!this.events.contains(event)) {
       throw new IllegalStateException("event must be in schedule");
     }
@@ -73,14 +88,19 @@ public class Schedule implements ScheduleRep {
       throw new IllegalStateException("event must have invitees to remove");
     }
     if (this.name.equals(event.getInvitedUsers().get(0))) {
-
+      this.events.remove(event);
     }
   }
 
-  // filter events by days of the week
+  /**
+   * Throws an IllegalArgumentException if the given event is null.
+   * @param event event in question
+   * @throws IllegalArgumentException if given event is null
+   */
+  private static void eventNullException(Event event) {
+    if (event == null) {
+      throw new IllegalArgumentException("event cannot be null");
+    }
+  }
 
-
-
-  // remove an event, based on if this user is the first in the list of the invitess
-  // then it is removed just from their schedule, where to implement this though
 }

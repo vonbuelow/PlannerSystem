@@ -1,5 +1,7 @@
 package model.eventfields;
 
+import java.util.Objects;
+
 /**
  * Represents a location.
  * Given if it is online or not and a place.
@@ -33,7 +35,7 @@ public class Location {
 
   @Override
   public int hashCode() {
-    return 37 * place.length() * String.valueOf(online).length();
+    return Objects.hashCode(this);
   }
 
   public String isOnline() {

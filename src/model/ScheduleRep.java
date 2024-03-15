@@ -20,8 +20,11 @@ public interface ScheduleRep {
   List<Event> eventsPlanned();
 
   /**
-   * Adds the given event to the current schedule
-   * @param event
+   * Adds the given event to the current schedule.
+   * @param event event to be added
+   * @throws IllegalArgumentException if event is null
+   * @throws IllegalStateException if event is already in the list of events or overlaps
+   *     with another event in schedule
    */
   void addEvent(Event event);
 

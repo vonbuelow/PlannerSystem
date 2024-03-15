@@ -23,9 +23,9 @@ public class NUPlannerTextView implements NUPlannerView {
   public String toString() {
     Appendable view = new StringBuilder();
     Map<String, Schedule> schedules = this.system.usersSchedules();
-    for (Map.Entry<String, Schedule> schedule : schedules.entrySet()) {
+    for (Map.Entry<String, Schedule> entry : schedules.entrySet()) {
       try {
-        view.append(schedule.getValue().toString()).append("\n");
+        view.append(entry.getValue().toString()).append("\n");
       }
       catch (IOException e) {
         throw new IllegalStateException(e);

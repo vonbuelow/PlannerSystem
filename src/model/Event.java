@@ -35,14 +35,6 @@ public class Event implements EventRep {
     this.invitees = invitees;
   }
 
-
-
-  // add in modification methods
-  // set name
-  // set time
-  // set location
-  // set invitees // ->> invariant would be not allowing the host to be changed
-
   @Override
   public String toString() {
     String inviteesList = "";

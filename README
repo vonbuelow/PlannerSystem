@@ -38,6 +38,7 @@ model package:
         Implements the NUPlanner system with its public methods and keeps track of all users,
         and all users schedules in the current system. Has a set of all users contained in the
         system. A list of events in the system.
+        - Invariant: all events in the event list are in at least one user's schedule
     Event
         An event in a user's schedule. Has a name of the event, time, location, and list of
         those invited and enforces the requirements listed by the assignment. Names for all
