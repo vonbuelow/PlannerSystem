@@ -15,6 +15,10 @@ import model.EventRep;
 import model.NUPlannerSystem;
 import model.Schedule;
 import model.ScheduleRep;
+import model.eventfields.Day;
+import model.eventfields.Location;
+import model.eventfields.Time;
+import view.NUPlannerTextView;
 
 /**
  * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
@@ -31,11 +35,19 @@ public class CentralSystemTests {
   String noelisA1;
   String noelisA2;
 
-  //Event event1 = new Event;
+  EventRep event1;
 
-  List<EventRep> profLuciaEvents = new ArrayList<EventRep>(Arrays.asList());
+  List<EventRep> profLuciaEvents;
+  List<EventRep> emmaVBEvents;
+  List<EventRep> noelisA1Events;
 
-  //Schedule profLuciaSched = new Schedule(profLucia, )
+  Schedule profLuciaSched;
+  Schedule emmaVBSched;
+  Schedule noelisA1Sched;
+
+  Map<String, ScheduleRep> profLuciaMap;
+  Map<String, ScheduleRep> emmaVBMap;
+  Map<String, ScheduleRep> noelisA1Map;
 
   Map<String, ScheduleRep> allSchedulesInSystem1;
   List<EventRep> allEventsInSystem1;
@@ -53,6 +65,29 @@ public class CentralSystemTests {
     noelisA1 = "Noelis Aponte";
     noelisA2 = "Noelis Aponte";
 
+    event1 = new Event("CS3500",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+
+    profLuciaEvents = new ArrayList<EventRep>(Arrays.asList(event1));
+    emmaVBEvents = new ArrayList<EventRep>(Arrays.asList(event1));
+    noelisA1Events = new ArrayList<EventRep>(Arrays.asList(event1));
+
+    profLuciaSched = new Schedule(profLucia, profLuciaEvents);
+    emmaVBSched = new Schedule(emmaVB, profLuciaEvents);
+    noelisA1Sched = new Schedule(noelisA1, profLuciaEvents);
+
+    profLuciaMap = new HashMap<String, ScheduleRep>();
+    profLuciaMap.put(profLucia, profLuciaSched);
+    emmaVBMap = new HashMap<String, ScheduleRep>();
+    emmaVBMap.put(emmaVB, emmaVBSched);
+    noelisA1Map = new HashMap<String, ScheduleRep>();
+    noelisA1Map.put(noelisA1, noelisA1Sched);
+
+    allSchedulesInSystem1.putAll(profLuciaMap);
+    allEventsInSystem1.add(event1);
+
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
 
 
@@ -60,6 +95,6 @@ public class CentralSystemTests {
 
   @Test
   public void testSaveScheduleValid() {
-
+    //TO TEST
   }
 }

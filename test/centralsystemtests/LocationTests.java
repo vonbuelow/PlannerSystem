@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- * Tests functionality of the Location class.
+ * Tests functionality of the Location class and public methods.
  */
 public class LocationTests {
   Location loc1;
@@ -39,5 +39,18 @@ public class LocationTests {
     assertEquals(loc3, loc5);
     assertEquals(loc5, loc6);
     assertEquals(loc3, loc6);
+  }
+
+  @Test
+  public void testToString() {
+    assertEquals("location: ur mom's house\nonline: false", loc1.toString());
+    assertEquals("location: Churchill Hall 101\nonline: false", loc3.toString());
+    assertEquals("location: my mom's house\nonline: true", loc2.toString());
+  }
+
+  @Test
+  public void testIsOnline() {
+    assertEquals("false", loc1.isOnline());
+    assertEquals("true", loc2.isOnline());
   }
 }

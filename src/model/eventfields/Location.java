@@ -38,10 +38,18 @@ public class Location {
     return Objects.hashCode(this);
   }
 
+  /**
+   * Returns a string stating whether the location is online.
+   * @return a string of true or false
+   */
   public String isOnline() {
     return Boolean.toString(this.online);
   }
 
+  /**
+   * Returns the name of the place of this location.
+   * @return a string of the location place
+   */
   public String getPlace() {
     return this.place;
   }

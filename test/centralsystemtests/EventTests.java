@@ -150,8 +150,9 @@ public class EventTests {
   /**
    * Testing the invalid elements.
    */
+  @Test
   public void testInvalidElements() {
-    // when reading an XML file add in a "True" and "fAlse"
+    // when reading an XML file add in a "True" and "false"
     // cannot translate into a boolean -> restrain to either "true" or "false"
 
     // when reading an XML file add no child elements to the uid tag -> error out

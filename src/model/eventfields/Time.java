@@ -28,7 +28,7 @@ public class Time {
     int lengthST = String.valueOf(startTime).length(); // length of the start time number
     int lengthET = String.valueOf(endTime).length(); // length of the end time number
     if (lengthST != 4 || lengthET != 4) {
-      throw new IllegalArgumentException("Invalid time format has to be 4 digits XXXX. "
+      throw new IllegalArgumentException("Valid time format has to be 4 digits XXXX. "
               + "You entered: " + start + " " + startTime + "\n" + end + " " + endTime);
     }
     if (!militaryTime(startTime)) {

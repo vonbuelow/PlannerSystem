@@ -1,7 +1,8 @@
 package model.eventfields;
 
 /**
- * Days of the week.
+ * Days of the week, along with their string representations and number of days they occur
+ * after the designated starting day of the week.
  */
 public enum Day {
 
@@ -15,7 +16,7 @@ public enum Day {
   SATURDAY("Saturday", 6);
 
   private final String val;
-  private int startDayVal;
+  private int startDayVal; // up for change if start day of the week is changed from Sunday
 
   Day(String val, int startDayVal) {
     this.val = val;
