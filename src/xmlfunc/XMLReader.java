@@ -223,5 +223,5 @@ public class XMLReader {
     ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday",
             "Wendnesday", "Thursday", "Friday", "Saturday", "Sunday"));
     return days.contains(nodeValue);
-   }
+  }
 }

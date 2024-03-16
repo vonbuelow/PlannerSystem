@@ -9,7 +9,6 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -78,6 +77,7 @@ public class TimeAndDayTests {
     assertEquals("time: Friday: 1130 -> Tuesday: 0950", time3.toString());
     assertEquals("time: Wednesday: 1600 -> Wednesday: 1559", time4.toString());
   }
+
   @Test
   public void testTimeEquals() {
     //assertEquals(time1, time1); // by reflexivity

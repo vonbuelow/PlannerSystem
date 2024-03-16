@@ -111,10 +111,12 @@ public class Time {
     int thatEndDay = time.end.orderOfDayInWeek();
 
     // Adjust for week wrapping
-    if (thisEndDay < thisStartDay || (thisEndDay == thisStartDay && compareTimes(this.startTime, this.endTime) > 0)) {
+    if (thisEndDay < thisStartDay || (thisEndDay == thisStartDay
+            && compareTimes(this.startTime, this.endTime) > 0)) {
       thisEndDay += 7;
     }
-    if (thatEndDay < thatStartDay || (thatEndDay == thatStartDay && compareTimes(time.startTime, time.endTime) > 0)) {
+    if (thatEndDay < thatStartDay || (thatEndDay == thatStartDay
+            && compareTimes(time.startTime, time.endTime) > 0)) {
       thatEndDay += 7;
     }
 

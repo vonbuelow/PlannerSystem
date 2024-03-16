@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import model.Event;
 import model.EventRep;
-import model.Schedule;
 import model.ScheduleRep;
 
 /**
@@ -68,7 +66,7 @@ public class XMLWriter {
     file.write("</location>\n");
     // Those who are invited
     file.write("<users>\n");
-    for(String invited: event.getInvitedUsers()) {
+    for (String invited: event.getInvitedUsers()) {
       file.write("<uid>" + invited + "</uid>\n");
     }
     file.write("</users>\n");

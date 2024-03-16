@@ -103,17 +103,23 @@ public class Event implements EventRep {
 
   @Override
   public void modifyTime(Time time) {
-
+    if (time == null) {
+      throw new IllegalArgumentException("time cannot be null");
+    }
+    this.time = time;
   }
 
   @Override
   public void modifyLocation(Location loc) {
-
+    if (loc == null) {
+      throw new IllegalArgumentException("not a valid location");
+    }
+    this.loc = loc;
   }
 
   @Override
   public void modifyInvitees(List<String> invitees, boolean toAdd) {
-
+    // modify events
   }
 }
 

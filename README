@@ -1,8 +1,14 @@
 Overview:
 What problem is this codebase trying to solve?
+This code base is abstracting an XML to an instance of schedules using a central system for
+database like maintenance. Then being able to go from the implementation in the system to writing
+a XML file and saving it to a given file location/directory.
 What high-level assumptions are made in the codebase, either about the background knowledge needed,
 about what forms of extensibility are envisioned or are out of scope, or about prerequisites for
 using this code?
+The model is very high-level from an interaction stand point without a controller.
+Extensibility would come from the interface implementation of how a schedule is represented
+along with how a system can be represented.
 --------------------------------------------------------------------------------------------------
 Quick start: give a short snippet of code showing how a user might get started using this codebase.
 
@@ -12,6 +18,7 @@ It is trite and useless to merely say “The model represents the data in my sys
 The view represents the rendering of my system. ...”
 This is a waste of your time and the reader’s time.
 Describe which components “drive” the control-flow of your system, and which ones “are driven”.
+The central system is driven by the XML reader and taking in new schedules to the overall system.
 
 --------------------------------------------------------------------------------------------------
 Key subcomponents: Within each component, give an overview of the main nouns in your system,
@@ -34,11 +41,15 @@ model package:
             Considers the locations children making sure there is a boolean and string location.
         Time
             Enforcing military time with hours and minutes, no seconds and not in civilian time.
+
     Central System
         Implements the NUPlanner system with its public methods and keeps track of all users,
         and all users schedules in the current system. Has a set of all users contained in the
         system. A list of events in the system.
         - Invariant: all events in the event list are in at least one user's schedule
+    EventRep
+        The interface to represent how an event could be implemented with the implemented public
+        methods.
     Event
         An event in a user's schedule. Has a name of the event, time, location, and list of
         those invited and enforces the requirements listed by the assignment. Names for all
@@ -47,9 +58,14 @@ model package:
     NUPlannerSystem
         The interface to represent a systems behavior of add, modify, remove, and get all users
         schedules.
+    ScheduleRep
+        The interface to represent how a schedule could be implemented with the public methods
+        mentioned with their respective javadocs.
     Schedule
         A schedule of a user. This contains the users name and the events in their schedule. All
         user ids should be unique (two with the same name are not allowed).
+userxmls:
+    A package to be used when testing the xml for a place the writer can send the XML files to.
 
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,

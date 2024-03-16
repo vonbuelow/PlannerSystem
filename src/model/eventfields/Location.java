@@ -10,9 +10,14 @@ public class Location {
   boolean online;
   String place;
 
+  /**
+   * Location representation.
+   * @param online if the location is taking place online.
+   * @param place where the place of the location is.
+   */
   public Location(boolean online, String place) {
     this.online = online;
-    if (place.equals("") || place == null) {
+    if (place.isEmpty() || place == null) {
       throw new IllegalArgumentException("cannot have null or empty location place");
     }
     this.place = place;

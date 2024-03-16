@@ -29,7 +29,7 @@ public interface NUPlannerSystem {
   void addEventToAllSchedules(EventRep event);
 
   /**
-   *
+   * Adds in a new use to the central/NUPlannerSystem.
    * @param newUser user to be added to the system
    * @throws IllegalArgumentException if map is null
    * @throws IllegalStateException if new user already exists in system

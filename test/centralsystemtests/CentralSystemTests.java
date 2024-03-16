@@ -1,7 +1,6 @@
 package centralsystemtests;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +17,6 @@ import model.ScheduleRep;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
-import view.NUPlannerTextView;
 
 /**
  * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
@@ -41,9 +39,9 @@ public class CentralSystemTests {
   List<EventRep> emmaVBEvents;
   List<EventRep> noelisA1Events;
 
-  Schedule profLuciaSched;
-  Schedule emmaVBSched;
-  Schedule noelisA1Sched;
+  ScheduleRep profLuciaSched;
+  ScheduleRep emmaVBSched;
+  ScheduleRep noelisA1Sched;
 
   Map<String, ScheduleRep> profLuciaMap;
   Map<String, ScheduleRep> emmaVBMap;
@@ -90,10 +88,10 @@ public class CentralSystemTests {
 
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
 
-
+    // this is to test save schedule
   }
 
-  @Test
+  //@Test
   public void testSaveScheduleValid() {
     //TO TEST
   }

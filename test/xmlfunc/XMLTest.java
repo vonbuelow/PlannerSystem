@@ -1,12 +1,7 @@
 package xmlfunc;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,8 +36,8 @@ public class XMLTest {
   public void testReadingElements() {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
-              "PlannerSystem\\src\\shortProf.xml"));
+      XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
+              + "PlannerSystem\\src\\shortProf.xml"));
 
       Map<String, ScheduleRep> profLuciaSched = reader.readXML();
       Set<String> keys = profLuciaSched.keySet();
@@ -56,8 +51,8 @@ public class XMLTest {
   // test the reader makes an instance of a schedule
   @Test
   public void testReadingSchedule() {
-    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
-            "PlannerSystem\\src\\shortProf.xml"));
+    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
+            + "PlannerSystem\\src\\shortProf.xml"));
 
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
@@ -74,8 +69,8 @@ public class XMLTest {
   public void testWriter() {
     XMLWriter writer = new XMLWriter();
     File usersxmls = new File("C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc");
-    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\" +
-            "PlannerSystem\\src\\shortProf.xml"));
+    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
+            + "PlannerSystem\\src\\shortProf.xml"));
 
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");

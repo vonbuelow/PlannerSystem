@@ -92,6 +92,18 @@ public class Schedule implements ScheduleRep {
     }
   }
 
+  @Override
+  public void modifyEvent(EventRep event) {
+    eventNullException(event);
+    if (this.eventsPlanned().stream().anyMatch(f -> f.getName().equals(event.getName()))) {
+      for (EventRep events: this.eventsPlanned()) {
+        if (events.getName().equals(event.getName())) {
+          events = event; // not being changed
+        }
+      }
+    }
+  }
+
   /**
    * Throws an IllegalArgumentException if the given event is null.
    * @param event event in question

@@ -1,17 +1,12 @@
 package model;
 
-import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.xml.parsers.ParserConfigurationException;
-
 import model.eventfields.Location;
 import model.eventfields.Time;
 import xmlfunc.XMLReader;
@@ -86,8 +81,6 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public void addNewUser(Map<String, ScheduleRep> newUser) {
-    // will add an event to all schedules when applicable for invitees/host.
-    // INVARIANT CHECK
     if (newUser == null) {
       throw new IllegalArgumentException("user cannot be null");
     }
@@ -119,8 +112,6 @@ public class CentralSystem implements NUPlannerSystem {
 
     Map<String, ScheduleRep> officialNewUser = new HashMap<String, ScheduleRep>();
     officialNewUser.put(userID, existingSched);
-
-    /*this.allSchedules.putAll();*/
   }
 
   @Override
@@ -133,25 +124,30 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalStateException("event must be in the system and"
               + " in the given user's schedule");
     }
-    //if (uid.isEmpty() || )
-    /*if (allSchedules.get(uid).eventsPlanned().an) {
 
-    }*/
   }
 
   @Override
   public void modifyTime(EventRep event, Time time, String uid) {
-
+    eventNullException(event);
+    if (time == null) {
+      throw new IllegalArgumentException("time cannot be null");
+    }
+    if (uid == null || this.allSchedules.containsKey(uid)) {
+      throw new IllegalArgumentException("uid cannot be empty or not in the system");
+    }
+    event.modifyTime(time);
+    this.allSchedules.get(uid).modifyEvent(event);
   }
 
   @Override
   public void modifyLocation(EventRep event, Location loc, String uid) {
-
+    event.modifyLocation(loc);
   }
 
   @Override
   public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid) {
-
+    event.modifyInvitees(invitees, toAdd);
   }
 
   @Override
@@ -169,11 +165,6 @@ public class CentralSystem implements NUPlannerSystem {
       allSchedules.get(uid).removeEvent(event);
     }
   }
-
-
-  // new user/schedule -> existing event invitees.
-  // if contained && does not conflict with current sched. add event.
-
 
   @Override
   public void addUser(File file) {

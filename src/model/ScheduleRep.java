@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * The schedule representation to be implemented by additional schedule implementations.
+ */
 public interface ScheduleRep {
   /**
    * Returns the name of the user that owns this schedule.
@@ -37,4 +40,6 @@ public interface ScheduleRep {
    *     invitees
    */
   void removeEvent(EventRep event);
+
+  void modifyEvent(EventRep event);
 }
