@@ -1,6 +1,7 @@
 package centralsystemtests;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,11 @@ import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
  * Contains examples of a CentralSystem and its features such as a set of users and their
@@ -34,6 +40,7 @@ public class CentralSystemTests {
   String noelisA2;
 
   EventRep event1;
+  EventRep event2;
 
   List<EventRep> profLuciaEvents;
   List<EventRep> emmaVBEvents;
@@ -63,8 +70,12 @@ public class CentralSystemTests {
     noelisA1 = "Noelis Aponte";
     noelisA2 = "Noelis Aponte";
 
-    event1 = new Event("CS3500",
+    event1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    event2 = new Event("CS3500 Day 2",
+            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             Arrays.asList(profLucia, emmaVB, noelisA1));
 
@@ -83,16 +94,61 @@ public class CentralSystemTests {
     noelisA1Map = new HashMap<String, ScheduleRep>();
     noelisA1Map.put(noelisA1, noelisA1Sched);
 
-    allSchedulesInSystem1.putAll(profLuciaMap);
+    allSchedulesInSystem1 = new HashMap<String, ScheduleRep>();
+    allSchedulesInSystem1.put(profLucia, profLuciaSched);
+    allSchedulesInSystem1.put(emmaVB, emmaVBSched);
+    allSchedulesInSystem1.put(noelisA1, noelisA1Sched);
+    allEventsInSystem1 = new ArrayList<EventRep>();
     allEventsInSystem1.add(event1);
 
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
 
-    // this is to test save schedule
   }
 
-  //@Test
+  @Test
   public void testSaveScheduleValid() {
     //TO TEST
+  }
+
+  @Test
+  public void testAddEventToAllSchedulesExceptions() {
+    assertThrows("event cannot be null", IllegalArgumentException.class,
+            () -> system1.addEventToAllSchedules(null));
+    assertThrows("event already exists in system", IllegalStateException.class,
+            () -> system1.addEventToAllSchedules(event1));
+    assertFalse(profLuciaSched.eventsPlanned().contains(event2));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event2));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
+    assertFalse(event1.overlapsWith(event2));
+    system1.addEventToAllSchedules(event2);
+    assertTrue(profLuciaSched.eventsPlanned().contains(event2));
+    assertTrue(emmaVBSched.eventsPlanned().contains(event2));
+    assertTrue(noelisA1Sched.eventsPlanned().contains(event2));
+
+  }
+
+  @Test
+  public void testModifyName() {
+
+  }
+
+  @Test
+  public void testModifyTime() {
+
+  }
+
+  @Test
+  public void testModifyLocation() {
+
+  }
+
+  @Test
+  public void testModifyInvitees() {
+
+  }
+
+  @Test
+  public void testRemoveEvent() {
+
   }
 }
