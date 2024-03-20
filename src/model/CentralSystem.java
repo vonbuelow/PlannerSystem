@@ -188,6 +188,9 @@ public class CentralSystem implements NUPlannerSystem {
     if (!eventList.contains(event)) {
       throw new IllegalStateException("event must be in system");
     }
+    if (!event.getInvitedUsers().contains(uid)) {
+      throw new IllegalStateException("the given user must be invited to the event");
+    }
     if (uid.equals(event.getInvitedUsers().get(0))) {
       for (ScheduleRep sched : allSchedules.values()) {
         sched.removeEvent(event);

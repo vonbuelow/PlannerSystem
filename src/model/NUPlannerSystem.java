@@ -90,6 +90,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @param     uid the user id of the user.
    * @throws IllegalArgumentException if the given event is null
    * @throws IllegalStateException if the given event is not currently in the system
+   *     or the given uid is not invited to the given event
    */
   void removeEvent(EventRep event, String uid);
 

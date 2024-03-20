@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import model.NUPlannerSystem;
+import model.ReadonlyNUPlannerSystem;
 import model.ScheduleRep;
 
 /**
@@ -11,10 +12,13 @@ import model.ScheduleRep;
  * The view represented by overriding the toString method.
  */
 public class NUPlannerTextView implements NUPlannerView {
-  private final NUPlannerSystem system;
-  // consider generality with method calls on specific systems
+  private final ReadonlyNUPlannerSystem system;
 
-  public NUPlannerTextView(NUPlannerSystem system) {
+  /**
+   * Takes in a read-only version of the planner system to create a view.
+   * @param system read-only planner system
+   */
+  public NUPlannerTextView(ReadonlyNUPlannerSystem system) {
     this.system = Objects.requireNonNull(system);
   }
 
