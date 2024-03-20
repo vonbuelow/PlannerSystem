@@ -72,10 +72,15 @@ public class Schedule implements ScheduleRep {
   public void addEvent(EventRep event) {
     eventNullException(event);
     if (!this.events.contains(event)
-            && this.events.stream().noneMatch(f -> f.overlapsWith(event))) {
+            && !overlapWith(event) && event.getInvitedUsers().contains(this.name)) {
       this.events.add(event);
     }
     throw new IllegalStateException("event exists already or conflicts with another");
+  }
+
+  @Override
+  public boolean overlapWith(EventRep event) {
+    return this.events.stream().anyMatch(f -> f.overlapsWith(event));
   }
 
   @Override

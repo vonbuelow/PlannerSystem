@@ -42,4 +42,11 @@ public interface ScheduleRep {
   void removeEvent(EventRep event);
 
   void modifyEvent(EventRep event);
+
+  /**
+   * Does a given event overlap in this schedule rep.
+   * @param     event a given event to check.
+   * @return    if the even overlaps with any in this schedule.
+   */
+  public boolean overlapWith(EventRep event);
 }

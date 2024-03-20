@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+
 import model.eventfields.Location;
 import model.eventfields.Time;
 import xmlfunc.XMLReader;
@@ -31,6 +33,23 @@ public class CentralSystem implements NUPlannerSystem {
   public CentralSystem() {
     this.allSchedules = new HashMap<String, ScheduleRep>();
     this.eventList = new ArrayList<EventRep>();
+  }
+
+  /**
+   * NEW: new constuructor keeping track of a list of schedules;
+   */
+  public CentralSystem(List<Schedule> schedules) {
+    this.allSchedules = new HashMap<>();
+    this.eventList = new ArrayList<EventRep>();
+
+    // valid schedules is handled by addNewUser method.
+
+    for (Schedule schedule: schedules) {
+      Map<String, ScheduleRep> user = new HashMap<>();
+      user.put(schedule.scheduleOwner(), schedule);
+      addNewUser(user);
+
+    }
   }
 
   /**
@@ -63,6 +82,19 @@ public class CentralSystem implements NUPlannerSystem {
     for (ScheduleRep sched : allSchedules.values()) {
       sched.addEvent(event);
     }
+    if (!this.eventList.contains(event)) {
+      eventList.add(event);
+    }
+  }
+
+  @Override
+  public void addEventToUserSchedules(String uid, EventRep event) {
+    eventNullException(event);
+    if (this.eventList.contains(event)) {
+      throw new IllegalStateException("event already exists in system");
+    }
+    // will add an event to all schedules when applicable for invitees/host.
+    this.allSchedules.get(uid).addEvent(event);
     if (!this.eventList.contains(event)) {
       eventList.add(event);
     }
@@ -106,12 +138,12 @@ public class CentralSystem implements NUPlannerSystem {
       for (EventRep newEvent : newUser.values().iterator().next().eventsPlanned()) {
         if (!existing.overlapsWith(newEvent)) {
           existingEvents.add(newEvent);
+          this.eventList.add(newEvent);
         }
       }
     }
 
-    Map<String, ScheduleRep> officialNewUser = new HashMap<String, ScheduleRep>();
-    officialNewUser.put(userID, existingSched);
+    this.allSchedules.put(userID, existingSched);
   }
 
   @Override
@@ -187,5 +219,28 @@ public class CentralSystem implements NUPlannerSystem {
     Map<String, ScheduleRep> copy = new HashMap<>();
     copy.putAll(allSchedules); // removes aliasing
     return copy;
+  }
+
+  @Override
+  public Set<String> usersInSystem() {
+    return this.usersSchedules().keySet();
+  }
+
+  @Override
+  public boolean doesOverlap(EventRep event) {
+    List<ScheduleRep> invitedSchedule = new ArrayList<>();
+    for (String user : event.getInvitedUsers()) {
+      invitedSchedule.add(this.allSchedules.get(user));
+    }
+    boolean ret = false;
+    for (ScheduleRep scheduleRep : invitedSchedule) {
+      ret = ret || scheduleRep.overlapWith(event);
+    }
+    return ret;
+  }
+
+  @Override
+  public List<EventRep> getUserEvents(String uid) {
+    return this.allSchedules.get(uid).eventsPlanned();
   }
 }

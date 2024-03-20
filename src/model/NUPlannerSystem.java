@@ -11,7 +11,8 @@ import model.eventfields.Time;
  * The interface of a NUPlannerSystem.
  * Will have behavior of adding, modifying, and removing events in a system.
  */
-public interface NUPlannerSystem {
+public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
+
   /**
    * Saves the schedule of the user with the given name to an XML file.
    * @param fileToSave place of where the users' schedule should be saved to
@@ -27,6 +28,13 @@ public interface NUPlannerSystem {
    * @throws IllegalStateException if the event is already in the system
    */
   void addEventToAllSchedules(EventRep event);
+
+  /**
+   * NEWWWWW.
+   * Add an event to a user schedule.
+   * @param event
+   */
+  void addEventToUserSchedules(String uid, EventRep event);
 
   /**
    * Adds in a new use to the central/NUPlannerSystem.
@@ -85,11 +93,6 @@ public interface NUPlannerSystem {
    */
   void removeEvent(EventRep event, String uid);
 
-  /**
-   * A copy of all users in a system and their schedules for toString purposes.
-   * @return
-   */
-  Map<String, ScheduleRep> usersSchedules();
 
   void addUser(File file);
 }
