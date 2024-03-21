@@ -35,6 +35,9 @@ public interface EventFrame {
    * - schedule event = all users in system
    * - create event = only invite some users
    *
-   *
+   * - once create is clicked, event frame prints out "create event" then lists info
+   * - remove event -> prints out remove event then info of event
+   * - selected user is the remover (user is stored as field in controller)
+   * - host is highlighted upon opening the event frame
    */
 }

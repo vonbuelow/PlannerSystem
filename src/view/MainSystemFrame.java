@@ -13,6 +13,10 @@ public interface MainSystemFrame {
 
   - days are viewed left to right (sun->sat)
   - bold lines drawn every 4 hours
+   */
 
+  /**
+   * Main system / schedule frame closing actually quits the program
+   * - #6200ee -> color for event highlighting (indigo)
    */
 }
