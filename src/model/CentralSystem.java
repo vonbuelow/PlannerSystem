@@ -80,7 +80,11 @@ public class CentralSystem implements NUPlannerSystem {
     }
     // will add an event to all schedules when applicable for invitees/host.
     for (ScheduleRep sched : allSchedules.values()) {
-      sched.addEvent(event);
+      try {
+        sched.addEvent(event);
+      } catch (IllegalStateException | IllegalArgumentException ex) {
+        // append to a string and then print it out after
+      }
     }
     if (!this.eventList.contains(event)) {
       eventList.add(event);

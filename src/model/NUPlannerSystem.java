@@ -23,6 +23,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
   /**
    * Add a new event to the central system.
    * Affecting the user's schedules who are invited.
+   * NEW: Adding in a try-catch to allow for some but not all to be invited if no overlap.
    * @param     event The added event.
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if the event is already in the system
