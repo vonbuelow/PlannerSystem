@@ -69,9 +69,11 @@ userxmls:
 Changes for part 2 ------------------------------------------------------------------------------
     Added in a ReadonlyPlannerModel which contains the following observations:
         What users (or user names) are in the planner?
+        CentralSystem (usersInSystem()):
             This was missing so we added it into our central system by getting the keys of our
-            map that stores all of our users and schedules.
+            map that stores all of our users and schedules. Avoiding reference to fields.
         Does some event conflict with the existing schedules for all of the event’s invited users?
+        CentralSystem (doesOverlap(EventRep event)):
             This was missing so we added a overlaps with method in our schedule class and added a
             method called doesOverlap which takes in an event, gets all who are invited. Iterates
             through the invitiees schedules and then called the new overlapsWith method on the
@@ -80,6 +82,16 @@ Changes for part 2 -------------------------------------------------------------
             We had half of this implementation, but added this method to the ReadOnly and got the
             users schedule, and the events planned as a list of events. Which is NOT A REFRENCE TO
             the actual field in schedule, rather it is a copy of all the events.
+        Remove event for a specific users:
+            Altering the original implementation of removeEvent to consider if the user is the host
+            of the event.
+        Add event to specific users schedule:
+            Adding in a new event to a specific users schedule.
+        Add event to all schedules:
+            When iterating through the invited users schedule, adding a try catch to add to the
+            schedules where no overlap occurs.
+        New constructor to keep track of a list of schedule:
+            For each schedule to be added to the map.
 
 
 

@@ -4,6 +4,7 @@ package model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -218,19 +219,18 @@ public class CentralSystem implements NUPlannerSystem {
     }
   }
 
-  /**
-   * The users schedule for toString text display implementation.
-   * @return    a copy not direct reference to the map storing current user->schedules.
-   */
+  @Override
   public Map<String, ScheduleRep> usersSchedules() {
     Map<String, ScheduleRep> copy = new HashMap<>();
-    copy.putAll(allSchedules); // removes aliasing
+    copy.putAll(this.allSchedules); // removes aliasing
     return copy;
   }
 
   @Override
   public Set<String> usersInSystem() {
-    return this.usersSchedules().keySet();
+    Set<String> users = new HashSet<>();
+    users.addAll(this.usersSchedules().keySet());
+    return users; // copy -> not a reference
   }
 
   @Override
