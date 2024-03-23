@@ -39,7 +39,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
   void addEventToInviteeSchedule(String uid, EventRep event);
 
   /**
-   * Adds in a new use to the central/NUPlannerSystem.
+   * Adds in a new user to the central/NUPlannerSystem.
    * @param newUser user to be added to the system
    * @throws IllegalArgumentException if map is null
    * @throws IllegalStateException if new user already exists in system
@@ -90,7 +90,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * just from the single invitee's schedule.
    * @param     event the event to be removed.
    * @param     uid the user id of the user.
-   * @throws IllegalArgumentException if the given event is null
+   * @throws IllegalArgumentException if the given event or uid is null
    * @throws IllegalStateException if the given event is not currently in the system
    *     or the given uid is not invited to the given event
    */

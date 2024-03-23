@@ -219,7 +219,7 @@ public class CentralSystemTests {
 
   @Test
   public void testAddEventToInviteeSchedule() {
-
+    //
   }
 
   @Test
@@ -242,8 +242,12 @@ public class CentralSystemTests {
 
   }
 
+  /**
+   * Invalid cases.
+   * Tests removing a null uid or event, empty uid, or non-existent uid.
+   */
   @Test
-  public void testRemoveEvent() {
+  public void testRemoveEventInvalid() {
 
   }
 }
