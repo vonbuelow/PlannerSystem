@@ -41,6 +41,7 @@ public class CentralSystemTests {
 
   EventRep event1;
   EventRep event2;
+  EventRep event3;
 
   List<EventRep> profLuciaEvents;
   List<EventRep> emmaVBEvents;
@@ -78,14 +79,18 @@ public class CentralSystemTests {
             new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             Arrays.asList(profLucia, emmaVB, noelisA1));
+    event3 = new Event("BBQ",
+            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+            new Location(true, "Not Churchill"),
+            Arrays.asList(emmaVB));
 
     profLuciaEvents = new ArrayList<EventRep>(Arrays.asList(event1));
     emmaVBEvents = new ArrayList<EventRep>(Arrays.asList(event1));
     noelisA1Events = new ArrayList<EventRep>(Arrays.asList(event1));
 
     profLuciaSched = new Schedule(profLucia, profLuciaEvents);
-    emmaVBSched = new Schedule(emmaVB, profLuciaEvents);
-    noelisA1Sched = new Schedule(noelisA1, profLuciaEvents);
+    emmaVBSched = new Schedule(emmaVB, emmaVBEvents);
+    noelisA1Sched = new Schedule(noelisA1, noelisA1Events);
 
     profLuciaMap = new HashMap<String, ScheduleRep>();
     profLuciaMap.put(profLucia, profLuciaSched);
@@ -110,20 +115,110 @@ public class CentralSystemTests {
     //TO TEST
   }
 
+  /**
+   * Invalid cases.
+   * Tests adding a null or already existing event to all invited users' schedules.
+   */
   @Test
-  public void testAddEventToAllSchedulesExceptions() {
+  public void testAddEventToAllSchedulesInvalid() {
     assertThrows("event cannot be null", IllegalArgumentException.class,
             () -> system1.addEventToAllSchedules(null));
     assertThrows("event already exists in system", IllegalStateException.class,
             () -> system1.addEventToAllSchedules(event1));
+  }
+
+  /**
+   * Tests adding an event to all invited users' schedules.
+   * Event does not conflict with any invited user's existing events.
+   */
+  @Test
+  public void testAddEventToAllSchedulesNoConflicts() {
     assertFalse(profLuciaSched.eventsPlanned().contains(event2));
     assertFalse(emmaVBSched.eventsPlanned().contains(event2));
     assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
+    assertFalse(allEventsInSystem1.contains(event2));
     assertFalse(event1.overlapsWith(event2));
     system1.addEventToAllSchedules(event2);
     assertTrue(profLuciaSched.eventsPlanned().contains(event2));
     assertTrue(emmaVBSched.eventsPlanned().contains(event2));
     assertTrue(noelisA1Sched.eventsPlanned().contains(event2));
+    assertTrue(allEventsInSystem1.contains(event2));
+  }
+
+  /**
+   * Tests adding an event to all invited users' schedules.
+   * Event conflicts with at least one invited user's existing events.
+   */
+  @Test
+  public void testAddEventToAllSchedulesSomeConflict() {
+    // one user is invited to an event
+    assertFalse(emmaVBSched.eventsPlanned().contains(event2));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event3));
+    system1.addEventToInviteeSchedule(emmaVB, event3);
+    assertTrue(emmaVBSched.eventsPlanned().contains(event3));
+
+    // that same user is only one not invited to event
+    assertFalse(profLuciaSched.eventsPlanned().contains(event2));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event2));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
+    assertFalse(allEventsInSystem1.contains(event2));
+    assertFalse(event1.overlapsWith(event2));
+    assertTrue(event3.overlapsWith(event2));
+    system1.addEventToAllSchedules(event2);
+    assertTrue(profLuciaSched.eventsPlanned().contains(event2));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event2));
+    assertTrue(noelisA1Sched.eventsPlanned().contains(event2));
+    assertTrue(allEventsInSystem1.contains(event2));
+  }
+
+  /**
+   * Tests adding an event to all invited users' schedules.
+   * Event conflicts with all invited users' existing events.
+   * Event does not get added to the system's list of events.
+   */
+  @Test
+  public void testAddEventToAllSchedulesTotalConflict() {
+    assertFalse(profLuciaSched.eventsPlanned().contains(event2));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event2));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
+    assertFalse(allEventsInSystem1.contains(event2));
+    assertFalse(event1.overlapsWith(event2));
+    system1.addEventToAllSchedules(event2);
+    assertTrue(profLuciaSched.eventsPlanned().contains(event2));
+    assertTrue(emmaVBSched.eventsPlanned().contains(event2));
+    assertTrue(noelisA1Sched.eventsPlanned().contains(event2));
+    assertTrue(allEventsInSystem1.contains(event2));
+
+    assertFalse(profLuciaSched.eventsPlanned().contains(event3));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event3));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event3));
+    assertFalse(allEventsInSystem1.contains(event3));
+    assertTrue(event2.overlapsWith(event3));
+    system1.addEventToAllSchedules(event3);
+    assertFalse(profLuciaSched.eventsPlanned().contains(event3));
+    assertFalse(emmaVBSched.eventsPlanned().contains(event3));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event3));
+    assertFalse(allEventsInSystem1.contains(event3));
+  }
+
+  /**
+   * Invalid cases.
+   * Tests adding a null uid or event, empty uid, or non-existent uid.
+   */
+  @Test
+  public void testAddEventToInviteeScheduleInvalid() {
+    assertThrows("event cannot be null", IllegalArgumentException.class,
+            () -> system1.addEventToInviteeSchedule(emmaVB, null));
+    assertThrows("uid cannot be null or empty", IllegalArgumentException.class,
+            () -> system1.addEventToInviteeSchedule(null, event1));
+    assertThrows("uid cannot be null or empty", IllegalArgumentException.class,
+            () -> system1.addEventToInviteeSchedule("", event1));
+    assertThrows("uid is not in system", IllegalStateException.class,
+            () -> system1.addEventToInviteeSchedule("hi", event1));
+  }
+
+  @Test
+  public void testAddEventToInviteeSchedule() {
 
   }
 

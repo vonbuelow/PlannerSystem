@@ -75,7 +75,9 @@ public class Schedule implements ScheduleRep {
             && !overlapWith(event) && event.getInvitedUsers().contains(this.name)) {
       this.events.add(event);
     }
-    throw new IllegalStateException("event exists already or conflicts with another");
+    else {
+      throw new IllegalStateException("event exists already or conflicts with another");
+    }
   }
 
   @Override

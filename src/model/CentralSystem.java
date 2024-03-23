@@ -37,7 +37,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   /**
-   * NEW: new constuructor keeping track of a list of schedules;
+   * NEW: new constructor keeping track of a list of schedules;
    */
   public CentralSystem(List<Schedule> schedules) {
     this.allSchedules = new HashMap<>();
@@ -76,9 +76,7 @@ public class CentralSystem implements NUPlannerSystem {
   @Override
   public void addEventToAllSchedules(EventRep event) {
     eventNullException(event);
-    if (this.eventList.contains(event)) {
-      throw new IllegalStateException("event already exists in system");
-    }
+    eventAlreadyExistsException(event);
     // will add an event to all schedules when applicable for invitees/host.
     for (ScheduleRep sched : allSchedules.values()) {
       try {
@@ -87,22 +85,34 @@ public class CentralSystem implements NUPlannerSystem {
         // append to a string and then print it out after
       }
     }
-    if (!this.eventList.contains(event)) {
-      eventList.add(event);
+
+    eventList.add(event);
+  }
+
+  /**
+   * Throws an exception if the given event is already in the current system's
+   * list of events.
+   * @param event event in question
+   * @throws IllegalStateException if the given event is already in the system
+   */
+  private void eventAlreadyExistsException(EventRep event) {
+    if (this.eventList.contains(event)) {
+      throw new IllegalStateException("event already exists in system");
     }
   }
 
   @Override
-  public void addEventToUserSchedules(String uid, EventRep event) {
+  public void addEventToInviteeSchedule(String uid, EventRep event) {
+    if (uid == null || uid.isEmpty()) {
+      throw new IllegalArgumentException("uid cannot be null or empty");
+    }
     eventNullException(event);
-    if (this.eventList.contains(event)) {
-      throw new IllegalStateException("event already exists in system");
+    if (!this.allSchedules.containsKey(uid)) {
+      throw new IllegalStateException("uid is not in system");
     }
     // will add an event to all schedules when applicable for invitees/host.
     this.allSchedules.get(uid).addEvent(event);
-    if (!this.eventList.contains(event)) {
-      eventList.add(event);
-    }
+    eventList.add(event);
   }
 
   /**
@@ -170,21 +180,20 @@ public class CentralSystem implements NUPlannerSystem {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
-    if (uid == null || this.allSchedules.containsKey(uid)) {
+    if (uid == null || !this.allSchedules.containsKey(uid)) {
       throw new IllegalArgumentException("uid cannot be empty or not in the system");
     }
-    event.modifyTime(time);
-    this.allSchedules.get(uid).modifyEvent(event);
+
   }
 
   @Override
   public void modifyLocation(EventRep event, Location loc, String uid) {
-    event.modifyLocation(loc);
+
   }
 
   @Override
   public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid) {
-    event.modifyInvitees(invitees, toAdd);
+
   }
 
   @Override

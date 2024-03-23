@@ -7,6 +7,6 @@ public class PlannerRunner {
   public static void main(String[] args) {
     ReadonlyNUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new NUPlannerTextView(model);
-    view.setVisible(true);
+    //view.setVisible(true);
   }
 }

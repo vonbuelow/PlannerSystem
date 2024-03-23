@@ -31,11 +31,12 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
   void addEventToAllSchedules(EventRep event);
 
   /**
-   * NEWWWWW.
-   * Add an event to a user schedule.
-   * @param event
+   * Add an event to a single user's schedule.
+   * @param event event to be added
+   * @throws IllegalArgumentException if event or uid is null, or uid is empty
+   * @throws IllegalStateException if given user cannot be found in the system
    */
-  void addEventToUserSchedules(String uid, EventRep event);
+  void addEventToInviteeSchedule(String uid, EventRep event);
 
   /**
    * Adds in a new use to the central/NUPlannerSystem.
