@@ -3,6 +3,8 @@ package view;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+
+import controller.Controller;
 import model.NUPlannerSystem;
 import model.ReadonlyNUPlannerSystem;
 import model.ScheduleRep;
@@ -38,7 +40,17 @@ public class NUPlannerTextView implements NUPlannerView {
   }
 
   @Override
+  public void setListener(Controller controller) {
+    // yo no se
+  }
+
+  @Override
+  public void display() {
+    // display the text?
+  }
+
+  /*@Override
   public void render() throws IOException {
     // to do when implementing the controller
-  }
+  }*/
 }
