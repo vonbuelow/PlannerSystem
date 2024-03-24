@@ -48,15 +48,32 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     listOfUsers = new JComboBox<String>(names);
     buttonPanel.add(listOfUsers);
     createButton = new JButton("Create Event");
+    eventButtonListener(createButton, false, frame);
     buttonPanel.add(createButton);
     //createButton.addActionListener();
     scheduleButton = new JButton("Schedule Event");
+    eventButtonListener(scheduleButton, true, frame);
     buttonPanel.add(scheduleButton);
     addSchedule = new JButton("Add Schedule");
     fileButtonListener(addSchedule, frame);
     buttonPanel.add(addSchedule);
     buttonPanel.setBackground(new Color(174, 200, 227));
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+  }
+
+  private void eventButtonListener(JButton createButton,
+                                   boolean isSchedule, MainSystemFrame frame) {
+    createButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("click") && isSchedule) {
+          JDialog event = new JDialog(new EventFrame("Emma", model));
+        }
+        else {
+          JDialog event = new JDialog(new EventFrame("ur mom", model));
+        }
+      }
+    });
   }
 
   private void fileButtonListener(JButton button, MainSystemFrame frame) {

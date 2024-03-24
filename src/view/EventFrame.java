@@ -10,35 +10,16 @@ import model.NUPlannerSystem;
  * Describes capabilities of event frame.
  */
 public class EventFrame extends JFrame {
-  private String name, location, start, end;
-  private JMenu isOnline, days;
-  private JList<String> availableUsers;
 
-  EventFrame(String selectedUser) {
-    this.name = "";
-    this.location = "";
-    this.start = "";
-    this.end = "";
-    defaultOnline(this.isOnline);
-    defaultDays(this.days);
-    this.availableUsers = new JList<>(new String[]{selectedUser}); // this wouldn't be possible right?? because we need
-                                                                   // at least one person to be the host.
+  EventFrame(String name, NUPlannerSystem model) {
+    this.setResizable(false);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    this.add(new EventPanel(name, model));
+    this.pack();
+    this.setVisible(true);
   }
 
-  private void defaultDays(JMenu days) {
-  }
-
-  private void defaultOnline(JMenu isOnline) {
-  }
-
-
-  EventFrame(EventRep event, NUPlannerSystem model) {
-    this.name = event.getName();
-    this.location = event.getLocation().getPlace();
-    this.start = event.getTime().getStartTime();
-    this.end = event.getTime().getEndTime();
-    this.availableUsers = new JList<>(model.usersInSystem().toArray(new String[0]));
-  }
 
   /*
   needs to show all relevant info of an event
