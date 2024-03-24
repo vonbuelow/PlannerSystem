@@ -39,6 +39,10 @@ public class CentralSystemTests {
   String noelisA1;
   String noelisA2;
 
+  Time time1;
+
+  Location loc1;
+
   EventRep event1;
   EventRep event2;
   EventRep event3;
@@ -50,10 +54,7 @@ public class CentralSystemTests {
   ScheduleRep profLuciaSched;
   ScheduleRep emmaVBSched;
   ScheduleRep noelisA1Sched;
-
-  Map<String, ScheduleRep> profLuciaMap;
-  Map<String, ScheduleRep> emmaVBMap;
-  Map<String, ScheduleRep> noelisA1Map;
+  ScheduleRep noelisA2Sched;
 
   Map<String, ScheduleRep> allSchedulesInSystem1;
   List<EventRep> allEventsInSystem1;
@@ -69,7 +70,11 @@ public class CentralSystemTests {
     profLucia = "Prof. Lucia";
     emmaVB = "Emma Vonbuelow";
     noelisA1 = "Noelis Aponte";
-    noelisA2 = "Noelis Aponte";
+    noelisA2 = "Noelis Aponte2";
+
+    time1 = new Time(Day.MONDAY, "1500", Day.MONDAY, "2000");
+
+    loc1 = new Location(false, "restaurant");
 
     event1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
@@ -91,18 +96,13 @@ public class CentralSystemTests {
     profLuciaSched = new Schedule(profLucia, profLuciaEvents);
     emmaVBSched = new Schedule(emmaVB, emmaVBEvents);
     noelisA1Sched = new Schedule(noelisA1, noelisA1Events);
-
-    profLuciaMap = new HashMap<String, ScheduleRep>();
-    profLuciaMap.put(profLucia, profLuciaSched);
-    emmaVBMap = new HashMap<String, ScheduleRep>();
-    emmaVBMap.put(emmaVB, emmaVBSched);
-    noelisA1Map = new HashMap<String, ScheduleRep>();
-    noelisA1Map.put(noelisA1, noelisA1Sched);
+    noelisA2Sched = new Schedule(noelisA2, new ArrayList<EventRep>());
 
     allSchedulesInSystem1 = new HashMap<String, ScheduleRep>();
     allSchedulesInSystem1.put(profLucia, profLuciaSched);
     allSchedulesInSystem1.put(emmaVB, emmaVBSched);
     allSchedulesInSystem1.put(noelisA1, noelisA1Sched);
+    allSchedulesInSystem1.put(noelisA2, noelisA2Sched);
     allEventsInSystem1 = new ArrayList<EventRep>();
     allEventsInSystem1.add(event1);
 
@@ -111,16 +111,15 @@ public class CentralSystemTests {
   }
 
   @Test
-  public void testSaveScheduleValid() {
+  public void testSaveSchedule() {
     //TO TEST
   }
 
   /**
-   * Invalid cases.
-   * Tests adding a null or already existing event to all invited users' schedules.
+   * Tests exceptions for addEventToAllSchedules in CentralSystem.
    */
   @Test
-  public void testAddEventToAllSchedulesInvalid() {
+  public void testAddEventToAllSchedulesExceptions() {
     assertThrows("event cannot be null", IllegalArgumentException.class,
             () -> system1.addEventToAllSchedules(null));
     assertThrows("event already exists in system", IllegalStateException.class,
@@ -202,11 +201,10 @@ public class CentralSystemTests {
   }
 
   /**
-   * Invalid cases.
-   * Tests adding a null uid or event, empty uid, or non-existent uid.
+   * Tests exceptions for addEventToInviteeSchedule in CentralSystem.
    */
   @Test
-  public void testAddEventToInviteeScheduleInvalid() {
+  public void testAddEventToInviteeScheduleExceptions() {
     assertThrows("event cannot be null", IllegalArgumentException.class,
             () -> system1.addEventToInviteeSchedule(emmaVB, null));
     assertThrows("uid cannot be null or empty", IllegalArgumentException.class,
@@ -222,32 +220,102 @@ public class CentralSystemTests {
     //
   }
 
+  /**
+   * Tests exceptions for modifyName in CentralSystem.
+   */
   @Test
-  public void testModifyName() {
-
-  }
-
-  @Test
-  public void testModifyTime() {
-
-  }
-
-  @Test
-  public void testModifyLocation() {
-
-  }
-
-  @Test
-  public void testModifyInvitees() {
-
+  public void testModifyNameExceptions() {
+    assertThrows("the given event and event name cannot be null/empty",
+            IllegalArgumentException.class,
+            () -> system1.modifyName(null, null));
+    assertThrows("the given event and event name cannot be null/empty",
+            IllegalArgumentException.class,
+            () -> system1.modifyName(null, "event1"));
+    assertThrows("the given event and event name cannot be null/empty",
+            IllegalArgumentException.class,
+            () -> system1.modifyName(event1, ""));
+    assertThrows("event must be in system",
+            IllegalStateException.class,
+            () -> system1.modifyName(event3, "event3"));
   }
 
   /**
-   * Invalid cases.
-   * Tests removing a null uid or event, empty uid, or non-existent uid.
+   * Tests exceptions for modifyTime in CentralSystem.
    */
   @Test
-  public void testRemoveEventInvalid() {
+  public void testModifyTimeExceptions() {
+    assertThrows("event cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.modifyTime(null, time1));
+    assertThrows("time cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.modifyTime(event1, null));
+    assertThrows("event must be in system",
+            IllegalStateException.class,
+            () -> system1.modifyTime(event2, time1));
+  }
 
+  /**
+   * Tests exceptions for modifyLocation in CentralSystem.
+   */
+  @Test
+  public void testModifyLocationExceptions() {
+    assertThrows("event cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.modifyLocation(null, loc1));
+    assertThrows("location cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.modifyLocation(event1, null));
+    assertThrows("event must be in system",
+            IllegalStateException.class,
+            () -> system1.modifyLocation(event3, loc1));
+  }
+
+  /**
+   * Tests exceptions for modifyInvitees in CentralSystem.
+   */
+  @Test
+  public void testModifyInviteesExceptions() {
+    assertThrows("event cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.modifyInvitees(null, new ArrayList<String>(),
+                    false, "profLucia"));
+    assertThrows("uid and invitees cannot be null, "
+            + "there must be at least one invitee", IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1, null, true, "profLucia"));
+    assertThrows("uid and invitees cannot be null, "
+                    + "there must be at least one invitee", IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1, new ArrayList<String>(),
+                    true, "profLucia"));
+    assertThrows("uid and invitees cannot be null, "
+                    + "there must be at least one invitee", IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1, new ArrayList<String>(Arrays.asList(emmaVB)),
+                    false, null));
+    assertThrows("event must be in system",
+            IllegalStateException.class,
+            () -> system1.modifyInvitees(event2, new ArrayList<String>(Arrays.asList(emmaVB)),
+                    false, "profLucia"));
+  }
+
+  /**
+   * Tests exceptions for removeEvent in CentralSystem.
+   */
+  @Test
+  public void testRemoveEventExceptions() {
+    assertThrows("event cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.removeEvent(null, "profLucia"));
+    assertThrows("uid cannot be null or empty",
+            IllegalArgumentException.class,
+            () -> system1.removeEvent(event1, null));
+    assertThrows("uid cannot be null or empty",
+            IllegalArgumentException.class,
+            () -> system1.removeEvent(event1, ""));
+    assertThrows("event must be in system",
+            IllegalStateException.class,
+            () -> system1.removeEvent(event3, emmaVB));
+    assertThrows("the given user must be invited to the event",
+            IllegalStateException.class,
+            () -> system1.removeEvent(event1, noelisA2));
   }
 }

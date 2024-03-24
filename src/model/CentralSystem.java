@@ -176,13 +176,18 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public void modifyName(EventRep event, String eventName) {
-    if (event == null || eventName == null) {
+    if (event == null || eventName == null || eventName.isEmpty()) {
       throw new IllegalArgumentException("the given event and event name cannot be null");
     }
     eventNotInSystemException(event);
 
     int eventIdx = this.eventList.indexOf(event);
-    this.eventList.get(eventIdx).modifyName(eventName);
+    EventRep eventToModify = this.eventList.get(eventIdx);
+    try {
+      eventToModify.modifyName(eventName);
+    } catch (IllegalStateException ignore) {
+      // Print message that name couldn't be modified/ignore
+    }
   }
 
   @Override
@@ -192,8 +197,15 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalArgumentException("time cannot be null");
     }
     eventNotInSystemException(event);
+
     int eventIdx = this.eventList.indexOf(event);
-    this.eventList.get(eventIdx).modifyTime(time);
+    EventRep eventToModify = this.eventList.get(eventIdx);
+
+    try {
+      eventToModify.modifyTime(time);
+    } catch (IllegalStateException ignore) {
+      // Print message that time couldn't be modified/ignore
+    }
 
   }
 
@@ -204,8 +216,15 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalArgumentException("location cannot be null");
     }
     eventNotInSystemException(event);
+
     int eventIdx = this.eventList.indexOf(event);
-    this.eventList.get(eventIdx).modifyLocation(loc);
+    EventRep eventToModify = this.eventList.get(eventIdx);
+
+    try {
+      eventToModify.modifyLocation(loc);
+    } catch (IllegalStateException ignore) {
+      // Print message that location couldn't be modified/ignore
+    }
   }
 
   @Override
@@ -221,6 +240,9 @@ public class CentralSystem implements NUPlannerSystem {
   @Override
   public void removeEvent(EventRep event, String uid) {
     eventNullException(event);
+    if (uid == null || uid.isEmpty()) {
+      throw new IllegalArgumentException("uid cannot be null or empty");
+    }
     eventNotInSystemException(event);
     if (!event.getInvitedUsers().contains(uid)) {
       throw new IllegalStateException("the given user must be invited to the event");
