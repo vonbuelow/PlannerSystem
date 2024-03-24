@@ -119,7 +119,15 @@ public class Event implements EventRep {
 
   @Override
   public void modifyInvitees(List<String> invitees, boolean toAdd) {
-    // modify events
+    if (invitees == null || invitees.isEmpty()) {
+      throw new IllegalArgumentException("invitees cannot be null or empty");
+    }
+    if (toAdd) {
+      this.invitees.addAll(invitees);
+    }
+    else {
+      this.invitees.removeAll(invitees);
+    }
   }
 }
 

@@ -228,13 +228,60 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid) {
+  public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd) {
     eventNullException(event);
-    if (invitees == null || uid == null || invitees.isEmpty()) {
+    if (invitees == null || invitees.isEmpty()) {
       throw new IllegalArgumentException("uid and invitees cannot be null, "
               + "there must be at least one invitee");
     }
+    if (invitees.contains(event.getInvitedUsers().get(0))) {
+      throw new IllegalArgumentException("invitees cannot contain host");
+    }
+    if (inviteesContainsDuplicates(invitees)) {
+      throw new IllegalArgumentException("invitees must be unique");
+    }
     eventNotInSystemException(event);
+
+    if (toAdd) {
+      List<String> usersToAdd = new ArrayList<>();
+      for (String invitee : invitees) {
+        if (event.getInvitedUsers().stream().noneMatch(f -> f.equals(invitee))) {
+          usersToAdd.add(invitee);
+        }
+      }
+
+      int eventIdx = this.eventList.indexOf(event);
+      EventRep eventToModify = this.eventList.get(eventIdx);
+      eventToModify.modifyInvitees(usersToAdd, true);
+    }
+    else {
+      List<String> usersToRemove = new ArrayList<>();
+      for (String invitee : invitees) {
+        if (event.getInvitedUsers().stream().anyMatch(f -> f.equals(invitee))) {
+          usersToRemove.add(invitee);
+        }
+
+        int eventIdx = this.eventList.indexOf(event);
+        EventRep eventToModify = this.eventList.get(eventIdx);
+        eventToModify.modifyInvitees(usersToRemove, false);
+      }
+    }
+  }
+
+  /**
+   * Checks if given list of invitees has multiple of same value.
+   * @param invitees invitees in question
+   * @return true iff there are duplicated invitee names
+   */
+  private boolean inviteesContainsDuplicates(List<String> invitees) {
+    for (int i = 0; i < invitees.size() - 1; i++) {
+      for (int j = i + 1; j < invitees.size(); j++) {
+        if (i != j && invitees.get(i).equals(invitees.get(j))) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   @Override

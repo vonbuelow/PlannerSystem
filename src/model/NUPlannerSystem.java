@@ -77,10 +77,11 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
   /**
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
-   * @throws IllegalArgumentException if event, invitees, or uid is null
-   * @throws IllegalStateException if event does not exist in system
+   * @throws IllegalArgumentException if event or invitees is null/contains host
+   * @throws IllegalStateException if event does not exist in system or invitees
+   *     contains the host
    */
-  void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid);
+  void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd);
 
   /**
    * Remove an existing event from the system. If event is removed from host's
