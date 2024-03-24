@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
  * Contains examples of a CentralSystem and its features such as a set of users and their
- * schedules and lists of Event.
+ * schedules and lists of events.
  */
 public class CentralSystemTests {
   Map<String, ScheduleRep> noUsersMap;
