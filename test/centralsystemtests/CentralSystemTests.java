@@ -279,22 +279,16 @@ public class CentralSystemTests {
     assertThrows("event cannot be null",
             IllegalArgumentException.class,
             () -> system1.modifyInvitees(null, new ArrayList<String>(),
-                    false, "profLucia"));
-    assertThrows("uid and invitees cannot be null, "
-            + "there must be at least one invitee", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1, null, true, "profLucia"));
-    assertThrows("uid and invitees cannot be null, "
-                    + "there must be at least one invitee", IllegalArgumentException.class,
+                    false));
+    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1, null, true));
+    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
             () -> system1.modifyInvitees(event1, new ArrayList<String>(),
-                    true, "profLucia"));
-    assertThrows("uid and invitees cannot be null, "
-                    + "there must be at least one invitee", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1, new ArrayList<String>(Arrays.asList(emmaVB)),
-                    false, null));
+                    true));
     assertThrows("event must be in system",
             IllegalStateException.class,
             () -> system1.modifyInvitees(event2, new ArrayList<String>(Arrays.asList(emmaVB)),
-                    false, "profLucia"));
+                    false));
   }
 
   /**

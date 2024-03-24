@@ -231,8 +231,7 @@ public class CentralSystem implements NUPlannerSystem {
   public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd) {
     eventNullException(event);
     if (invitees == null || invitees.isEmpty()) {
-      throw new IllegalArgumentException("uid and invitees cannot be null, "
-              + "there must be at least one invitee");
+      throw new IllegalArgumentException("invitees cannot be null or empty");
     }
     if (invitees.contains(event.getInvitedUsers().get(0))) {
       throw new IllegalArgumentException("invitees cannot contain host");
