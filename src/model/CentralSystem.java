@@ -77,16 +77,19 @@ public class CentralSystem implements NUPlannerSystem {
   public void addEventToAllSchedules(EventRep event) {
     eventNullException(event);
     eventAlreadyExistsException(event);
+    boolean added = false;
     // will add an event to all schedules when applicable for invitees/host.
     for (ScheduleRep sched : allSchedules.values()) {
       try {
         sched.addEvent(event);
+        added = true;
       } catch (IllegalStateException | IllegalArgumentException ex) {
         // append to a string and then print it out after
       }
     }
-
-    eventList.add(event);
+    if (added) {
+      eventList.add(event);
+    }
   }
 
   /**
@@ -110,9 +113,19 @@ public class CentralSystem implements NUPlannerSystem {
     if (!this.allSchedules.containsKey(uid)) {
       throw new IllegalStateException("uid is not in system");
     }
+
+    boolean added = false;
     // will add an event to all schedules when applicable for invitees/host.
-    this.allSchedules.get(uid).addEvent(event);
-    eventList.add(event);
+    try {
+      this.allSchedules.get(uid).addEvent(event);
+      added = true;
+    } catch (IllegalStateException e) {
+      // ignore
+    }
+
+    if (added) {
+      eventList.add(event);
+    }
   }
 
   /**
@@ -162,46 +175,53 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void modifyName(EventRep event, String eventName, String uid) {
-    if (event == null || eventName == null || uid == null) {
-      throw new IllegalArgumentException("the given event, name, and uid cannot be null");
+  public void modifyName(EventRep event, String eventName) {
+    if (event == null || eventName == null) {
+      throw new IllegalArgumentException("the given event and event name cannot be null");
     }
-    if (!this.eventList.contains(event)
-            || !allSchedules.get(uid).eventsPlanned().contains(event)) {
-      throw new IllegalStateException("event must be in the system and"
-              + " in the given user's schedule");
-    }
+    eventNotInSystemException(event);
 
+    int eventIdx = this.eventList.indexOf(event);
+    this.eventList.get(eventIdx).modifyName(eventName);
   }
 
   @Override
-  public void modifyTime(EventRep event, Time time, String uid) {
+  public void modifyTime(EventRep event, Time time) {
     eventNullException(event);
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
-    if (uid == null || !this.allSchedules.containsKey(uid)) {
-      throw new IllegalArgumentException("uid cannot be empty or not in the system");
-    }
+    eventNotInSystemException(event);
+    int eventIdx = this.eventList.indexOf(event);
+    this.eventList.get(eventIdx).modifyTime(time);
 
   }
 
   @Override
-  public void modifyLocation(EventRep event, Location loc, String uid) {
-
+  public void modifyLocation(EventRep event, Location loc) {
+    eventNullException(event);
+    if (loc == null) {
+      throw new IllegalArgumentException("location cannot be null");
+    }
+    eventNotInSystemException(event);
+    int eventIdx = this.eventList.indexOf(event);
+    this.eventList.get(eventIdx).modifyLocation(loc);
   }
 
   @Override
   public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid) {
-
+    eventNullException(event);
+    if (invitees == null || uid == null || invitees.isEmpty()) {
+      throw new IllegalArgumentException("uid and invitees cannot be null, "
+              + "there must be at least one invitee");
+    }
+    eventNotInSystemException(event);
   }
 
   @Override
   public void removeEvent(EventRep event, String uid) {
     eventNullException(event);
-    if (!eventList.contains(event)) {
-      throw new IllegalStateException("event must be in system");
-    }
+    eventNotInSystemException(event);
     if (!event.getInvitedUsers().contains(uid)) {
       throw new IllegalStateException("the given user must be invited to the event");
     }
@@ -212,6 +232,16 @@ public class CentralSystem implements NUPlannerSystem {
     }
     else {
       allSchedules.get(uid).removeEvent(event);
+    }
+  }
+
+  /**
+   * Throws an exception if the given event is not currently in the system.
+   * @param event event in question
+   */
+  private void eventNotInSystemException(EventRep event) {
+    if (!eventList.contains(event)) {
+      throw new IllegalStateException("event must be in system");
     }
   }
 

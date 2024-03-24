@@ -103,7 +103,7 @@ public class Schedule implements ScheduleRep {
   public void modifyEvent(EventRep event) {
     eventNullException(event);
     if (this.eventsPlanned().stream().anyMatch(f -> f.getName().equals(event.getName()))) {
-      for (EventRep events: this.eventsPlanned()) {
+      for (EventRep events : this.eventsPlanned()) {
         if (events.getName().equals(event.getName())) {
           events = event; // not being changed
         }

@@ -51,35 +51,33 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * Changes it to the given event name.
    * @param event the existing event to modify
    * @param eventName new name to give the event
-   * @param uid the user id of the user's schedule
-   * @throws IllegalArgumentException if event, eventName, or uid is null
-   * @throws IllegalStateException if event: does not exist in system,
-   *     or is not in the given user's schedule, if eventName is the same as another
+   * @throws IllegalArgumentException if event or eventName is null
+   * @throws IllegalStateException if event: does not exist in system, if eventName is the same as another
    *     event in given user's schedule, or if uid is empty, not in system, or not
    *     the host of the given event.
    */
-  void modifyName(EventRep event, String eventName, String uid);
+  void modifyName(EventRep event, String eventName);
 
   /**
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
-   * @throws IllegalArgumentException if event is null
+   * @throws IllegalArgumentException if event or time is null
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyTime(EventRep event, Time time, String uid);
+  void modifyTime(EventRep event, Time time);
 
   /**
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
-   * @throws IllegalArgumentException if event is null
+   * @throws IllegalArgumentException if event or location is null
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyLocation(EventRep event, Location loc, String uid);
+  void modifyLocation(EventRep event, Location loc);
 
   /**
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
-   * @throws IllegalArgumentException if event is null
+   * @throws IllegalArgumentException if event, invitees, or uid is null
    * @throws IllegalStateException if event does not exist in system
    */
   void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd, String uid);
@@ -88,9 +86,10 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * Remove an existing event from the system. If event is removed from host's
    * schedule, remove the event from all invitees' schedules. Otherwise, remove
    * just from the single invitee's schedule.
+   * Event should be updated from all users' schedules.
    * @param     event the event to be removed.
    * @param     uid the user id of the user.
-   * @throws IllegalArgumentException if the given event or uid is null
+   * @throws IllegalArgumentException if the given event or uid is null or empty
    * @throws IllegalStateException if the given event is not currently in the system
    *     or the given uid is not invited to the given event
    */
