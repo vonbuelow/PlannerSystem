@@ -20,7 +20,9 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private JMenu menu;
   private JMenuBar menuBar;
   private JMenuItem saveAllItem;
-  private JComboBox listOfUsers;
+  private SchedulePanel content;
+  private JComboBox<String> listOfUsers;
+  private String selectedUser;
 
   public MainSystemFrame(NUPlannerSystem model) {
     this.model = model;
@@ -29,7 +31,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     this.setJMenuBar(this.menuBar);
     // create the 7 panels
     // overlap the helpful lines
-
+    this.content = new SchedulePanel(model);
+    this.add(this.content);
+    this.setMinimumSize(new Dimension(700, 480));
+    this.pack();
   }
 
   private void createMenu() {
@@ -65,8 +70,9 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   private void buttonLayout(MainSystemFrame frame) {
     JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
-    String[] names = {"emma", "noelis", "ur mom"};
+    String[] names = this.model.usersInSystem().toArray(new String[0]);
     listOfUsers = new JComboBox<String>(names);
+    usersListener(this.listOfUsers);
     buttonPanel.add(listOfUsers);
     createButton = new JButton("Create Event");
     eventButtonListener(createButton, false, frame);
@@ -80,6 +86,18 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     buttonPanel.add(addSchedule);
     buttonPanel.setBackground(new Color(174, 200, 227));
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+  }
+
+  private void usersListener(JComboBox<String> listOfUsers) {
+    listOfUsers.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        // Update selectedUser with the currently selected item
+        selectedUser = String.valueOf(listOfUsers.getSelectedItem());
+        System.out.println("Selected User: " + selectedUser); // Just for demonstration
+      }
+    });
+
   }
 
   private void eventButtonListener(JButton createButton,
@@ -108,11 +126,21 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
         // Check if a directory was selected
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-          System.out.println("Selected directory: "
+          model.addUser(fileChooser.getSelectedFile());
+          String[] names = model.usersInSystem().toArray(new String[0]);
+          updateListOfUsers();
+          content.updateView();
+          System.out.println(model.usersInSystem().toString());
+          System.out.println("Selected file: "
                   + fileChooser.getSelectedFile().getAbsolutePath());
         }
       }
     });
+  }
+
+  private void updateListOfUsers() {
+    String[] names = model.usersInSystem().toArray(new String[0]);
+    listOfUsers.setModel(new DefaultComboBoxModel<>(names));
   }
 
   @Override
