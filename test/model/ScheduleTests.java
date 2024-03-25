@@ -1,4 +1,4 @@
-package centralsystemtests;
+package model;
 
 /**
  * Tests that work with schedule.

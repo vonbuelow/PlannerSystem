@@ -44,12 +44,10 @@ public class CentralSystem implements NUPlannerSystem {
     this.eventList = new ArrayList<EventRep>();
 
     // valid schedules is handled by addNewUser method.
-
     for (Schedule schedule: schedules) {
       Map<String, ScheduleRep> user = new HashMap<>();
       user.put(schedule.scheduleOwner(), schedule);
       addNewUser(user);
-
     }
   }
 
@@ -295,7 +293,11 @@ public class CentralSystem implements NUPlannerSystem {
     }
     if (uid.equals(event.getInvitedUsers().get(0))) {
       for (ScheduleRep sched : allSchedules.values()) {
-        sched.removeEvent(event);
+        try {
+          sched.removeEvent(event);
+        } catch (IllegalStateException e) {
+          // user is not invited
+        }
       }
     }
     else {
@@ -315,6 +317,9 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public void addUser(File file) {
+    if (file == null) {
+      throw new IllegalArgumentException("file cannot be null");
+    }
     try {
       XMLReader reader = new XMLReader(file);
       addNewUser(reader.readXML());

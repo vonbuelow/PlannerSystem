@@ -52,9 +52,8 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @param event the existing event to modify
    * @param eventName new name to give the event
    * @throws IllegalArgumentException if event or eventName is null/empty
-   * @throws IllegalStateException if event: does not exist in system, if eventName is the same as another
-   *     event in given user's schedule, or if uid is empty, not in system, or not
-   *     the host of the given event.
+   * @throws IllegalStateException if event: does not exist in system, if eventName
+   *     is the same as another event in given user's schedule or not in system
    */
   void modifyName(EventRep event, String eventName);
 
@@ -62,7 +61,8 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
    * @throws IllegalArgumentException if event or time is null
-   * @throws IllegalStateException if event does not exist in system
+   * @throws IllegalStateException if event does not exist in system, or time overlaps
+   *     with another event in host's schedule
    */
   void modifyTime(EventRep event, Time time);
 
@@ -70,7 +70,8 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * Change an existing event that is passed in to pull up.
    * @param     event the new event to change/edit.
    * @throws IllegalArgumentException if event or location is null
-   * @throws IllegalStateException if event does not exist in system
+   * @throws IllegalStateException if event does not exist in system, if given location
+   *     is the same as the current
    */
   void modifyLocation(EventRep event, Location loc);
 
@@ -96,6 +97,11 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    */
   void removeEvent(EventRep event, String uid);
 
-
+  /**
+   * Allows client to give a user schedule as an XML file to the system.
+   * XML file gets interpreted into a ScheduleRep.
+   * @param file user schedule as xml file
+   * @throws IllegalArgumentException if given file is null
+   */
   void addUser(File file);
 }

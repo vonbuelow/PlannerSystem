@@ -1,4 +1,4 @@
-package centralsystemtests;
+package model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,12 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.CentralSystem;
-import model.Event;
-import model.EventRep;
-import model.NUPlannerSystem;
-import model.Schedule;
-import model.ScheduleRep;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;

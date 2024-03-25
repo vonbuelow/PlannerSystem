@@ -1,4 +1,4 @@
-package centralsystemtests;
+package model.eventfields;
 
 import org.junit.Before;
 import org.junit.Test;
