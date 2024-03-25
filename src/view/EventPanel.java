@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.swing.*;
@@ -22,44 +24,47 @@ public class EventPanel extends JPanel {
     eventNamePanel(this);
     locationPanel(this);
     userPanel(this, model.usersInSystem());
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setVisible(true);
     // how to display all users to select?? with the first person being the host
   }
 
   private void userPanel(EventPanel eventPanel, Set<String> strings) {
-    JPanel userListPanel = new JPanel(new BorderLayout());
+    JPanel userListPanel = new JPanel();
     userListPanel.add(new JLabel("Available users"), BorderLayout.NORTH);
     userListPanel.add(new JList<String>(strings.toArray(new String[0])));
     eventPanel.add(userListPanel);
   }
 
+  // 33 lines atm
   private void locationPanel(EventPanel eventPanel) {
-    JPanel locationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    locationPanel.add(new JLabel("Location:"));
-    locationPanel.add(new JTextField(15)); //??
-    eventPanel.add(locationPanel);
+    JPanel location = new JPanel();
+    location.add(new JLabel("Location:"));
+    location.setAlignmentX(RIGHT_ALIGNMENT);
+    eventPanel.add(location);
 
-    JPanel onlinePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    onlinePanel.add(defaultOnline());
-    onlinePanel.add(new JTextField(15));
-    eventPanel.add(onlinePanel);
+    JPanel locationOptions = new JPanel();
+    String[] options = {"Is online", "Is not online"};
+    locationOptions.add(new JList<>(options));
+    locationOptions.add(new JTextField(15));
+    eventPanel.add(locationOptions);
 
-    JPanel startDayPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel startDayPanel = new JPanel();
     startDayPanel.add(new JLabel("Starting Day:"));
     startDayPanel.add(this.days);
     eventPanel.add(startDayPanel);
 
-    JPanel startTimePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel startTimePanel = new JPanel();
     startTimePanel.add(new JLabel("Starting Time:"));
     startTimePanel.add(new JTextField(15));
     eventPanel.add(startTimePanel);
 
-    JPanel endDayPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel endDayPanel = new JPanel();
     endDayPanel.add(new JLabel("Ending Day:"));
     endDayPanel.add(this.days);
     eventPanel.add(startDayPanel);
 
-    JPanel endTimePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel endTimePanel = new JPanel();
     endTimePanel.add(new JLabel("Ending Time:"));
     startDayPanel.add(new JTextField(15));
     eventPanel.add(startDayPanel);
@@ -75,7 +80,7 @@ public class EventPanel extends JPanel {
   }
 
   private void eventNamePanel(EventPanel eventPanel) {
-    JPanel eventNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JPanel eventNamePanel = new JPanel();
     eventNamePanel.add(new JLabel("Event name:"));
     eventNamePanel.add(new JTextField(15));
     eventPanel.add(eventNamePanel);
@@ -89,12 +94,5 @@ public class EventPanel extends JPanel {
     this.days.add(new JMenuItem("Thursday"));
     this.days.add(new JMenuItem("Friday"));
     this.days.add(new JMenuItem("Saturday"));
-  }
-
-  private JMenu defaultOnline() {
-    isOnline = new JMenu();
-    isOnline.add(new JMenuItem("false"));
-    isOnline.add(new JMenuItem("false"));
-    return isOnline;
   }
 }

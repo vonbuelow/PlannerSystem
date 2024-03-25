@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.File;
 
 import javax.swing.*;
 import controller.Controller;
@@ -18,6 +19,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private JButton createButton, scheduleButton, addSchedule;
   private JMenu menu;
   private JMenuBar menuBar;
+  private JMenuItem saveAllItem;
   private JComboBox listOfUsers;
 
   public MainSystemFrame(NUPlannerSystem model) {
@@ -25,14 +27,33 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     createMSFrame(this);
     createMenu();
     this.setJMenuBar(this.menuBar);
+    // create the 7 panels
+    // overlap the helpful lines
+
   }
 
   private void createMenu() {
     this.menuBar = new JMenuBar();
     this.menu = new JMenu("File");
-    menuBar.add(this.menu);
-    menu.add(new JMenuItem("Save all Calendars"));
-    menu.add(new JMenuItem("Save this Calendar"));
+    this.menuBar.add(this.menu);
+    this.saveAllItem = new JMenuItem("Save all Calendars");
+    saveAllListener(this.saveAllItem);
+    menu.add(saveAllItem);
+  }
+
+  private void saveAllListener(JMenuItem saveAllItem) {
+    saveAllItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        if (chooser.showOpenDialog(saveAllItem) == JFileChooser.APPROVE_OPTION) {
+          File selectedDirectory = chooser.getSelectedFile();
+          System.out.println("Selected directory: " + selectedDirectory.getAbsolutePath());
+        }
+      }
+    });
   }
 
   private void createMSFrame(MainSystemFrame frame) {

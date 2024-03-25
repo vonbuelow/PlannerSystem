@@ -12,9 +12,9 @@ import model.NUPlannerSystem;
 public class EventFrame extends JFrame {
 
   EventFrame(String name, NUPlannerSystem model) {
+    this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.add(new EventPanel(name, model));
     this.pack();
     this.setVisible(true);
