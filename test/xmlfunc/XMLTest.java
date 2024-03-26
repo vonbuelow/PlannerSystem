@@ -51,8 +51,7 @@ public class XMLTest {
   // test the reader makes an instance of a schedule
   @Test
   public void testReadingSchedule() {
-    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
-            + "PlannerSystem\\src\\shortProf.xml"));
+    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
 
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");

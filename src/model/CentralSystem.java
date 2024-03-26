@@ -168,7 +168,7 @@ public class CentralSystem implements NUPlannerSystem {
         }
       }
     }
-
+    System.out.println(existingEvents.toString());
     this.allSchedules.put(userID, existingSched);
   }
 

@@ -15,12 +15,22 @@ import model.NUPlannerSystem;
  */
 public class EventPanel extends JPanel {
 
-  private String name, location, start, end;
-  private JMenu isOnline, days;
-  private JList<String> availableUsers;
+  private JTextField eventNameField;
+  private JComboBox<String> startDayComboBox, endDayComboBox;
+  private JTextField startTimeField, endTimeField;
+  private JTextField locationField;
+  private JList<String> availableUsersList;
+  private JMenu isOnline;
+  private JComboBox<String> startDay, endDay;
+  private FlowLayout layout;
 
   EventPanel(String selectedUser, NUPlannerSystem model) {
+    eventNameField = new JTextField(15);
+    startTimeField = new JTextField(15);
+    endTimeField = new JTextField(15);
+    locationField = new JTextField(15);
     defaultDays();
+    this.layout = (new FlowLayout(FlowLayout.LEFT));
     eventNamePanel(this);
     locationPanel(this);
     userPanel(this, model.usersInSystem());
@@ -31,68 +41,102 @@ public class EventPanel extends JPanel {
 
   private void userPanel(EventPanel eventPanel, Set<String> strings) {
     JPanel userListPanel = new JPanel();
-    userListPanel.add(new JLabel("Available users"), BorderLayout.NORTH);
-    userListPanel.add(new JList<String>(strings.toArray(new String[0])));
+    userListPanel.setLayout(layout);
+    userListPanel.add(new JLabel("Available users:"), BorderLayout.NORTH);
+    availableUsersList = new JList<String>(strings.toArray(new String[0]));
+    userListPanel.add(availableUsersList);
     eventPanel.add(userListPanel);
   }
 
   // 33 lines atm
   private void locationPanel(EventPanel eventPanel) {
+    defaultDays();
+
     JPanel location = new JPanel();
+    location.setLayout(layout);
     location.add(new JLabel("Location:"));
-    location.setAlignmentX(RIGHT_ALIGNMENT);
     eventPanel.add(location);
 
     JPanel locationOptions = new JPanel();
+    locationOptions.setLayout(layout);
     String[] options = {"Is online", "Is not online"};
-    locationOptions.add(new JList<>(options));
-    locationOptions.add(new JTextField(15));
+    locationOptions.add(new JComboBox<>(options));
+    locationOptions.add(locationField);
     eventPanel.add(locationOptions);
 
     JPanel startDayPanel = new JPanel();
+    startDayPanel.setLayout(layout);
     startDayPanel.add(new JLabel("Starting Day:"));
-    startDayPanel.add(this.days);
+    startDayPanel.add(startDayComboBox);
     eventPanel.add(startDayPanel);
 
     JPanel startTimePanel = new JPanel();
+    startTimePanel.setLayout(layout);
     startTimePanel.add(new JLabel("Starting Time:"));
-    startTimePanel.add(new JTextField(15));
+    startTimePanel.add(startTimeField);
     eventPanel.add(startTimePanel);
 
     JPanel endDayPanel = new JPanel();
+    endDayPanel.setLayout(layout);
     endDayPanel.add(new JLabel("Ending Day:"));
-    endDayPanel.add(this.days);
-    eventPanel.add(startDayPanel);
+    endDayPanel.add(endDayComboBox);
+    eventPanel.add(endDayPanel);
 
     JPanel endTimePanel = new JPanel();
+    endTimePanel.setLayout(layout);
     endTimePanel.add(new JLabel("Ending Time:"));
-    startDayPanel.add(new JTextField(15));
+    startDayPanel.add(endTimeField);
     eventPanel.add(startDayPanel);
   }
 
 
   EventPanel(EventRep event, NUPlannerSystem model) {
-    this.name = event.getName();
-    this.location = event.getLocation().getPlace();
-    this.start = event.getTime().getStartTime();
-    this.end = event.getTime().getEndTime();
-    this.availableUsers = new JList<>(model.usersInSystem().toArray(new String[0]));
+    this.eventNameField = new JTextField(event.getName());
+    this.locationField = new JTextField(event.getLocation().getPlace());
+    this.startTimeField = new JTextField(event.getTime().getStartTime());
+    this.endTimeField = new JTextField(event.getTime().getEndTime());
+    this.availableUsersList = new JList<>(model.usersInSystem().toArray(new String[0]));
   }
 
   private void eventNamePanel(EventPanel eventPanel) {
     JPanel eventNamePanel = new JPanel();
+    eventNamePanel.setLayout(layout);
     eventNamePanel.add(new JLabel("Event name:"));
-    eventNamePanel.add(new JTextField(15));
+    eventNamePanel.add(eventNameField);
     eventPanel.add(eventNamePanel);
   }
   private void defaultDays() {
-    this.days = new JMenu();
-    this.days.add(new JMenuItem("Sunday"));
-    this.days.add(new JMenuItem("Monday"));
-    this.days.add(new JMenuItem("Tuesday"));
-    this.days.add(new JMenuItem("Wednesday"));
-    this.days.add(new JMenuItem("Thursday"));
-    this.days.add(new JMenuItem("Friday"));
-    this.days.add(new JMenuItem("Saturday"));
+    String[] dayOptions = {"Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday", "Saturday"};
+    this.startDayComboBox = new JComboBox<>(dayOptions);
+    this.endDayComboBox = new JComboBox<>(dayOptions);
+  }
+
+  public String getEventName() {
+    return eventNameField.getText();
+  }
+
+  public String getStartDay() {
+    return (String) startDayComboBox.getSelectedItem();
+  }
+
+  public String getEndDay() {
+    return (String) endDayComboBox.getSelectedItem();
+  }
+
+  public String getStartTime() {
+    return startTimeField.getText();
+  }
+
+  public String getEndTime() {
+    return endTimeField.getText();
+  }
+
+  public String getLoc() {
+    return locationField.getText();
+  }
+
+  public String getSelectedUser() {
+    return availableUsersList.getSelectedValue();
   }
 }

@@ -1,10 +1,12 @@
 package view;
 
 import java.awt.*;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import model.EventRep;
 import model.NUPlannerSystem;
 
 /**
@@ -12,19 +14,45 @@ import model.NUPlannerSystem;
  */
 public class SchedulePanel extends JPanel {
   private NUPlannerSystem model;
+  private String selectedUser;
 
   /**
    * put the content here of the actual schedule, called from the main system frame.
    */
   SchedulePanel(NUPlannerSystem model) {
     this.model = model;
+    this.selectedUser = "";
     this.setLayout(new BorderLayout());
   }
 
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
+    drawEvents(g);
     drawLines(g);
+  }
+
+  private void drawEvents(Graphics g) {
+    if (selectedUser.equals("")) {
+      return;
+    }
+
+    List<EventRep> events = model.getUserEvents(selectedUser);
+    int colSpacing = getWidth() / 7;
+    int rowSpacing = getHeight() / 24;
+    System.out.println(events.toString() + "drawimg these rn");
+    for (EventRep event : events) {
+      int dayIndex = dayIndex(event.getTime().getStartDay());
+      int startTimeIndex = Integer.parseInt(event.getTime().getStartTime());
+      int endTimeIndex = Integer.parseInt(event.getTime().getEndTime());
+
+      int x = colSpacing * dayIndex;
+      int y = rowSpacing * startTimeIndex;
+      int height = rowSpacing * (endTimeIndex - startTimeIndex);
+
+      g.setColor(Color.RED); // Set the event color
+      g.fillRect(x, y, colSpacing, height); // Draw the event as a filled rectangle
+    }
   }
 
   private void drawLines(Graphics g) {
@@ -46,7 +74,7 @@ public class SchedulePanel extends JPanel {
     }
   }
 
-  private void daysOfTheWeek(SchedulePanel schedulePanel, NUPlannerSystem model) {
+ /* private void daysOfTheWeek(SchedulePanel schedulePanel, NUPlannerSystem model) {
     JPanel week = new JPanel();
     week.setLayout(new GridLayout(1, 7));
     for (int i = 0; i < 7; i++) {
@@ -56,9 +84,36 @@ public class SchedulePanel extends JPanel {
       // add a listener here??????????
     }
     schedulePanel.add(week);
-  }
+  }*/
 
   public void updateView() {
 
+  }
+
+  protected void showSchedule(String selectedUser) {
+    this.selectedUser = selectedUser;
+    repaint();
+  }
+
+  private int dayIndex(String startDay) {
+    switch (startDay) {
+      case "Sunday":
+        return 0;
+      case "Monday":
+        return 1;
+      case "Tuesday":
+        return 2;
+      case "Wednesday":
+        return 3;
+      case "Thursday":
+        return 4;
+      case "Friday":
+        return 5;
+      case "Saturday":
+        return 6;
+      default:
+        break;
+    }
+    return -1;
   }
 }

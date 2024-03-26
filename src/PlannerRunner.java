@@ -1,9 +1,6 @@
-import controller.Controller;
 import model.CentralSystem;
 import model.NUPlannerSystem;
-import model.ReadonlyNUPlannerSystem;
 import view.MainSystemFrame;
-import view.NUPlannerTextView;
 import view.NUPlannerView;
 
 public class PlannerRunner {

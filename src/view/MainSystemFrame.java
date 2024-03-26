@@ -29,8 +29,6 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     createMSFrame(this);
     createMenu();
     this.setJMenuBar(this.menuBar);
-    // create the 7 panels
-    // overlap the helpful lines
     this.content = new SchedulePanel(model);
     this.add(this.content);
     this.setMinimumSize(new Dimension(700, 480));
@@ -94,7 +92,9 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
       public void actionPerformed(ActionEvent e) {
         // Update selectedUser with the currently selected item
         selectedUser = String.valueOf(listOfUsers.getSelectedItem());
+        content.showSchedule(selectedUser);
         System.out.println("Selected User: " + selectedUser); // Just for demonstration
+        content.repaint();
       }
     });
 
@@ -131,6 +131,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
           updateListOfUsers();
           content.updateView();
           System.out.println(model.usersInSystem().toString());
+          //System.out.println(model.getUserEvents("Gordisimo"));
           System.out.println("Selected file: "
                   + fileChooser.getSelectedFile().getAbsolutePath());
         }
