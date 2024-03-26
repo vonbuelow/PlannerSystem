@@ -7,8 +7,8 @@ import java.util.Objects;
  * Given if it is online or not and a place.
  */
 public class Location {
-  boolean online;
-  String place;
+  private boolean online;
+  private String place;
 
   /**
    * Location representation.

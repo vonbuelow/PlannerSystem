@@ -94,7 +94,10 @@ Changes for part 2 -------------------------------------------------------------
             schedules where no overlap occurs.
         New constructor to keep track of a list of schedule:
             For each schedule to be added to the map.
-
+        ACCESS MODIFIERS:
+            Adding 'private' to the access modifiers in time and location.
+    Added in Test Directory ->
+        IN MODEL TESTING PACKAGE MORE THOUROUGH TESTING
 
 
 --------------------------------------------------------------------------------------------------

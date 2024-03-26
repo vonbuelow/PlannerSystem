@@ -7,10 +7,10 @@ import java.util.Objects;
  * Time with a start day, start time, end day, and end time of an event.
  */
 public class Time {
-  Day start;
-  Day end;
-  String startTime;
-  String endTime;
+  private Day start;
+  private Day end;
+  private String startTime;
+  private String endTime;
 
 
   /**
