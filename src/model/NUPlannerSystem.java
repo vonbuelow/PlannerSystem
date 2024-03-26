@@ -52,8 +52,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @param event the existing event to modify
    * @param eventName new name to give the event
    * @throws IllegalArgumentException if event or eventName is null/empty
-   * @throws IllegalStateException if event: does not exist in system, if eventName
-   *     is the same as another event in given user's schedule or not in system
+   * @throws IllegalStateException if event: does not exist in system
    */
   void modifyName(EventRep event, String eventName);
 

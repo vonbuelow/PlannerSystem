@@ -360,6 +360,11 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public List<EventRep> getUserEvents(String uid) {
-    return this.allSchedules.get(uid).eventsPlanned();
+    return new ArrayList<>(this.allSchedules.get(uid).eventsPlanned());
+  }
+
+  @Override
+  public List<EventRep> getSystemEvents() {
+    return new ArrayList<>(this.eventList);
   }
 }

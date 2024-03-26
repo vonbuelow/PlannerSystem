@@ -55,6 +55,8 @@ model package:
         those invited and enforces the requirements listed by the assignment. Names for all
         existing events in a given user's schedule should be unique.
         - Invariant: there is always a host for an event (at least one invitee per event)
+        - Invariant: when modifying an event, it cannot have the exact same info as another
+        event in system
     NUPlannerSystem
         The interface to represent a systems behavior of add, modify, remove, and get all users
         schedules.
@@ -76,11 +78,11 @@ Changes for part 2 -------------------------------------------------------------
         CentralSystem (doesOverlap(EventRep event)):
             This was missing so we added a overlaps with method in our schedule class and added a
             method called doesOverlap which takes in an event, gets all who are invited. Iterates
-            through the invitiees schedules and then called the new overlapsWith method on the
+            through the invitees schedules and then called the new overlapsWith method on the
             given event.
         What are the events in a given user’s schedule?
             We had half of this implementation, but added this method to the ReadOnly and got the
-            users schedule, and the events planned as a list of events. Which is NOT A REFRENCE TO
+            users schedule, and the events planned as a list of events. Which is NOT A REFERENCE TO
             the actual field in schedule, rather it is a copy of all the events.
         Remove event for a specific users:
             Altering the original implementation of removeEvent to consider if the user is the host

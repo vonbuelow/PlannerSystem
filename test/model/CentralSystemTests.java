@@ -15,6 +15,7 @@ import model.eventfields.Time;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -38,6 +39,7 @@ public class CentralSystemTests {
   Location loc1;
 
   EventRep event1;
+  EventRep oldEvent1;
   EventRep event2;
   EventRep event3;
 
@@ -71,6 +73,10 @@ public class CentralSystemTests {
     loc1 = new Location(false, "restaurant");
 
     event1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    oldEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             Arrays.asList(profLucia, emmaVB, noelisA1));
@@ -234,6 +240,39 @@ public class CentralSystemTests {
   }
 
   /**
+   * Tests the usual valid case when calling modifyName.
+   * The given name is different from the current event name.
+   * Old event cannot be found in system, while the new event can be.
+   * Invitees' schedules have the updated event.
+   */
+  @Test
+  public void testModifyNameValid() {
+    EventRep newEvent1 = new Event("CS3500 Lecture Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyName(oldEvent1, "CS3500 Lecture Day 1");
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
    * Tests exceptions for modifyTime in CentralSystem.
    */
   @Test
@@ -247,6 +286,162 @@ public class CentralSystemTests {
     assertThrows("event must be in system",
             IllegalStateException.class,
             () -> system1.modifyTime(event2, time1));
+  }
+
+  /**
+   * Tests modifying the time of an event to a different start hour.
+   */
+  @Test
+  public void testModifyTimeValidDifferentStartHour() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyTime(oldEvent1,
+            new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
+   * Tests modifying the time of an event to a different end hour.
+   */
+  @Test
+  public void testModifyTimeValidDifferentEndHour() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyTime(oldEvent1,
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
+   * Tests modifying the time of an event to a different start day.
+   */
+  @Test
+  public void testModifyTimeValidDifferentStartDay() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyTime(oldEvent1,
+            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
+   * Tests modifying the time of an event to a different end day.
+   */
+  @Test
+  public void testModifyTimeValidDifferentEndDay() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyTime(oldEvent1,
+            new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
+   * Tests modifying the time of an event where at least one invitee (non-host)
+   * has a time conflict. This means the event is not modified
+   */
+  @Test
+  public void testModifyTimeOneUserTimeConflict() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyTime(oldEvent1,
+            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"));
+
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
   }
 
   /**

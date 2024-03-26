@@ -33,8 +33,17 @@ public interface ReadonlyNUPlannerSystem {
   /**
    * NEW.
    * All the events a given user has in their schedule.
+   * Is a copy of user list of events.
    * @param      uid the user id to find their events.
    * @return     the list of events this user is attending.
    */
   List<EventRep> getUserEvents(String uid);
+
+  /**
+   * NEW.
+   * All the events in the current system.
+   * Is a copy of system list of events.
+   * @return the list of events in the system
+   */
+  List<EventRep> getSystemEvents();
 }
