@@ -241,16 +241,19 @@ public class CentralSystem implements NUPlannerSystem {
     if (invitees == null || invitees.isEmpty()) {
       throw new IllegalArgumentException("invitees cannot be null or empty");
     }
-    if (invitees.contains(event.getInvitedUsers().get(0))) {
-      throw new IllegalArgumentException("invitees cannot contain host");
+    if (invitees.contains(event.getInvitedUsers().get(0)) && !toAdd) {
+      throw new IllegalArgumentException("you cannot remove the host");
     }
     if (inviteesContainsDuplicates(invitees)) {
       throw new IllegalArgumentException("invitees must be unique");
     }
     eventNotInSystemException(event);
+    if (invitees.size() >= event.getInvitedUsers().size() && !toAdd) {
+      throw new IllegalStateException("too many invitees to remove");
+    }
 
     if (toAdd) {
-      List<String> usersToAdd = new ArrayList<>();
+      List<String> usersToAdd = new ArrayList<String>();
       for (String invitee : invitees) {
         if (event.getInvitedUsers().stream().noneMatch(f -> f.equals(invitee))) {
           usersToAdd.add(invitee);
@@ -262,7 +265,7 @@ public class CentralSystem implements NUPlannerSystem {
       eventToModify.modifyInvitees(usersToAdd, true);
     }
     else {
-      List<String> usersToRemove = new ArrayList<>();
+      List<String> usersToRemove = new ArrayList<String>();
       for (String invitee : invitees) {
         if (event.getInvitedUsers().stream().anyMatch(f -> f.equals(invitee))) {
           usersToRemove.add(invitee);

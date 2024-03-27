@@ -92,6 +92,12 @@ Changes for part 2 -------------------------------------------------------------
         Add event to all schedules:
             When iterating through the invited users schedule, adding a try catch to add to the
             schedules where no overlap occurs.
+        Modifying invitees:
+            It is okay to remove invitees that don't exist; they are already "removed."
+            The amount of removed invitees just cannot exceed or be the current number of
+            invitees; this would mean an event could have no invitees (i.e. no host), and
+            our requirement is that any event has at least one invitee. It is okay to add
+            invitees that are already in the event; they are already "added."
         New constructor to keep track of a list of schedule:
             For each schedule to be added to the map.
         ACCESS MODIFIERS:

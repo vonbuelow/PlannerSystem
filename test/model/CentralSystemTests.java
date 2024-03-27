@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -249,7 +250,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Lecture Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
     assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -295,7 +296,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -326,7 +327,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -357,7 +358,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -388,7 +389,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -420,7 +421,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -472,7 +473,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(true, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -504,7 +505,7 @@ public class CentralSystemTests {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "somewhere else"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -532,7 +533,6 @@ public class CentralSystemTests {
    */
   @Test
   public void testModifyInviteesExceptions() {
-    //???
     assertThrows("event cannot be null",
             IllegalArgumentException.class,
             () -> system1.modifyInvitees(null, new ArrayList<String>(),
@@ -540,20 +540,58 @@ public class CentralSystemTests {
     assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
             () -> system1.modifyInvitees(event1, null, true));
     assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1, new ArrayList<String>(),
-                    true));
+            () -> system1.modifyInvitees(event1, new ArrayList<String>(), true));
+    assertThrows("you cannot remove the host", IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1,
+                    new ArrayList<String>(Collections.singletonList(profLucia)), false));
+    assertThrows("invitees must be unique",
+            IllegalArgumentException.class,
+            () -> system1.modifyInvitees(event1,
+                    new ArrayList<String>(Arrays.asList(noelisA1, noelisA1)), true));
     assertThrows("event must be in system",
             IllegalStateException.class,
-            () -> system1.modifyInvitees(event2, new ArrayList<String>(Arrays.asList(emmaVB)),
+            () -> system1.modifyInvitees(event2,
+                    new ArrayList<String>(Collections.singletonList(emmaVB)),
+                    false));
+    assertThrows("too many invitees to remove",
+            IllegalStateException.class,
+            () -> system1.modifyInvitees(event1,
+                    new ArrayList<String>(Arrays.asList(emmaVB, noelisA1, noelisA2)),
                     false));
   }
 
   /**
    * Tests valid cases for adding/removing invitees.
+   * Adding/removing at least one invitee for event with at least two invitees.
+   * Adding people that already exist and at least one does not.
+   * Removing people that exist and don't.
    */
   @Test
-  public void testModifyInviteesValid() {
-    //???
+  public void testModifyInviteesAddOneNewInvitee() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "somewhere else"),
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1, noelisA2)));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getUserEvents(noelisA2).isEmpty());
+
+    system1.modifyInvitees(event1,
+            new ArrayList<String>(List.of(noelisA2)), true);
+
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA2).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA2).get(0));
+
   }
 
   /**
