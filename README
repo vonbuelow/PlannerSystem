@@ -1,25 +1,31 @@
-Overview:
+Overview-------------------------------------------------------------------------------------------
 What problem is this codebase trying to solve?
+
 This code base is abstracting an XML to an instance of schedules using a central system for
 database like maintenance. Then being able to go from the implementation in the system to writing
 a XML file and saving it to a given file location/directory.
+---------------------------------------------------------------------------------------------------
 What high-level assumptions are made in the codebase, either about the background knowledge needed,
 about what forms of extensibility are envisioned or are out of scope, or about prerequisites for
 using this code?
+
 The model is very high-level from an interaction stand point without a controller.
 Extensibility would come from the interface implementation of how a schedule is represented
 along with how a system can be represented.
 --------------------------------------------------------------------------------------------------
 Quick start: give a short snippet of code showing how a user might get started using this codebase.
 
+When running the system a user should open up out PlannerRunner which... runs the planner!
+To add in some events to the schedule/nuplanner a user should go into their file system and
+find where the provided XMLs are (the xmls which are in the src folder). Then a user can navigate
+to those XMLs in their file explorer and add them to the system. To see a schedule a user will need
+to click on a user they want to see. Then the respective schedule should pop up.
 --------------------------------------------------------------------------------------------------
 Key components: Explain the highest-level components in your system, and what they do.
-It is trite and useless to merely say “The model represents the data in my system.
-The view represents the rendering of my system. ...”
-This is a waste of your time and the reader’s time.
-Describe which components “drive” the control-flow of your system, and which ones “are driven”.
-The central system is driven by the XML reader and taking in new schedules to the overall system.
 
+The central system is driven by the XML reader and taking in new schedules to the overall system.
+The central system then drives the functionality until the XML writer needs to be driven by the
+system.
 --------------------------------------------------------------------------------------------------
 Key subcomponents: Within each component, give an overview of the main nouns in your system,
 and why they exist and what they are used for.
@@ -104,10 +110,52 @@ Changes for part 2 -------------------------------------------------------------
             Adding 'private' to the access modifiers in time and location.
     Added in Test Directory ->
         IN MODEL TESTING PACKAGE MORE THOUROUGH TESTING
-
-
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,
 or explain for each directory in your codebase what components it provides.
 Either way, supply the reader with a “map” to your codebase, so they can navigate around.
 
+key:
+** - notes
+* - interface
+~ - package
+
+/src [this contains the whole program, the programs parts the divided into packages]
+|+-/controller~: (** this is for future implementation nothing to see here really**)
+|  |+- Controller
+|+-/model~: (** interfaces, model, schedule rep., time rep., location rep., and day enum**)
+|  |+-/eventfields~ (day, location, and time)
+|  |   |+-Day [enum]
+|  |   |+-Location [online && place]
+|  |   |+-Time [start {day and time} && end {day and time}]
+|  |+- CentralSystem [our representation of the central system thus far]
+|  |+- Event [our representation of an event with a name, time, location, and invitees]
+|  |+- EventRep [* the interface of an event for what the event can have the behavior of]
+|  |+- NUPlannerSystem [* the interface of a NUPlanner system and the behaviors of a planner]
+|  |+- ReadOnlyNUPlannerSystem [the model with only observable features]
+|  |+- Schedule [our representation of schedule with a uid and list of events]
+|  |+- ScheduleRep [*interface: represents a schedule]
+|+-/userxmls~: (** this is to test for our writer**)
+|+-/view~
+|  |+- EventFrame [frame: the frame of an event that pops up when either create or modify pops up]
+|  |+- EventPanel [panel: the panel containing event fields and remove/modify event]
+|  |+- MainSystemFrame [frame: the overall main system that implements NUPlannerView]
+|  |+- NUPlannerTestView [view: a general naive string based view implements NUPlannerView]
+|  |+- NUPlannerView [*interface: representing the view of a NUPlanner]
+|  |+- SchedulePanel [panel: the panel of the initial schedule panel]
+|+-/xmlfunc~
+|  |+- XMLReader [read a given xml and place it in the central system]
+|  |+- XMLWriter [write a schedule to a given directory]
+| (** in additional to MVC and classes the src folder also contains example XML files
+      and a main method to RUN THE PROGRAM**)
+/test
+|  |+-/model~
+|  |   |+-/eventfields~
+|  |   |   |+- CentralSystemTests [test: central system]
+|  |   |   |+- EventTests [test: event]
+|  |   |   |+- ScheduleTests [test: schedule]
+|  |+-/xmlfunc~
+|  |   |+- XMLTest [test: XMLReader and XMLWriter]
+
+(**outside of the src and testing folder there are screenshots of event panel,
+                                                   schedule, and schedule events**)

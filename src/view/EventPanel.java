@@ -1,11 +1,17 @@
 package view;
 
-import java.awt.*;
-import java.sql.Array;
-import java.util.ArrayList;
+
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.util.Set;
 
-import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 
 import model.EventRep;
 import model.NUPlannerSystem;
@@ -16,8 +22,10 @@ import model.NUPlannerSystem;
 public class EventPanel extends JPanel {
 
   private JTextField eventNameField;
-  private JComboBox<String> startDayComboBox, endDayComboBox;
-  private JTextField startTimeField, endTimeField;
+  private JComboBox<String> startDayComboBox;
+  private JComboBox<String> endDayComboBox;
+  private JTextField startTimeField;
+  private JTextField endTimeField;
   private JTextField locationField;
   private JList<String> availableUsersList;
   private JMenu isOnline;
@@ -105,6 +113,7 @@ public class EventPanel extends JPanel {
     eventNamePanel.add(eventNameField);
     eventPanel.add(eventNamePanel);
   }
+
   private void defaultDays() {
     String[] dayOptions = {"Sunday", "Monday", "Tuesday",
             "Wednesday", "Thursday", "Friday", "Saturday"};

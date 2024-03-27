@@ -37,7 +37,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   /**
-   * NEW: new constructor keeping track of a list of schedules;
+   * NEW: new constructor keeping track of a list of schedules.
    */
   public CentralSystem(List<Schedule> schedules) {
     this.allSchedules = new HashMap<>();
@@ -213,10 +213,9 @@ public class CentralSystem implements NUPlannerSystem {
     }
 
     if (allSchedules.values().stream()
-                 .anyMatch(s
-                         -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
-                         && s.eventsPlanned().stream().anyMatch(e
-                         -> e.overlapsWith(eventCopy) && !e.equals(eventToModify)))) {
+                 .anyMatch(s -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
+                         && s.eventsPlanned().stream().anyMatch(e ->
+                         e.overlapsWith(eventCopy) && !e.equals(eventToModify)))) {
       throw new IllegalStateException("at least one user has a time conflict");
     }
     else {

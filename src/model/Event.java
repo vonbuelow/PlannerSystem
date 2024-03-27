@@ -129,11 +129,14 @@ public class Event implements EventRep {
       throw new IllegalArgumentException("invitees cannot be null or empty");
     }
     if (toAdd) {
-      this.invitees.addAll(invitees);
-
+      for (String user: invitees) {
+        this.invitees.add(user);
+      }
     }
     else {
-      this.invitees.removeAll(invitees);
+      for (String user: invitees) {
+        this.invitees.remove(invitees);
+      }
     }
   }
 }

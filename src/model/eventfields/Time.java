@@ -147,27 +147,52 @@ public class Time {
     return timeToMinutes(first) - timeToMinutes(second);
   }
 
+  /**
+   * Returning the starting date time.
+   * @return    the Day that this time is starting at.
+   */
   public Day getStartDayDefault() {
     return this.start;
   }
 
+  /**
+   * Returning the start day as a string.
+   * @return     the starting day as a string of this time.
+   */
   public String getStartDay() {
     return getDayString(this.start);
   }
 
+  /**
+   * Get the toString of the day and get rid of the extra value information of a day.
+   * @param     day the day we want to get the string of.
+   * @return    a string representation of the day.
+   */
   private String getDayString(Day day) {
     int dayLength = day.toString().length();
     return day.toString().substring(0, dayLength - 2);
   }
 
+  /**
+   * The ending day as a string of this times end day.
+   * @return    a string representation of this times end day.
+   */
   public String getEndDay() {
     return getDayString(this.end);
   }
 
+  /**
+   * The starting time of this time which is a string.
+   * @return   the string value which is a start time.
+   */
   public String getStartTime() {
     return this.startTime;
   }
 
+  /**
+   * The ending time of this time which is a string.
+   * @return   the string value which is a end time.
+   */
   public String getEndTime() {
     return this.endTime;
   }

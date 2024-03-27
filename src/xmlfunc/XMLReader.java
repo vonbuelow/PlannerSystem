@@ -222,7 +222,7 @@ public class XMLReader {
    */
   private boolean validDay(String nodeValue) {
     ArrayList<String> days = new ArrayList<>(Arrays.asList("Monday", "Tuesday",
-            "Wendnesday", "Thursday", "Friday", "Saturday", "Sunday"));
+            "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"));
     return days.contains(nodeValue);
   }
 }

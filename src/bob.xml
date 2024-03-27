@@ -3,10 +3,64 @@
     <event>
         <name>"CS3500 Morning Lecture"</name>
         <time>
+            <start-day>Monday</start-day>
+            <start>0450</start>
+            <end-day>Monday</end-day>
+            <end>1130</end>
+        </time>
+        <location>
+            <online>false</online>
+            <place>"Churchill Hall 101"</place>
+        </location>
+        <users>
+            <uid>"Prof. Lucia"</uid>
+            <uid>"Bobby Jr. III"</uid>
+            <uid>"Chat"</uid>
+        </users>
+    </event>
+    <event>
+        <name>"CS3500 Morning Lecturee"</name>
+        <time>
             <start-day>Tuesday</start-day>
             <start>0950</start>
             <end-day>Tuesday</end-day>
             <end>1130</end>
+        </time>
+        <location>
+            <online>false</online>
+            <place>"Churchill Hall 101"</place>
+        </location>
+        <users>
+            <uid>"Prof. Lucia"</uid>
+            <uid>"Bobby Jr. III"</uid>
+            <uid>"Chat"</uid>
+        </users>
+    </event>
+    <event>
+        <name>"CS3500 Morning Lectureee"</name>
+        <time>
+            <start-day>Wednesday</start-day>
+            <start>1250</start>
+            <end-day>Wednesday</end-day>
+            <end>1530</end>
+        </time>
+        <location>
+            <online>false</online>
+            <place>"Churchill Hall 101"</place>
+        </location>
+        <users>
+            <uid>"Prof. Lucia"</uid>
+            <uid>"Bobby Jr. III"</uid>
+            <uid>"Chat"</uid>
+        </users>
+    </event>
+    <event>
+        <name>"CS3500 Morning Lectureeee"</name>
+        <time>
+            <start-day>Thursday</start-day>
+            <start>2050</start>
+            <end-day>Thursday</end-day>
+            <end>2251</end>
         </time>
         <location>
             <online>false</online>

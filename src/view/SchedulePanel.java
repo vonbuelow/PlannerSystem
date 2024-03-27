@@ -1,11 +1,10 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Color;
 import java.util.List;
-
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
+import javax.swing.JPanel;
 import model.EventRep;
 import model.NUPlannerSystem;
 
@@ -40,20 +39,37 @@ public class SchedulePanel extends JPanel {
     List<EventRep> events = model.getUserEvents(selectedUser);
     int colSpacing = getWidth() / 7;
     int rowSpacing = getHeight() / 24;
-    System.out.println(events.toString() + "drawimg these rn");
+
     for (EventRep event : events) {
-      int dayIndex = dayIndex(event.getTime().getStartDay());
+      int dayStartIndex = dayIndex(event.getTime().getStartDay());
+      int dayEndIndex = dayIndex(event.getTime().getEndDay());
       int[] startTime = parseTime(event.getTime().getStartTime());
       int[] endTime = parseTime(event.getTime().getEndTime());
-      int startTimeIndex = startTime[0] + (startTime[1] / 60);
-      int endTimeIndex = endTime[0] + (endTime[1] / 60);
 
-      int x = colSpacing * dayIndex;
-      int y = rowSpacing * startTimeIndex;
-      int height = rowSpacing * (endTimeIndex - startTimeIndex);
+      int startYPosition = startTime[0] * rowSpacing + (startTime[1] * rowSpacing / 60);
+      int endYPosition = endTime[0] * rowSpacing + (endTime[1] * rowSpacing / 60);
 
-      g.setColor(new Color(89, 70, 211, 255));
-      g.fillRect(x, y, colSpacing, height);
+      // Determine the last day to draw the event. It should not go past Saturday.
+      int lastDayToDraw = (dayEndIndex >= dayStartIndex) ? dayEndIndex : 6;
+
+      for (int currentDay = dayStartIndex; currentDay <= lastDayToDraw; currentDay++) {
+        int x = colSpacing * currentDay;
+        int y = (currentDay == dayStartIndex) ? startYPosition : 0;
+        int height = (currentDay == dayEndIndex) ? endYPosition - y : getHeight() - y;
+
+        if (currentDay == dayEndIndex && currentDay != dayStartIndex) {
+          y = 0;
+          height = endYPosition;
+        }
+
+        g.setColor(new Color(89, 70, 211, 255));
+        g.fillRect(x, y, colSpacing, height);
+
+        // If the event spans over to the next week, stop drawing at Saturday
+        if (currentDay == 6) {
+          break;
+        }
+      }
     }
   }
 
@@ -75,18 +91,6 @@ public class SchedulePanel extends JPanel {
       g.drawLine(x, 0, x, height);
     }
   }
-
- /* private void daysOfTheWeek(SchedulePanel schedulePanel, NUPlannerSystem model) {
-    JPanel week = new JPanel();
-    week.setLayout(new GridLayout(1, 7));
-    for (int i = 0; i < 7; i++) {
-      JPanel day = new JPanel();
-      day.setBorder(new LineBorder(new Color(7, 36, 60), 2, false));
-      week.add(day);
-      // add a listener here??????????
-    }
-    schedulePanel.add(week);
-  }*/
   public void updateView() {
     //this.paintComponent(new );
   }

@@ -50,6 +50,7 @@ public class ScheduleTests {
   ScheduleRep emmaVBSched;
   ScheduleRep noelisA1Sched;
   ScheduleRep noelisA2Sched;
+
   @Before
   public void setup() {
     noUsersMap = new HashMap<String, ScheduleRep>();
@@ -120,17 +121,14 @@ public class ScheduleTests {
   @Test
   public void testAddEventExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> profLuciaSched.addEvent(null));
+            IllegalArgumentException.class, () -> profLuciaSched.addEvent(null));
     assertThrows("event exists already, conflicts with another, or owner isn't invited",
-            IllegalStateException.class,
-            () -> emmaVBSched.addEvent(event1));
+            IllegalStateException.class, () -> emmaVBSched.addEvent(event1));
     assertThrows("event exists already, conflicts with another, or owner isn't invited",
-            IllegalStateException.class,
-            () -> noelisA1Sched.addEvent(event4)); // conflict with event1
+            IllegalStateException.class, () -> noelisA1Sched.addEvent(event4));
+    // conflict with event1
     assertThrows("event exists already, conflicts with another, or owner isn't invited",
-            IllegalStateException.class,
-            () -> noelisA1Sched.addEvent(event3)); // not invited
+            IllegalStateException.class, () -> noelisA1Sched.addEvent(event3)); // not invited
   }
 
   /**
@@ -158,11 +156,9 @@ public class ScheduleTests {
   @Test
   public void testRemoveEventExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> profLuciaSched.removeEvent(null));
+            IllegalArgumentException.class, () -> profLuciaSched.removeEvent(null));
     assertThrows("event must be in schedule",
-            IllegalStateException.class,
-            () -> emmaVBSched.removeEvent(event3));
+            IllegalStateException.class, () -> emmaVBSched.removeEvent(event3));
   }
 
   /**
@@ -189,8 +185,7 @@ public class ScheduleTests {
   @Test
   public void testOverlapWithException() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> noelisA1Sched.overlapWith(null));
+            IllegalArgumentException.class, () -> noelisA1Sched.overlapWith(null));
   }
 
   /**

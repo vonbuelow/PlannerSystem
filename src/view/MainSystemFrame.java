@@ -1,13 +1,22 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.io.File;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JFileChooser;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JDialog;
 import controller.Controller;
 import model.NUPlannerSystem;
 
@@ -16,7 +25,9 @@ import model.NUPlannerSystem;
  */
 public class MainSystemFrame extends JFrame implements NUPlannerView {
   NUPlannerSystem model;
-  private JButton createButton, scheduleButton, addSchedule;
+  private JButton createButton;
+  private JButton scheduleButton;
+  private JButton addSchedule;
   private JMenu menu;
   private JMenuBar menuBar;
   private JMenuItem saveAllItem;
@@ -24,6 +35,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private JComboBox<String> listOfUsers;
   private String selectedUser;
 
+  /**
+   * This represents a main system frame of a nuplanner system as a GUI view.
+   * @param     model the model of the planner system being run on.
+   */
   public MainSystemFrame(NUPlannerSystem model) {
     this.model = model;
     createMSFrame(this);
@@ -147,28 +162,11 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   @Override
   public void setListener(Controller controller) {
-
+    // this would be a listener given the controller.
   }
 
   @Override
   public void display() {
     this.setVisible(true);
   }
-
-  /*
-  view should look as close to assignment as possible
-  note: view has file menu which uses JMenu and JMenuItem which contains two items:
-  - one to load XML file
-  - other save every loaded schedule
-  - can be done w/ buttons instead
-
-  - days are viewed left to right (sun->sat)
-  - bold lines drawn every 4 hours
-   */
-
-
-  /**
-   * Main system / schedule frame closing actually quits the program
-   * - #6200ee -> color for event highlighting (indigo)
-   */
 }
