@@ -581,7 +581,7 @@ public class CentralSystemTests {
     assertTrue(system1.getUserEvents(noelisA2).isEmpty());
 
     system1.modifyInvitees(event1,
-            new ArrayList<String>(List.of(noelisA2)), true);
+            new ArrayList<String>(Arrays.asList(noelisA2)), true);
 
     assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));

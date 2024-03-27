@@ -130,6 +130,7 @@ public class Event implements EventRep {
     }
     if (toAdd) {
       this.invitees.addAll(invitees);
+
     }
     else {
       this.invitees.removeAll(invitees);
