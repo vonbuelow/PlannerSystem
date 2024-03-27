@@ -203,22 +203,29 @@ public class CentralSystem implements NUPlannerSystem {
 
     int eventIdx = this.eventList.indexOf(event);
     EventRep eventToModify = this.eventList.get(eventIdx);
+    EventRep eventCopy = new Event(eventToModify.getName(),
+            eventToModify.getTime(), eventToModify.getLocation(),
+            eventToModify.getInvitedUsers());
     try {
-      eventToModify.modifyTime(time);
+      eventCopy.modifyTime(time);
     } catch (IllegalStateException e) {
       throw new IllegalStateException(e);
     }
 
-    /*if (this.eventList.stream().anyMatch()
-            .anyMatch(s -> s.eventsPlanned().stream()
-                    .anyMatch(e -> e.overlapsWith(eventToModify)))) {
+    if (allSchedules.values().stream()
+                 .anyMatch(s
+                         -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
+                         && s.eventsPlanned().stream().anyMatch(e
+                         -> e.overlapsWith(eventCopy) && !e.equals(eventToModify)))) {
+      throw new IllegalStateException("at least one user has a time conflict");
+    }
+    else {
       try {
-        eventToModify.modifyTime(event.getTime());
+        eventToModify.modifyTime(time);
       } catch (IllegalStateException e) {
         throw new IllegalStateException(e);
       }
-    }*/
-
+    }
 
   }
 

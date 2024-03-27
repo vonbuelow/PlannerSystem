@@ -17,7 +17,6 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -77,18 +76,19 @@ public class CentralSystemTests {
     event1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     oldEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event2 = new Event("CS3500 Day 2",
             new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
-            Arrays.asList(profLucia, emmaVB, noelisA1));
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event3 = new Event("BBQ",
             new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
-            new Location(true, "Not Churchill"), Arrays.asList(emmaVB));
+            new Location(true, "Not Churchill"),
+            new ArrayList<String>(Arrays.asList(emmaVB)));
 
     profLuciaEvents = new ArrayList<EventRep>(Arrays.asList(event1));
     emmaVBEvents = new ArrayList<EventRep>(Arrays.asList(event1));
@@ -103,7 +103,6 @@ public class CentralSystemTests {
     allSchedulesInSystem1.put(profLucia, profLuciaSched);
     allSchedulesInSystem1.put(emmaVB, emmaVBSched);
     allSchedulesInSystem1.put(noelisA1, noelisA1Sched);
-    allSchedulesInSystem1.put(noelisA2, noelisA2Sched);
     allEventsInSystem1 = new ArrayList<EventRep>();
     allEventsInSystem1.add(event1);
 
@@ -369,7 +368,7 @@ public class CentralSystemTests {
     assertFalse(system1.getSystemEvents().contains(newEvent1));
 
     system1.modifyTime(oldEvent1,
-            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"));
+            new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"));
 
     assertFalse(system1.getSystemEvents().contains(oldEvent1));
     assertTrue(system1.getSystemEvents().contains(newEvent1));
@@ -419,7 +418,7 @@ public class CentralSystemTests {
   @Test
   public void testModifyTimeOneUserTimeConflict() {
     EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"),
+            new Time(Day.FRIDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -434,7 +433,7 @@ public class CentralSystemTests {
     emmaVBSched.addEvent(event3); // BBQ conflicts with lecture time to be modified
     assertThrows("at least one user has a conflict with the new time",
             IllegalStateException.class,
-            () -> system1.modifyTime(oldEvent1, new Time(Day.SUNDAY, "0950",
+            () -> system1.modifyTime(oldEvent1, new Time(Day.FRIDAY, "0950",
                     Day.TUESDAY, "1130")));
 
     // therefore event does not change times
@@ -562,13 +561,13 @@ public class CentralSystemTests {
 
   /**
    * Tests valid case for adding/removing invitees.
-   * Adding/removing at least one invitee for event with at least two invitees.
+   * Adding at least one new invitee for event with at least two invitees.
    */
   @Test
   public void testModifyInviteesAddOneNewInvitee() {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
-            new Location(false, "somewhere else"),
+            new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1, noelisA2)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
@@ -576,10 +575,14 @@ public class CentralSystemTests {
     assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
     assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
-    assertTrue(system1.getUserEvents(noelisA2).isEmpty());
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
 
-    system1.modifyInvitees(event1,
+    Map<String, ScheduleRep> newUser = new HashMap<String, ScheduleRep>();
+    newUser.put(noelisA2, noelisA2Sched);
+    system1.modifyInvitees(oldEvent1,
             new ArrayList<String>(Arrays.asList(noelisA2)), true);
+    system1.addNewUser(newUser);
 
     assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
@@ -589,6 +592,8 @@ public class CentralSystemTests {
     assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
     assertNotEquals(oldEvent1, system1.getUserEvents(noelisA2).get(0));
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
   }
 
   /**
@@ -596,8 +601,37 @@ public class CentralSystemTests {
    * Adding people that already exist and at least one does not.
    */
   @Test
-  public void testModifyInviteesAdding() {
+  public void testModifyInviteesAddingExistingAndNew() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1, noelisA2)));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
 
+    Map<String, ScheduleRep> newUser = new HashMap<String, ScheduleRep>();
+    newUser.put(noelisA2, noelisA2Sched);
+    system1.modifyInvitees(oldEvent1,
+            new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA2)),
+            true);
+    system1.addNewUser(newUser);
+
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA2).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA2).get(0));
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
   }
 
   /**
@@ -605,8 +639,32 @@ public class CentralSystemTests {
    * Removing people that exist and don't.
    */
   @Test
-  public void testModifyInviteesRemoving() {
+  public void testModifyInviteesRemovingExistingAndNew() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "Churchill Hall 101"),
+            new ArrayList<String>(Arrays.asList(profLucia, noelisA1)));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
 
+    system1.modifyInvitees(oldEvent1,
+            new ArrayList<String>(Arrays.asList(emmaVB, noelisA2)),
+            false);
+
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertTrue(system1.getUserEvents(emmaVB).isEmpty());
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getUserEvents(noelisA2).isEmpty());
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
   }
 
   /**
