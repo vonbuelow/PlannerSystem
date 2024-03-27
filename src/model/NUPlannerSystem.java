@@ -16,7 +16,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
   /**
    * Saves the schedule of the user with the given name to an XML file.
    * @param fileToSave place of where the users' schedule should be saved to
-   * @throws IllegalArgumentException if the given folder does not exist
+   * @throws IllegalArgumentException if the given file is null
    */
   void saveSchedule(File fileToSave);
 

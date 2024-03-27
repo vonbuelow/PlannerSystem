@@ -36,17 +36,15 @@ public interface ScheduleRep {
    * schedule.
    * @param event event to be removed
    * @throws IllegalArgumentException if event is null
-   * @throws IllegalStateException if event does not exist in schedule or does not have
-   *     invitees
+   * @throws IllegalStateException if event does not exist in schedule
    */
   void removeEvent(EventRep event);
-
-  void modifyEvent(EventRep event);
 
   /**
    * Does a given event overlap in this schedule rep.
    * @param     event a given event to check.
    * @return    if the even overlaps with any in this schedule.
+   * @throws IllegalArgumentException if event is null
    */
-  public boolean overlapWith(EventRep event);
+  boolean overlapWith(EventRep event);
 }

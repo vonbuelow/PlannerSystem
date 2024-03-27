@@ -16,8 +16,8 @@ public interface ReadonlyNUPlannerSystem {
   Map<String, ScheduleRep> usersSchedules();
 
   /**
-   * What users (or user names) are in the planner.
-   * A set (*can change to array.list - method chaining*) of users as String.
+   * What users (or user ids) are in the planner.
+   * A set (*can change to arraylist - method chaining*) of users as String.
    * @return     a set of all users in a given system.
    */
   Set<String> usersInSystem();
@@ -27,6 +27,7 @@ public interface ReadonlyNUPlannerSystem {
    * Does a given event overlap with anyone who is invited, in their existing schedule.
    * @param      event the event which gets passed along all schedules.
    * @return     Whether the event passed in over laps.
+   * @throws IllegalArgumentException if the given event is null
    */
   boolean doesOverlap(EventRep event);
 
@@ -36,6 +37,7 @@ public interface ReadonlyNUPlannerSystem {
    * Is a copy of user list of events.
    * @param      uid the user id to find their events.
    * @return     the list of events this user is attending.
+   * @throws IllegalArgumentException if the given uid is null or empty
    */
   List<EventRep> getUserEvents(String uid);
 

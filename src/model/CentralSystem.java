@@ -183,8 +183,8 @@ public class CentralSystem implements NUPlannerSystem {
     EventRep eventToModify = this.eventList.get(eventIdx);
     try {
       eventToModify.modifyName(eventName);
-    } catch (IllegalStateException ignore) {
-      // Print message that name couldn't be modified/ignore
+    } catch (IllegalStateException e) {
+      throw new IllegalStateException(e);
     }
   }
 
@@ -198,12 +198,22 @@ public class CentralSystem implements NUPlannerSystem {
 
     int eventIdx = this.eventList.indexOf(event);
     EventRep eventToModify = this.eventList.get(eventIdx);
-
     try {
       eventToModify.modifyTime(time);
-    } catch (IllegalStateException ignore) {
-      // Print message that time couldn't be modified/ignore
+    } catch (IllegalStateException e) {
+      throw new IllegalStateException(e);
     }
+
+    /*if (this.eventList.stream().anyMatch()
+            .anyMatch(s -> s.eventsPlanned().stream()
+                    .anyMatch(e -> e.overlapsWith(eventToModify)))) {
+      try {
+        eventToModify.modifyTime(event.getTime());
+      } catch (IllegalStateException e) {
+        throw new IllegalStateException(e);
+      }
+    }*/
+
 
   }
 
@@ -220,8 +230,8 @@ public class CentralSystem implements NUPlannerSystem {
 
     try {
       eventToModify.modifyLocation(loc);
-    } catch (IllegalStateException ignore) {
-      // Print message that location couldn't be modified/ignore
+    } catch (IllegalStateException e) {
+      throw new IllegalStateException(e);
     }
   }
 

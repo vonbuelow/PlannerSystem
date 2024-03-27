@@ -106,6 +106,9 @@ public class Event implements EventRep {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
+    if (time.equals(this.time)) {
+      throw new IllegalStateException("new time cannot be same as current");
+    }
     this.time = time;
   }
 
@@ -113,6 +116,9 @@ public class Event implements EventRep {
   public void modifyLocation(Location loc) {
     if (loc == null) {
       throw new IllegalArgumentException("not a valid location");
+    }
+    if (loc.equals(this.loc)) {
+      throw new IllegalStateException("new location cannot be same as current");
     }
     this.loc = loc;
   }

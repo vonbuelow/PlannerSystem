@@ -16,6 +16,7 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -86,8 +87,7 @@ public class CentralSystemTests {
             Arrays.asList(profLucia, emmaVB, noelisA1));
     event3 = new Event("BBQ",
             new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
-            new Location(true, "Not Churchill"),
-            Arrays.asList(emmaVB));
+            new Location(true, "Not Churchill"), Arrays.asList(emmaVB));
 
     profLuciaEvents = new ArrayList<EventRep>(Arrays.asList(event1));
     emmaVBEvents = new ArrayList<EventRep>(Arrays.asList(event1));
@@ -107,7 +107,6 @@ public class CentralSystemTests {
     allEventsInSystem1.add(event1);
 
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
-
   }
 
   @Test
@@ -356,7 +355,7 @@ public class CentralSystemTests {
   @Test
   public void testModifyTimeValidDifferentStartDay() {
     EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"),
+            new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             Arrays.asList(profLucia, emmaVB, noelisA1));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -414,12 +413,12 @@ public class CentralSystemTests {
 
   /**
    * Tests modifying the time of an event where at least one invitee (non-host)
-   * has a time conflict. This means the event is not modified
+   * has a time conflict. This means the event is not modified (exception thrown).
    */
   @Test
   public void testModifyTimeOneUserTimeConflict() {
     EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+            new Time(Day.SUNDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             Arrays.asList(profLucia, emmaVB, noelisA1));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -431,9 +430,13 @@ public class CentralSystemTests {
     assertTrue(system1.getSystemEvents().contains(oldEvent1));
     assertFalse(system1.getSystemEvents().contains(newEvent1));
 
-    system1.modifyTime(oldEvent1,
-            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"));
+    emmaVBSched.addEvent(event3); // BBQ conflicts with lecture time to be modified
+    assertThrows("at least one user has a conflict with the new time",
+            IllegalStateException.class,
+            () -> system1.modifyTime(oldEvent1, new Time(Day.SUNDAY, "0950",
+                    Day.TUESDAY, "1130")));
 
+    // therefore event does not change times
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
@@ -461,10 +464,75 @@ public class CentralSystemTests {
   }
 
   /**
+   * Tests modifying the location of an event.
+   * Changes the online status.
+   */
+  @Test
+  public void testModifyLocationOnline() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(true, "Churchill Hall 101"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyLocation(oldEvent1,
+            new Location(true, "Churchill Hall 101"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
+   * Tests modifying the location of an event.
+   * Changes the place of the event.
+   */
+  @Test
+  public void testModifyLocationPlace() {
+    EventRep newEvent1 = new Event("CS3500 Day 1",
+            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+            new Location(false, "somewhere else"),
+            Arrays.asList(profLucia, emmaVB, noelisA1));
+    assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(oldEvent1));
+    assertFalse(system1.getSystemEvents().contains(newEvent1));
+
+    system1.modifyLocation(oldEvent1,
+            new Location(false, "somewhere else"));
+
+    assertFalse(system1.getSystemEvents().contains(oldEvent1));
+    assertTrue(system1.getSystemEvents().contains(newEvent1));
+    assertNotEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(newEvent1, system1.getUserEvents(noelisA1).get(0));
+  }
+
+  /**
    * Tests exceptions for modifyInvitees in CentralSystem.
    */
   @Test
   public void testModifyInviteesExceptions() {
+    //???
     assertThrows("event cannot be null",
             IllegalArgumentException.class,
             () -> system1.modifyInvitees(null, new ArrayList<String>(),
@@ -478,6 +546,14 @@ public class CentralSystemTests {
             IllegalStateException.class,
             () -> system1.modifyInvitees(event2, new ArrayList<String>(Arrays.asList(emmaVB)),
                     false));
+  }
+
+  /**
+   * Tests valid cases for adding/removing invitees.
+   */
+  @Test
+  public void testModifyInviteesValid() {
+    //???
   }
 
   /**
@@ -500,5 +576,53 @@ public class CentralSystemTests {
     assertThrows("the given user must be invited to the event",
             IllegalStateException.class,
             () -> system1.removeEvent(event1, noelisA2));
+  }
+
+  /**
+   * Tests host removing valid existing events for removeEvent in CentralSystem.
+   */
+  @Test
+  public void testRemoveEventValidByHost() {
+    assertEquals(event1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(event1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(event1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(event1));
+
+    system1.removeEvent(event1, profLucia);
+
+    // removes event for all users
+    assertTrue(system1.getUserEvents(profLucia).isEmpty());
+    assertTrue(system1.getUserEvents(emmaVB).isEmpty());
+    assertTrue(system1.getUserEvents(noelisA1).isEmpty());
+    assertTrue(system1.getSystemEvents().contains(event1));
+  }
+
+  /**
+   * Tests non-host removing valid existing events for removeEvent in CentralSystem.
+   */
+  @Test
+  public void testRemoveEventValidByNonHost() {
+    assertEquals(event1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(event1, system1.getUserEvents(emmaVB).get(0));
+    assertEquals(event1, system1.getUserEvents(noelisA1).get(0));
+    assertTrue(system1.getSystemEvents().contains(event1));
+
+    system1.removeEvent(event1, noelisA1);
+
+    // removes event for just one user
+    assertEquals(event1, system1.getUserEvents(profLucia).get(0));
+    assertEquals(event1, system1.getUserEvents(emmaVB).get(0));
+    assertTrue(system1.getUserEvents(noelisA1).isEmpty());
+    assertTrue(system1.getSystemEvents().contains(event1));
+  }
+
+  /**
+   * Tests exception thrown by addUser.
+   */
+  @Test
+  public void testAddUserException() {
+    assertThrows("file cannot be null",
+            IllegalArgumentException.class,
+            () -> system1.addUser(null));
   }
 }

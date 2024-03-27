@@ -21,7 +21,9 @@ public class Schedule implements ScheduleRep {
 
   @Override
   public String scheduleOwner() {
-    return this.name;
+    String uid = "";
+    uid += this.name;
+    return uid;
   }
 
   @Override
@@ -76,7 +78,8 @@ public class Schedule implements ScheduleRep {
       this.events.add(event);
     }
     else {
-      throw new IllegalStateException("event exists already or conflicts with another");
+      throw new IllegalStateException(
+              "event exists already, conflicts with another, or owner isn't invited");
     }
   }
 
@@ -91,24 +94,7 @@ public class Schedule implements ScheduleRep {
     if (!this.events.contains(event)) {
       throw new IllegalStateException("event must be in schedule");
     }
-    if (event.getInvitedUsers().isEmpty()) {
-      throw new IllegalStateException("event must have invitees to remove");
-    }
-    if (this.name.equals(event.getInvitedUsers().get(0))) {
-      this.events.remove(event);
-    }
-  }
-
-  @Override
-  public void modifyEvent(EventRep event) {
-    eventNullException(event);
-    if (this.eventsPlanned().stream().anyMatch(f -> f.getName().equals(event.getName()))) {
-      for (EventRep events : this.eventsPlanned()) {
-        if (events.getName().equals(event.getName())) {
-          events = event; // not being changed
-        }
-      }
-    }
+    this.events.remove(event);
   }
 
   /**
