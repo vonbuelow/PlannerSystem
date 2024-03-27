@@ -257,6 +257,9 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalStateException("too many invitees to remove");
     }
 
+    int eventIdx = this.eventList.indexOf(event);
+    EventRep eventToModify = this.eventList.get(eventIdx);
+
     if (toAdd) {
       List<String> usersToAdd = new ArrayList<String>();
       for (String invitee : invitees) {
@@ -264,9 +267,6 @@ public class CentralSystem implements NUPlannerSystem {
           usersToAdd.add(invitee);
         }
       }
-
-      int eventIdx = this.eventList.indexOf(event);
-      EventRep eventToModify = this.eventList.get(eventIdx);
       eventToModify.modifyInvitees(usersToAdd, true);
     }
     else {
@@ -275,11 +275,8 @@ public class CentralSystem implements NUPlannerSystem {
         if (event.getInvitedUsers().stream().anyMatch(f -> f.equals(invitee))) {
           usersToRemove.add(invitee);
         }
-
-        int eventIdx = this.eventList.indexOf(event);
-        EventRep eventToModify = this.eventList.get(eventIdx);
-        eventToModify.modifyInvitees(usersToRemove, false);
       }
+      eventToModify.modifyInvitees(usersToRemove, false);
     }
   }
 

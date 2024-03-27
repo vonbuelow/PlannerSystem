@@ -561,10 +561,8 @@ public class CentralSystemTests {
   }
 
   /**
-   * Tests valid cases for adding/removing invitees.
+   * Tests valid case for adding/removing invitees.
    * Adding/removing at least one invitee for event with at least two invitees.
-   * Adding people that already exist and at least one does not.
-   * Removing people that exist and don't.
    */
   @Test
   public void testModifyInviteesAddOneNewInvitee() {
@@ -591,6 +589,23 @@ public class CentralSystemTests {
     assertNotEquals(oldEvent1, system1.getUserEvents(emmaVB).get(0));
     assertNotEquals(oldEvent1, system1.getUserEvents(noelisA1).get(0));
     assertNotEquals(oldEvent1, system1.getUserEvents(noelisA2).get(0));
+  }
+
+  /**
+   * Tests valid case for adding/removing invitees.
+   * Adding people that already exist and at least one does not.
+   */
+  @Test
+  public void testModifyInviteesAdding() {
+
+  }
+
+  /**
+   * Tests valid case for adding/removing invitees.
+   * Removing people that exist and don't.
+   */
+  @Test
+  public void testModifyInviteesRemoving() {
 
   }
 
