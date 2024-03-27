@@ -1,6 +1,5 @@
 package model;
 
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,8 +14,6 @@ import model.eventfields.Time;
 import xmlfunc.XMLReader;
 import xmlfunc.XMLWriter;
 
-// INVARIANT CONSIDERATIONS
-
 /**
  * Representing the central system of a NUPlanner.
  * Contains a map of all schedules in the system.
@@ -25,6 +22,7 @@ import xmlfunc.XMLWriter;
  */
 public class CentralSystem implements NUPlannerSystem {
   // Invariant: all events in the event list are in at least one user's schedule
+  // i.e. the size of each event's invitees list is at least one.
   private final Map<String, ScheduleRep> allSchedules; // all users -> their respective schedules
   private final List<EventRep> eventList; // list of all events if it is useful -> maintain
 
@@ -37,7 +35,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   /**
-   * NEW: new constructor keeping track of a list of schedules.
+   * NEW: new constructor keeping track of a list of schedules;
    */
   public CentralSystem(List<Schedule> schedules) {
     this.allSchedules = new HashMap<>();
@@ -63,6 +61,9 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public void saveSchedule(File folderToSaveTo) {
+    if (folderToSaveTo == null) {
+      throw new IllegalArgumentException("folder cannot be null");
+    }
     if (!folderToSaveTo.exists()) {
       throw new IllegalArgumentException("give a valid folder");
     }
@@ -76,13 +77,13 @@ public class CentralSystem implements NUPlannerSystem {
     eventNullException(event);
     eventAlreadyExistsException(event);
     boolean added = false;
-    // will add an event to all schedules when applicable for invitees/host.
+
     for (ScheduleRep sched : allSchedules.values()) {
       try {
         sched.addEvent(event);
         added = true;
-      } catch (IllegalStateException | IllegalArgumentException ex) {
-        // append to a string and then print it out after
+      } catch (IllegalStateException ex) {
+        throw new IllegalStateException(ex);
       }
     }
     if (added) {
@@ -122,7 +123,9 @@ public class CentralSystem implements NUPlannerSystem {
     }
 
     if (added) {
-      eventList.add(event);
+      if (!eventList.contains(event)) {
+        eventList.add(event);
+      }
     }
   }
 
@@ -143,7 +146,7 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalArgumentException("user cannot be null");
     }
     if (newUser.isEmpty()) {
-      throw new IllegalStateException("new user must be non-empty");
+      throw new IllegalArgumentException("new user must be non-empty");
     }
 
     String userID = newUser.keySet().iterator().next();
@@ -212,10 +215,7 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalStateException(e);
     }
 
-    if (allSchedules.values().stream()
-                 .anyMatch(s -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
-                         && s.eventsPlanned().stream().anyMatch(e ->
-                         e.overlapsWith(eventCopy) && !e.equals(eventToModify)))) {
+    if (anyUserTimeConflictWithNewTime(eventToModify, eventCopy)) {
       throw new IllegalStateException("at least one user has a time conflict");
     }
     else {
@@ -225,7 +225,22 @@ public class CentralSystem implements NUPlannerSystem {
         throw new IllegalStateException(e);
       }
     }
+  }
 
+  /**
+   * Determines if any of the users currently in the system will have the time conflict
+   * in their schedule once the given event to be modified becomes the given event that
+   * has been modified.
+   * @param eventToModify original event yet to change the time of
+   * @param eventCopy same as original event but with a time change
+   * @return true iff any user has the new event overlapping with any of their other events
+   */
+  private boolean anyUserTimeConflictWithNewTime(EventRep eventToModify, EventRep eventCopy) {
+    return allSchedules.values().stream()
+            .anyMatch(s
+                    -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
+                    && s.eventsPlanned().stream().anyMatch(e
+                    -> e.overlapsWith(eventCopy) && !e.equals(eventToModify)));
   }
 
   @Override
@@ -266,11 +281,20 @@ public class CentralSystem implements NUPlannerSystem {
     int eventIdx = this.eventList.indexOf(event);
     EventRep eventToModify = this.eventList.get(eventIdx);
 
+    addOrRemoveInvitees(event, invitees, toAdd, eventToModify);
+  }
+
+  private void addOrRemoveInvitees(EventRep event, List<String> invitees, boolean toAdd, EventRep eventToModify) {
     if (toAdd) {
       List<String> usersToAdd = new ArrayList<String>();
       for (String invitee : invitees) {
         if (event.getInvitedUsers().stream().noneMatch(f -> f.equals(invitee))) {
           usersToAdd.add(invitee);
+        }
+      }
+      for (String user : usersToAdd) {
+        if (allSchedules.containsKey(user)) {
+          allSchedules.get(user).addEvent(eventToModify);
         }
       }
       eventToModify.modifyInvitees(usersToAdd, true);
@@ -280,6 +304,11 @@ public class CentralSystem implements NUPlannerSystem {
       for (String invitee : invitees) {
         if (event.getInvitedUsers().stream().anyMatch(f -> f.equals(invitee))) {
           usersToRemove.add(invitee);
+        }
+      }
+      for (String user : usersToRemove) {
+        if (allSchedules.containsKey(user)) {
+          allSchedules.get(user).removeEvent(eventToModify);
         }
       }
       eventToModify.modifyInvitees(usersToRemove, false);
@@ -314,10 +343,8 @@ public class CentralSystem implements NUPlannerSystem {
     }
     if (uid.equals(event.getInvitedUsers().get(0))) {
       for (ScheduleRep sched : allSchedules.values()) {
-        try {
+        if (event.getInvitedUsers().contains(sched.scheduleOwner())) {
           sched.removeEvent(event);
-        } catch (IllegalStateException e) {
-          // user is not invited
         }
       }
     }
@@ -381,6 +408,9 @@ public class CentralSystem implements NUPlannerSystem {
 
   @Override
   public List<EventRep> getUserEvents(String uid) {
+    if (uid == null || uid.isEmpty()) {
+      throw new IllegalArgumentException("uid cannot be null/empty");
+    }
     return new ArrayList<>(this.allSchedules.get(uid).eventsPlanned());
   }
 

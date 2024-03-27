@@ -146,6 +146,7 @@ public class CentralSystemTests {
   /**
    * Tests adding an event to all invited users' schedules.
    * Event conflicts with at least one invited user's existing events.
+   * Event does not get added to the system's list of events.
    */
   @Test
   public void testAddEventToAllSchedulesSomeConflict() {
@@ -162,11 +163,12 @@ public class CentralSystemTests {
     assertFalse(allEventsInSystem1.contains(event2));
     assertFalse(event1.overlapsWith(event2));
     assertTrue(event3.overlapsWith(event2));
-    system1.addEventToAllSchedules(event2);
-    assertTrue(profLuciaSched.eventsPlanned().contains(event2));
+    assertThrows("event exists already, conflicts with another, or owner isn't invited",
+            IllegalStateException.class, () -> system1.addEventToAllSchedules(event2));
+    assertFalse(profLuciaSched.eventsPlanned().contains(event2));
     assertFalse(emmaVBSched.eventsPlanned().contains(event2));
-    assertTrue(noelisA1Sched.eventsPlanned().contains(event2));
-    assertTrue(allEventsInSystem1.contains(event2));
+    assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
+    assertFalse(allEventsInSystem1.contains(event2));
   }
 
   /**
@@ -192,7 +194,8 @@ public class CentralSystemTests {
     assertFalse(noelisA1Sched.eventsPlanned().contains(event3));
     assertFalse(allEventsInSystem1.contains(event3));
     assertTrue(event2.overlapsWith(event3));
-    system1.addEventToAllSchedules(event3);
+    assertThrows("event exists already, conflicts with another, or owner isn't invited",
+            IllegalStateException.class, () -> system1.addEventToAllSchedules(event3));
     assertFalse(profLuciaSched.eventsPlanned().contains(event3));
     assertFalse(emmaVBSched.eventsPlanned().contains(event3));
     assertFalse(noelisA1Sched.eventsPlanned().contains(event3));
@@ -653,9 +656,12 @@ public class CentralSystemTests {
     assertTrue(system1.getSystemEvents().contains(oldEvent1));
     assertFalse(system1.getSystemEvents().contains(newEvent1));
 
+    Map<String, ScheduleRep> newUser = new HashMap<String, ScheduleRep>();
+    newUser.put(noelisA2, noelisA2Sched);
     system1.modifyInvitees(oldEvent1,
             new ArrayList<String>(Arrays.asList(emmaVB, noelisA2)),
             false);
+    system1.addNewUser(newUser);
 
     assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertTrue(system1.getUserEvents(emmaVB).isEmpty());

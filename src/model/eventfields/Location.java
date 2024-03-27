@@ -12,12 +12,13 @@ public class Location {
 
   /**
    * Location representation.
-   * @param online if the location is taking place online.
-   * @param place where the place of the location is.
+   * @param online if the location is taking place online
+   * @param place the name of the location place
+   * @throws IllegalArgumentException if the place is null or empty
    */
   public Location(boolean online, String place) {
     this.online = online;
-    if (place.isEmpty() || place == null) {
+    if (place == null || place.isEmpty()) {
       throw new IllegalArgumentException("cannot have null or empty location place");
     }
     this.place = place;
@@ -45,17 +46,23 @@ public class Location {
 
   /**
    * Returns a string stating whether the location is online.
+   * Public observation for XML writer reference.
    * @return a string of true or false
    */
   public String isOnline() {
-    return Boolean.toString(this.online);
+    String online = "";
+    online += Boolean.toString(this.online);
+    return online;
   }
 
   /**
    * Returns the name of the place of this location.
+   * Public observation for XML writer reference.
    * @return a string of the location place
    */
   public String getPlace() {
-    return this.place;
+    String place = "";
+    place += this.place;
+    return place;
   }
 }

@@ -1,6 +1,5 @@
 package model.eventfields;
 
-
 import java.util.Objects;
 
 /**
@@ -20,13 +19,15 @@ public class Time {
    * @param end end day of an event time
    * @param endTime ending clock time of the event
    * @throws IllegalArgumentException when times are not: 4-digit numbers, in military time,
-   *     non-null.
-   * @throws IllegalStateException when times are equal
+   *     non-null, and different
    *
    */
   public Time(Day start, String startTime, Day end, String endTime) {
-    int lengthST = String.valueOf(startTime).length(); // length of the start time number
-    int lengthET = String.valueOf(endTime).length(); // length of the end time number
+    if (start == null || end == null || startTime == null || endTime == null) {
+      throw new IllegalArgumentException("No days or hours can be null");
+    }
+    int lengthST = startTime.length(); // length of the start time number
+    int lengthET = endTime.length(); // length of the end time number
     if (lengthST != 4 || lengthET != 4) {
       throw new IllegalArgumentException("Valid time format has to be 4 digits XXXX. "
               + "You entered: " + start + " " + startTime + "\n" + end + " " + endTime);
@@ -37,17 +38,13 @@ public class Time {
     if (!militaryTime(endTime)) {
       throw new IllegalArgumentException("End time is NOT IN MILITARY TIME: " + endTime);
     }
-    if (start == null || end == null) {
-      throw new IllegalArgumentException("No days can be null.");
-    }
-    if (startTime.equals(endTime)) {
-      throw new IllegalStateException("start and end times must be different");
+    if (startTime.equals(endTime) && start.equals(end)) {
+      throw new IllegalArgumentException("start and end times must be different");
     }
     this.start = start;
     this.startTime = startTime;
     this.end = end;
     this.endTime = endTime;
-
   }
 
   /**
@@ -100,10 +97,15 @@ public class Time {
 
   /**
    * Returns whether the given time overlaps with the current.
+   * Public for Event's usage of the same logic.
    * @param time the time whose time is being compared to the current
-   * @return
+   * @return true iff the current time conflicts with the given time
+   * @throws IllegalArgumentException if the given time is null
    */
   public boolean overlapsWith(Time time) {
+    if (time == null) {
+      throw new IllegalArgumentException("time cannot be null");
+    }
     // Convert days to their order in the week
     int thisStartDay = this.start.orderOfDayInWeek();
     int thatStartDay = time.start.orderOfDayInWeek();
@@ -148,25 +150,27 @@ public class Time {
   }
 
   /**
-   * Returning the starting date time.
-   * @return    the Day that this time is starting at.
+   * Gets the start day of the current time.
+   * Public for XML writer observation.
+   * @return the time's start day as a Day
    */
   public Day getStartDayDefault() {
     return this.start;
   }
 
   /**
-   * Returning the start day as a string.
-   * @return     the starting day as a string of this time.
+   * Gets a string abbreviation of the current time's start day.
+   * Public for writer and panel observation.
+   * @return the time's start day abbreviated
    */
   public String getStartDay() {
     return getDayString(this.start);
   }
 
   /**
-   * Get the toString of the day and get rid of the extra value information of a day.
-   * @param     day the day we want to get the string of.
-   * @return    a string representation of the day.
+   * Converts the given day into an abbreviated string.
+   * @param day the current time's day
+   * @return an abbreviation of the given day's name
    */
   private String getDayString(Day day) {
     int dayLength = day.toString().length();
@@ -174,26 +178,33 @@ public class Time {
   }
 
   /**
-   * The ending day as a string of this times end day.
-   * @return    a string representation of this times end day.
+   * Gets a string abbreviation of the current time's end day.
+   * Public for XML writer observation.
+   * @return the time's end day abbreviated
    */
   public String getEndDay() {
     return getDayString(this.end);
   }
 
   /**
-   * The starting time of this time which is a string.
-   * @return   the string value which is a start time.
+   * The start hour of the current time.
+   * Public for XML writer and panels.
+   * @return a copy of the current time's start time
    */
   public String getStartTime() {
-    return this.startTime;
+    String st = "";
+    st += this.startTime;
+    return st;
   }
 
   /**
-   * The ending time of this time which is a string.
-   * @return   the string value which is a end time.
+   * The end hour of the current time.
+   * Public for XML writer and panels.
+   * @return a copy of the current time's end time
    */
   public String getEndTime() {
-    return this.endTime;
+    String et = "";
+    et += this.endTime;
+    return et;
   }
 }
