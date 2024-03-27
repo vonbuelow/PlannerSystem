@@ -51,8 +51,9 @@ public class XMLTest {
   // test the reader makes an instance of a schedule
   @Test
   public void testReadingSchedule() {
-    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
-
+    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\"
+            + "Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
+    // a reader
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
     Location location = new Location(false, "\"Churchill Hall 101\"");
@@ -60,6 +61,12 @@ public class XMLTest {
             Arrays.asList("\"Prof. Lucia\"", "\"Student Anon\"", "\"Chat\""));
     EventRep event = new Event("\"CS3500 Morning Lecture\"", time, location, invitees);
     ScheduleRep schedule = new Schedule("Prof. Lucia", new ArrayList<>(Arrays.asList(event)));
+    // model testing
+    NUPlannerSystem model = new CentralSystem();
+    model.addUser(new File("C:\\Users\\emmaj\\OneDrive\\"
+            + "Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
+
+    //System.out.println(model.getUserEvents("Prof. Lucia"));
     assertEquals(schedule.eventsPlanned(), profLuciaSched.get("Prof. Lucia").eventsPlanned());
   }
 

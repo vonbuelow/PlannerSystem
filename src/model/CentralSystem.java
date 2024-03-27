@@ -160,15 +160,20 @@ public class CentralSystem implements NUPlannerSystem {
       }
     }
 
-    for (EventRep existing : existingSched.eventsPlanned()) {
-      for (EventRep newEvent : newUser.values().iterator().next().eventsPlanned()) {
-        if (!existing.overlapsWith(newEvent)) {
-          existingEvents.add(newEvent);
-          this.eventList.add(newEvent);
+    if (!this.eventList.isEmpty()) {
+      for (EventRep existing : existingSched.eventsPlanned()) {
+        for (EventRep newEvent : newUser.get(userID).eventsPlanned()) {
+          if (!existing.overlapsWith(newEvent)) {
+            existingEvents.add(newEvent);
+            this.eventList.add(newEvent);
+          }
         }
       }
     }
-    System.out.println(existingEvents.toString());
+    else {
+      existingEvents.addAll(newUser.get(userID).eventsPlanned());
+    }
+
     this.allSchedules.put(userID, existingSched);
   }
 

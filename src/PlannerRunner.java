@@ -1,6 +1,7 @@
 import model.CentralSystem;
 import model.NUPlannerSystem;
 import view.MainSystemFrame;
+import view.NUPlannerTextView;
 import view.NUPlannerView;
 
 public class PlannerRunner {

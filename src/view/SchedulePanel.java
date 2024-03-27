@@ -43,15 +43,17 @@ public class SchedulePanel extends JPanel {
     System.out.println(events.toString() + "drawimg these rn");
     for (EventRep event : events) {
       int dayIndex = dayIndex(event.getTime().getStartDay());
-      int startTimeIndex = Integer.parseInt(event.getTime().getStartTime());
-      int endTimeIndex = Integer.parseInt(event.getTime().getEndTime());
+      int[] startTime = parseTime(event.getTime().getStartTime());
+      int[] endTime = parseTime(event.getTime().getEndTime());
+      int startTimeIndex = startTime[0] + (startTime[1] / 60);
+      int endTimeIndex = endTime[0] + (endTime[1] / 60);
 
       int x = colSpacing * dayIndex;
       int y = rowSpacing * startTimeIndex;
       int height = rowSpacing * (endTimeIndex - startTimeIndex);
 
-      g.setColor(Color.RED); // Set the event color
-      g.fillRect(x, y, colSpacing, height); // Draw the event as a filled rectangle
+      g.setColor(new Color(89, 70, 211, 255));
+      g.fillRect(x, y, colSpacing, height);
     }
   }
 
@@ -85,14 +87,19 @@ public class SchedulePanel extends JPanel {
     }
     schedulePanel.add(week);
   }*/
-
   public void updateView() {
-
+    //this.paintComponent(new );
   }
 
   protected void showSchedule(String selectedUser) {
     this.selectedUser = selectedUser;
     repaint();
+  }
+
+  private int[] parseTime(String time) {
+    int hour = Integer.parseInt(time.substring(0, 2));
+    int minute = Integer.parseInt(time.substring(2, 4));
+    return new int[]{hour, minute};
   }
 
   private int dayIndex(String startDay) {

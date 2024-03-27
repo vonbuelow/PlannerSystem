@@ -70,7 +70,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
     String[] names = this.model.usersInSystem().toArray(new String[0]);
     listOfUsers = new JComboBox<String>(names);
-    usersListener(this.listOfUsers);
+    usersListener(this.listOfUsers, frame);
     buttonPanel.add(listOfUsers);
     createButton = new JButton("Create Event");
     eventButtonListener(createButton, false, frame);
@@ -86,15 +86,16 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
   }
 
-  private void usersListener(JComboBox<String> listOfUsers) {
+  private void usersListener(JComboBox<String> listOfUsers, MainSystemFrame frame) {
     listOfUsers.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
         // Update selectedUser with the currently selected item
         selectedUser = String.valueOf(listOfUsers.getSelectedItem());
         content.showSchedule(selectedUser);
-        System.out.println("Selected User: " + selectedUser); // Just for demonstration
-        content.repaint();
+        System.out.println("Selected User: " + selectedUser);
+        //content.repaint();
+        frame.repaint();
       }
     });
 

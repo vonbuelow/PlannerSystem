@@ -57,6 +57,7 @@ public class XMLReader {
       getEventsFromSchedule(nodeList, ret);
       ScheduleRep sched = new Schedule(userID, ret);
       schedules.put(userID, sched);
+      //System.out.println(schedules.get(userID).eventsPlanned().toString());
       return schedules;
     } catch (ParserConfigurationException ex) {
       throw new IllegalStateException("Error in creating the builder");
