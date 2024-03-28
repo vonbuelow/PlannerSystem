@@ -20,20 +20,21 @@ import model.NUPlannerSystem;
  * Describes capabilities of event frame's panel.
  */
 public class EventPanel extends JPanel {
-
-  private JTextField eventNameField;
+  private final JTextField eventNameField;
   private JComboBox<String> startDayComboBox;
   private JComboBox<String> endDayComboBox;
-  private JTextField startTimeField;
-  private JTextField endTimeField;
-  private JTextField locationField;
+  private final JTextField startTimeField;
+  private final JTextField endTimeField;
+  private final JTextField locationField;
   private JList<String> availableUsersList;
-  private JMenu isOnline;
-  private JComboBox<String> startDay;
-  private JComboBox<String> endDay;
   private FlowLayout layout;
 
-  EventPanel(String selectedUser, NUPlannerSystem model) {
+  /**
+   * Creates a panel to view information about an event's name, time, location, etc.
+   * @param selectedUser uid of the user selected on the panel
+   * @param model system of users
+   */
+  protected EventPanel(String selectedUser, NUPlannerSystem model) {
     eventNameField = new JTextField(15);
     startTimeField = new JTextField(15);
     endTimeField = new JTextField(15);
@@ -48,6 +49,11 @@ public class EventPanel extends JPanel {
     // how to display all users to select?? with the first person being the host
   }
 
+  /**
+   * Adds user to given event panel.
+   * @param eventPanel event panel to be added to
+   * @param strings users available
+   */
   private void userPanel(EventPanel eventPanel, Set<String> strings) {
     JPanel userListPanel = new JPanel();
     userListPanel.setLayout(layout);
@@ -57,7 +63,10 @@ public class EventPanel extends JPanel {
     eventPanel.add(userListPanel);
   }
 
-  // 33 lines atm
+  /**
+   * Adds location to given event panel.
+   * @param eventPanel event panel to be added to
+   */
   private void locationPanel(EventPanel eventPanel) {
     defaultDays();
 
@@ -98,8 +107,12 @@ public class EventPanel extends JPanel {
     eventPanel.add(startDayPanel);
   }
 
-
-  EventPanel(EventRep event, NUPlannerSystem model) {
+  /**
+   * Constructor for potential controller use.
+   * @param event event to be presented in a panel
+   * @param model system of users
+   */
+  public EventPanel(EventRep event, NUPlannerSystem model) {
     this.eventNameField = new JTextField(event.getName());
     this.locationField = new JTextField(event.getLocation().getPlace());
     this.startTimeField = new JTextField(event.getTime().getStartTime());
@@ -107,6 +120,10 @@ public class EventPanel extends JPanel {
     this.availableUsersList = new JList<>(model.usersInSystem().toArray(new String[0]));
   }
 
+  /**
+   * Adds an event name to a panel.
+   * @param eventPanel event panel to be added to
+   */
   private void eventNamePanel(EventPanel eventPanel) {
     JPanel eventNamePanel = new JPanel();
     eventNamePanel.setLayout(layout);
@@ -115,6 +132,9 @@ public class EventPanel extends JPanel {
     eventPanel.add(eventNamePanel);
   }
 
+  /**
+   * Gives default days to choose from for starting and ending events.
+   */
   private void defaultDays() {
     String[] dayOptions = {"Sunday", "Monday", "Tuesday",
         "Wednesday", "Thursday", "Friday", "Saturday"};
@@ -122,31 +142,59 @@ public class EventPanel extends JPanel {
     this.endDayComboBox = new JComboBox<>(dayOptions);
   }
 
-  public String getEventName() {
+  /**
+   * Gets the text for an event name.
+   * @return an event name as a string
+   */
+  protected String getEventName() {
     return eventNameField.getText();
   }
 
-  public String getStartDay() {
+  /**
+   * Gets the text for an event start day.
+   * @return event start day as a string
+   */
+  protected String getStartDay() {
     return (String) startDayComboBox.getSelectedItem();
   }
 
-  public String getEndDay() {
+  /**
+   * Gets the text for an event end day.
+   * @return event end day as a string
+   */
+  protected String getEndDay() {
     return (String) endDayComboBox.getSelectedItem();
   }
 
-  public String getStartTime() {
+  /**
+   * Gets the text for an event start time.
+   * @return event start time as a string
+   */
+  protected String getStartTime() {
     return startTimeField.getText();
   }
 
-  public String getEndTime() {
+  /**
+   * Gets the text for an event end time.
+   * @return event end time as a string
+   */
+  protected String getEndTime() {
     return endTimeField.getText();
   }
 
-  public String getLoc() {
+  /**
+   * Gets the text for an event location.
+   * @return event location as a string
+   */
+  protected String getLoc() {
     return locationField.getText();
   }
 
-  public String getSelectedUser() {
+  /**
+   * Gets the name of a user from available users.
+   * @return uid as a string
+   */
+  protected String getSelectedUser() {
     return availableUsersList.getSelectedValue();
   }
 }

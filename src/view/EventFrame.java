@@ -13,8 +13,7 @@ import model.NUPlannerSystem;
  * Describes capabilities of event frame.
  */
 public class EventFrame extends JFrame {
-
-  EventPanel panel;
+  private EventPanel panel;
 
   EventFrame(String name, NUPlannerSystem model) {
     this.setTitle("Event Info!");

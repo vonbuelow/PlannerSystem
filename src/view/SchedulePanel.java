@@ -12,8 +12,8 @@ import model.NUPlannerSystem;
  * Describes capabilities of schedule panel.
  */
 public class SchedulePanel extends JPanel {
-  private NUPlannerSystem model;
-  private String selectedUser;
+  private final NUPlannerSystem model;
+  private String selectedUser; // is changed
 
   /**
    * put the content here of the actual schedule, called from the main system frame.

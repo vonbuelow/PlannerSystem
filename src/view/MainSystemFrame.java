@@ -24,7 +24,7 @@ import model.NUPlannerSystem;
  * Describes capabilities of main system frame, therefore whole view.
  */
 public class MainSystemFrame extends JFrame implements NUPlannerView {
-  NUPlannerSystem model;
+  private final NUPlannerSystem model;
   private JMenuBar menuBar;
   private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
