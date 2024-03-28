@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.util.Set;
@@ -9,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
