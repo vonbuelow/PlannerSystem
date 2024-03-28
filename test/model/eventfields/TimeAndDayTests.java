@@ -49,41 +49,41 @@ public class TimeAndDayTests {
   public void testConstructorExceptions() {
     assertThrows("Valid time format has to be 4 digits XXXX. "
             + "You entered: Monday: 05393\nMonday: 2300",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "05393", Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "05393", Day.MONDAY, "2300"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 053\nMonday: 2300",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "053", Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "053", Day.MONDAY, "2300"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 2300\nMonday: 05393",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", Day.MONDAY, "05393"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", Day.MONDAY, "05393"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 2300\nMonday: 053",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", Day.MONDAY, "053"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", Day.MONDAY, "053"));
     assertThrows("Start time is NOT IN MILITARY TIME: 0068",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "0068", Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "0068", Day.MONDAY, "2300"));
     assertThrows("End time is NOT IN MILITARY TIME: 2400",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", Day.MONDAY, "2400"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", Day.MONDAY, "2400"));
     assertThrows("No days or hours can be null",
-            IllegalArgumentException.class,
-            () -> new Time(null, "2300", Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(null, "2300", Day.MONDAY, "2300"));
     assertThrows("No days or hours can be null",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", null, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", null, "2300"));
     assertThrows("No days or hours can be null",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, null, Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, null, Day.MONDAY, "2300"));
     assertThrows("No days or hours can be null",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", Day.MONDAY, null));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", Day.MONDAY, null));
     assertThrows("start and end times must be different",
-            IllegalArgumentException.class,
-            () -> new Time(Day.MONDAY, "2300", Day.MONDAY, "2300"));
+            IllegalArgumentException.class, () ->
+                    new Time(Day.MONDAY, "2300", Day.MONDAY, "2300"));
   }
 
   @Test
@@ -130,8 +130,7 @@ public class TimeAndDayTests {
   @Test
   public void testTimeOverlapsWithOtherTime() {
     assertThrows("time cannot be null",
-            IllegalArgumentException.class,
-            () -> time1.overlapsWith(null));
+            IllegalArgumentException.class, () -> time1.overlapsWith(null));
     assertTrue(time1.overlapsWith(time5));
     assertFalse(time1.overlapsWith(time2));
     assertTrue(time6.overlapsWith(time7));

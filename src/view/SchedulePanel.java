@@ -91,6 +91,7 @@ public class SchedulePanel extends JPanel {
       g.drawLine(x, 0, x, height);
     }
   }
+
   public void updateView() {
     //this.paintComponent(new );
   }

@@ -14,7 +14,6 @@ import model.NUPlannerSystem;
  */
 public class EventFrame extends JFrame {
 
-  private JButton modifyEvent, removeEvent;
   EventPanel panel;
 
   EventFrame(String name, NUPlannerSystem model) {
@@ -29,16 +28,16 @@ public class EventFrame extends JFrame {
   }
 
   private void buttonLayout(EventFrame eventFrame, NUPlannerSystem model) {
-      JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
-      modifyEvent = new JButton("Modify Event");
-      eventButtonListener(modifyEvent, true, eventFrame);
-      buttonPanel.add(modifyEvent);
-      //createButton.addActionListener();
-      removeEvent = new JButton("Remove Event");
-      eventButtonListener(removeEvent, false, eventFrame);
-      buttonPanel.add(removeEvent);
-      buttonPanel.setBackground(new Color(174, 200, 227));
-      eventFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+    JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
+    JButton modifyEvent = new JButton("Modify Event");
+    eventButtonListener(modifyEvent, true, eventFrame);
+    buttonPanel.add(modifyEvent);
+    //createButton.addActionListener();
+    JButton removeEvent = new JButton("Remove Event");
+    eventButtonListener(removeEvent, false, eventFrame);
+    buttonPanel.add(removeEvent);
+    buttonPanel.setBackground(new Color(174, 200, 227));
+    eventFrame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
   }
 
   /**

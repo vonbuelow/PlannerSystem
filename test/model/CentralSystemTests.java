@@ -109,20 +109,20 @@ public class CentralSystemTests {
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
   }
 
-  @Test
+  /*@Test
   public void testSaveSchedule() {
     //TO TEST
-  }
+  }*/
 
   /**
    * Tests exceptions for addEventToAllSchedules in CentralSystem.
    */
   @Test
   public void testAddEventToAllSchedulesExceptions() {
-    assertThrows("event cannot be null", IllegalArgumentException.class,
-            () -> system1.addEventToAllSchedules(null));
-    assertThrows("event already exists in system", IllegalStateException.class,
-            () -> system1.addEventToAllSchedules(event1));
+    assertThrows("event cannot be null", IllegalArgumentException.class, () ->
+            system1.addEventToAllSchedules(null));
+    assertThrows("event already exists in system", IllegalStateException.class, () ->
+            system1.addEventToAllSchedules(event1));
   }
 
   /**
@@ -207,20 +207,20 @@ public class CentralSystemTests {
    */
   @Test
   public void testAddEventToInviteeScheduleExceptions() {
-    assertThrows("event cannot be null", IllegalArgumentException.class,
-            () -> system1.addEventToInviteeSchedule(emmaVB, null));
-    assertThrows("uid cannot be null or empty", IllegalArgumentException.class,
-            () -> system1.addEventToInviteeSchedule(null, event1));
-    assertThrows("uid cannot be null or empty", IllegalArgumentException.class,
-            () -> system1.addEventToInviteeSchedule("", event1));
-    assertThrows("uid is not in system", IllegalStateException.class,
-            () -> system1.addEventToInviteeSchedule("hi", event1));
+    assertThrows("event cannot be null", IllegalArgumentException.class, () ->
+            system1.addEventToInviteeSchedule(emmaVB, null));
+    assertThrows("uid cannot be null or empty", IllegalArgumentException.class, () ->
+            system1.addEventToInviteeSchedule(null, event1));
+    assertThrows("uid cannot be null or empty", IllegalArgumentException.class, () ->
+            system1.addEventToInviteeSchedule("", event1));
+    assertThrows("uid is not in system", IllegalStateException.class, () ->
+            system1.addEventToInviteeSchedule("hi", event1));
   }
 
-  @Test
+  /*@Test
   public void testAddEventToInviteeSchedule() {
     //
-  }
+  }*/
 
   /**
    * Tests exceptions for modifyName in CentralSystem.
@@ -228,17 +228,14 @@ public class CentralSystemTests {
   @Test
   public void testModifyNameExceptions() {
     assertThrows("the given event and event name cannot be null/empty",
-            IllegalArgumentException.class,
-            () -> system1.modifyName(null, null));
+            IllegalArgumentException.class, () -> system1.modifyName(null, null));
     assertThrows("the given event and event name cannot be null/empty",
-            IllegalArgumentException.class,
-            () -> system1.modifyName(null, "event1"));
+            IllegalArgumentException.class, () ->
+                    system1.modifyName(null, "event1"));
     assertThrows("the given event and event name cannot be null/empty",
-            IllegalArgumentException.class,
-            () -> system1.modifyName(event1, ""));
+            IllegalArgumentException.class, () -> system1.modifyName(event1, ""));
     assertThrows("event must be in system",
-            IllegalStateException.class,
-            () -> system1.modifyName(event3, "event3"));
+            IllegalStateException.class, () -> system1.modifyName(event3, "event3"));
   }
 
   /**
@@ -280,14 +277,11 @@ public class CentralSystemTests {
   @Test
   public void testModifyTimeExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.modifyTime(null, time1));
+            IllegalArgumentException.class, () -> system1.modifyTime(null, time1));
     assertThrows("time cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.modifyTime(event1, null));
+            IllegalArgumentException.class, () -> system1.modifyTime(event1, null));
     assertThrows("event must be in system",
-            IllegalStateException.class,
-            () -> system1.modifyTime(event2, time1));
+            IllegalStateException.class, () -> system1.modifyTime(event2, time1));
   }
 
   /**
@@ -435,8 +429,8 @@ public class CentralSystemTests {
 
     emmaVBSched.addEvent(event3); // BBQ conflicts with lecture time to be modified
     assertThrows("at least one user has a conflict with the new time",
-            IllegalStateException.class,
-            () -> system1.modifyTime(oldEvent1, new Time(Day.FRIDAY, "0950",
+            IllegalStateException.class, () ->
+                    system1.modifyTime(oldEvent1, new Time(Day.FRIDAY, "0950",
                     Day.TUESDAY, "1130")));
 
     // therefore event does not change times
@@ -456,14 +450,11 @@ public class CentralSystemTests {
   @Test
   public void testModifyLocationExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.modifyLocation(null, loc1));
+            IllegalArgumentException.class, () -> system1.modifyLocation(null, loc1));
     assertThrows("location cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.modifyLocation(event1, null));
+            IllegalArgumentException.class, () -> system1.modifyLocation(event1, null));
     assertThrows("event must be in system",
-            IllegalStateException.class,
-            () -> system1.modifyLocation(event3, loc1));
+            IllegalStateException.class, () -> system1.modifyLocation(event3, loc1));
   }
 
   /**
@@ -536,28 +527,25 @@ public class CentralSystemTests {
   @Test
   public void testModifyInviteesExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.modifyInvitees(null, new ArrayList<String>(),
+            IllegalArgumentException.class, () ->
+                    system1.modifyInvitees(null, new ArrayList<String>(),
                     false));
-    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1, null, true));
-    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1, new ArrayList<String>(), true));
-    assertThrows("you cannot remove the host", IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1,
+    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class, () ->
+            system1.modifyInvitees(event1, null, true));
+    assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,() ->
+            system1.modifyInvitees(event1, new ArrayList<String>(), true));
+    assertThrows("you cannot remove the host", IllegalArgumentException.class, () ->
+            system1.modifyInvitees(event1,
                     new ArrayList<String>(Collections.singletonList(profLucia)), false));
     assertThrows("invitees must be unique",
-            IllegalArgumentException.class,
-            () -> system1.modifyInvitees(event1,
+            IllegalArgumentException.class, () -> system1.modifyInvitees(event1,
                     new ArrayList<String>(Arrays.asList(noelisA1, noelisA1)), true));
     assertThrows("event must be in system",
-            IllegalStateException.class,
-            () -> system1.modifyInvitees(event2,
+            IllegalStateException.class, () -> system1.modifyInvitees(event2,
                     new ArrayList<String>(Collections.singletonList(emmaVB)),
                     false));
     assertThrows("too many invitees to remove",
-            IllegalStateException.class,
-            () -> system1.modifyInvitees(event1,
+            IllegalStateException.class, () -> system1.modifyInvitees(event1,
                     new ArrayList<String>(Arrays.asList(emmaVB, noelisA1, noelisA2)),
                     false));
   }
@@ -679,20 +667,16 @@ public class CentralSystemTests {
   @Test
   public void testRemoveEventExceptions() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.removeEvent(null, "profLucia"));
+            IllegalArgumentException.class, () ->
+                    system1.removeEvent(null, "profLucia"));
     assertThrows("uid cannot be null or empty",
-            IllegalArgumentException.class,
-            () -> system1.removeEvent(event1, null));
+            IllegalArgumentException.class, () -> system1.removeEvent(event1, null));
     assertThrows("uid cannot be null or empty",
-            IllegalArgumentException.class,
-            () -> system1.removeEvent(event1, ""));
+            IllegalArgumentException.class, () -> system1.removeEvent(event1, ""));
     assertThrows("event must be in system",
-            IllegalStateException.class,
-            () -> system1.removeEvent(event3, emmaVB));
+            IllegalStateException.class, () -> system1.removeEvent(event3, emmaVB));
     assertThrows("the given user must be invited to the event",
-            IllegalStateException.class,
-            () -> system1.removeEvent(event1, noelisA2));
+            IllegalStateException.class, () -> system1.removeEvent(event1, noelisA2));
   }
 
   /**
@@ -739,7 +723,6 @@ public class CentralSystemTests {
   @Test
   public void testAddUserException() {
     assertThrows("file cannot be null",
-            IllegalArgumentException.class,
-            () -> system1.addUser(null));
+            IllegalArgumentException.class, () -> system1.addUser(null));
   }
 }

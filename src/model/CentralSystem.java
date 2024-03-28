@@ -35,7 +35,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   /**
-   * NEW: new constructor keeping track of a list of schedules;
+   * NEW: new constructor keeping track of a list of schedules.
    */
   public CentralSystem(List<Schedule> schedules) {
     this.allSchedules = new HashMap<>();
@@ -237,10 +237,9 @@ public class CentralSystem implements NUPlannerSystem {
    */
   private boolean anyUserTimeConflictWithNewTime(EventRep eventToModify, EventRep eventCopy) {
     return allSchedules.values().stream()
-            .anyMatch(s
-                    -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
-                    && s.eventsPlanned().stream().anyMatch(e
-                    -> e.overlapsWith(eventCopy) && !e.equals(eventToModify)));
+            .anyMatch(s -> eventToModify.getInvitedUsers().contains(s.scheduleOwner())
+                    && s.eventsPlanned().stream().anyMatch(e -> e.overlapsWith(eventCopy)
+                    && !e.equals(eventToModify)));
   }
 
   @Override
@@ -284,7 +283,8 @@ public class CentralSystem implements NUPlannerSystem {
     addOrRemoveInvitees(event, invitees, toAdd, eventToModify);
   }
 
-  private void addOrRemoveInvitees(EventRep event, List<String> invitees, boolean toAdd, EventRep eventToModify) {
+  private void addOrRemoveInvitees(EventRep event, List<String> invitees,
+                                   boolean toAdd, EventRep eventToModify) {
     if (toAdd) {
       List<String> usersToAdd = new ArrayList<String>();
       for (String invitee : invitees) {

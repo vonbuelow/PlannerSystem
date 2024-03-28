@@ -29,7 +29,8 @@ public class EventPanel extends JPanel {
   private JTextField locationField;
   private JList<String> availableUsersList;
   private JMenu isOnline;
-  private JComboBox<String> startDay, endDay;
+  private JComboBox<String> startDay;
+  private JComboBox<String> endDay;
   private FlowLayout layout;
 
   EventPanel(String selectedUser, NUPlannerSystem model) {
@@ -116,7 +117,7 @@ public class EventPanel extends JPanel {
 
   private void defaultDays() {
     String[] dayOptions = {"Sunday", "Monday", "Tuesday",
-            "Wednesday", "Thursday", "Friday", "Saturday"};
+        "Wednesday", "Thursday", "Friday", "Saturday"};
     this.startDayComboBox = new JComboBox<>(dayOptions);
     this.endDayComboBox = new JComboBox<>(dayOptions);
   }

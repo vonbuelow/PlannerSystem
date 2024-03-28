@@ -25,15 +25,9 @@ import model.NUPlannerSystem;
  */
 public class MainSystemFrame extends JFrame implements NUPlannerView {
   NUPlannerSystem model;
-  private JButton createButton;
-  private JButton scheduleButton;
-  private JButton addSchedule;
-  private JMenu menu;
   private JMenuBar menuBar;
-  private JMenuItem saveAllItem;
-  private SchedulePanel content;
+  private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
-  private String selectedUser;
 
   /**
    * This represents a main system frame of a nuplanner system as a GUI view.
@@ -52,10 +46,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   private void createMenu() {
     this.menuBar = new JMenuBar();
-    this.menu = new JMenu("File");
-    this.menuBar.add(this.menu);
-    this.saveAllItem = new JMenuItem("Save all Calendars");
-    saveAllListener(this.saveAllItem);
+    JMenu menu = new JMenu("File");
+    this.menuBar.add(menu);
+    JMenuItem saveAllItem = new JMenuItem("Save all Calendars");
+    saveAllListener(saveAllItem);
     menu.add(saveAllItem);
   }
 
@@ -87,14 +81,14 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     listOfUsers = new JComboBox<String>(names);
     usersListener(this.listOfUsers, frame);
     buttonPanel.add(listOfUsers);
-    createButton = new JButton("Create Event");
+    JButton createButton = new JButton("Create Event");
     eventButtonListener(createButton, false, frame);
     buttonPanel.add(createButton);
     //createButton.addActionListener();
-    scheduleButton = new JButton("Schedule Event");
+    JButton scheduleButton = new JButton("Schedule Event");
     eventButtonListener(scheduleButton, true, frame);
     buttonPanel.add(scheduleButton);
-    addSchedule = new JButton("Add Schedule");
+    JButton addSchedule = new JButton("Add Schedule");
     fileButtonListener(addSchedule, frame);
     buttonPanel.add(addSchedule);
     buttonPanel.setBackground(new Color(174, 200, 227));
@@ -106,7 +100,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
       @Override
       public void actionPerformed(ActionEvent e) {
         // Update selectedUser with the currently selected item
-        selectedUser = String.valueOf(listOfUsers.getSelectedItem());
+        String selectedUser = String.valueOf(listOfUsers.getSelectedItem());
         content.showSchedule(selectedUser);
         System.out.println("Selected User: " + selectedUser);
         //content.repaint();
