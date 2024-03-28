@@ -4,7 +4,7 @@ import view.MainSystemFrame;
 import view.NUPlannerView;
 
 /**
- * Runs the planner system. Allows uploading schedules and
+ * Runs the planner system. Allows uploading schedules and editing user calendars.
  */
 public class PlannerRunner {
 

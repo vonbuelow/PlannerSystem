@@ -10,6 +10,8 @@ import view.NUPlannerView;
  * The controller represents what delegates the users model from the view.
  */
 public class Controller implements ActionListener {
+  private final NUPlannerSystem model;
+  private final NUPlannerView view;
 
   /**
    * Controls the program with the model and the view.
@@ -17,17 +19,22 @@ public class Controller implements ActionListener {
    * @param     v the view that the controller is communicating to.
    */
   public Controller(NUPlannerSystem m, NUPlannerView v) {
-    v.setListener(this);
-    v.display();
+    this.model = m;
+    this.view = v;
+    this.view.setListener(this);
+    this.view.display();
   }
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if (e.getActionCommand().equals("Schedule Button")) {
-      // do some stuff to schedule the event
-    }
-    else if (e.getActionCommand().equals("Create Button")) {
-      // do something to create the event
+    switch (e.getActionCommand()) {
+      //read from the input textfield
+      case "Schedule Button":
+        // do something when the schedule button is pressed
+        break;
+      case "Create Button":
+        // do something when the create button is pressed
+        break;
     }
   }
 }
