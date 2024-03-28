@@ -23,7 +23,7 @@ public interface ReadonlyNUPlannerSystem {
   Set<String> usersInSystem();
 
   /**
-   * NEW.
+   * NEW. FOR FUTURE USE IN LETTING CLIENT KNOW IF ADDING/MOVING EVENT WILL WORK.
    * Does a given event overlap with anyone who is invited, in their existing schedule.
    * @param      event the event which gets passed along all schedules.
    * @return     Whether the event passed in over laps.

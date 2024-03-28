@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -72,17 +73,24 @@ public class Event implements EventRep {
 
   @Override
   public boolean overlapsWith(EventRep e) {
+    if (e == null) {
+      throw new IllegalArgumentException("event cannot be null");
+    }
     return this.time.overlapsWith(e.getTime());
   }
 
   @Override
   public String getName() {
-    return this.name;
+    String name = "";
+    name += this.name;
+    return name;
   }
 
   @Override
   public List<String> getInvitedUsers() {
-    return this.invitees;
+    List<String> users = new ArrayList<>();
+    users.addAll(this.invitees);
+    return users;
   }
 
   @Override
@@ -92,11 +100,11 @@ public class Event implements EventRep {
 
   @Override
   public void modifyName(String name) {
-    if (name == null) {
-      throw new IllegalArgumentException("name cannot be null");
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException("name cannot be null/empty");
     }
-    if (name.isEmpty() || name.equals(this.name)) {
-      throw new IllegalStateException("given name cannot be empty or same as the current");
+    if (name.equals(this.name)) {
+      throw new IllegalStateException("given name cannot be same as the current");
     }
     this.name = name;
   }
@@ -129,13 +137,11 @@ public class Event implements EventRep {
       throw new IllegalArgumentException("invitees cannot be null or empty");
     }
     if (toAdd) {
-      for (String user: invitees) {
-        this.invitees.add(user);
-      }
+      this.invitees.addAll(invitees);
     }
     else {
       for (String user: invitees) {
-        this.invitees.remove(invitees);
+        this.invitees.remove(user);
       }
     }
   }

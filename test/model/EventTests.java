@@ -14,6 +14,7 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -115,6 +116,9 @@ public class EventTests {
 
   @Test
   public void testOverlapsWith() {
+    assertThrows("event cannot be null",
+            IllegalArgumentException.class,
+            () -> event1.overlapsWith(null));
     assertTrue(event1.overlapsWith(event3));
     assertTrue(event1.overlapsWith(event5));
     assertTrue(event5.overlapsWith(event1));

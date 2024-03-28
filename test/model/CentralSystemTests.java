@@ -658,10 +658,10 @@ public class CentralSystemTests {
 
     Map<String, ScheduleRep> newUser = new HashMap<String, ScheduleRep>();
     newUser.put(noelisA2, noelisA2Sched);
-    system1.modifyInvitees(oldEvent1,
+    system1.addNewUser(newUser);
+    system1.modifyInvitees(event1,
             new ArrayList<String>(Arrays.asList(emmaVB, noelisA2)),
             false);
-    system1.addNewUser(newUser);
 
     assertEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
     assertTrue(system1.getUserEvents(emmaVB).isEmpty());

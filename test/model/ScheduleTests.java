@@ -19,8 +19,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests that work with schedule.
- * Making sure to go through possible edge cases.
+ * Tests for ScheduleRep methods.
  */
 public class ScheduleTests {
   Map<String, ScheduleRep> noUsersMap;

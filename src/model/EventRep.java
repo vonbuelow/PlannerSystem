@@ -21,6 +21,7 @@ public interface EventRep {
    * This would mean a time conflict.
    * @param e the event that may overlap with current
    * @return true iff one event ends at the same time as the other starts
+   * @throws IllegalArgumentException if event is null
    */
   boolean overlapsWith(EventRep e);
 
@@ -45,8 +46,8 @@ public interface EventRep {
   /**
    * Modifies the name of the current event to the given.
    * @param name new name of the event
-   * @throws IllegalArgumentException if the name is null
-   * @throws IllegalStateException if the name is empty or the same as the event name
+   * @throws IllegalArgumentException if the name is null/empty
+   * @throws IllegalStateException if the name is the same as the event name
    */
   void modifyName(String name);
 
@@ -72,10 +73,7 @@ public interface EventRep {
    * @param invitees list of invitees to event to modify
    * @param toAdd whether the given invitees are to be added or removed from event
    *              (if to add, true, false otherwise)
-   * @throws IllegalArgumentException if the list of invitees is null
-   * @throws IllegalStateException
-   *      -if the given list is not among invited users already, and they are to be removed
-   *      -if the given list is already invited to the event, and they are to be added
+   * @throws IllegalArgumentException if the list of invitees is null/empty
    */
   void modifyInvitees(List<String> invitees, boolean toAdd);
 }
