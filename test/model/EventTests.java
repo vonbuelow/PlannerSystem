@@ -117,8 +117,7 @@ public class EventTests {
   @Test
   public void testOverlapsWith() {
     assertThrows("event cannot be null",
-            IllegalArgumentException.class,
-            () -> event1.overlapsWith(null));
+            IllegalArgumentException.class, () -> event1.overlapsWith(null));
     assertTrue(event1.overlapsWith(event3));
     assertTrue(event1.overlapsWith(event5));
     assertTrue(event5.overlapsWith(event1));
