@@ -9,18 +9,19 @@ import java.util.List;
 import javax.swing.JPanel;
 import model.EventRep;
 import model.NUPlannerSystem;
+import model.ReadonlyNUPlannerSystem;
 
 /**
  * Describes capabilities of schedule panel.
  */
 public class SchedulePanel extends JPanel {
-  private final NUPlannerSystem model;
+  private final ReadonlyNUPlannerSystem model;
   private String selectedUser; // is changed
 
   /**
    * put the content here of the actual schedule, called from the main system frame.
    */
-  SchedulePanel(NUPlannerSystem model) {
+  SchedulePanel(ReadonlyNUPlannerSystem model) {
     this.model = model;
     this.selectedUser = "";
     this.setLayout(new BorderLayout());

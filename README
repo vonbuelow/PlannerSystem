@@ -15,7 +15,7 @@ along with how a system can be represented.
 --------------------------------------------------------------------------------------------------
 Quick start: give a short snippet of code showing how a user might get started using this codebase.
 
-When running the system a user should open up out PlannerRunner which... runs the planner!
+When running the system a user should open up out PlannerMain which... runs the planner!
 To add in some events to the schedule/nuplanner a user should go into their file system and
 find where the provided XMLs are (the xmls which are in the src folder). Then a user can navigate
 to those XMLs in their file explorer and add them to the system. To see a schedule a user will need
@@ -110,6 +110,11 @@ Changes for part 2 -------------------------------------------------------------
             Adding 'private' to the access modifiers in time and location.
     Added in Test Directory ->
         IN MODEL TESTING PACKAGE MORE THOUROUGH TESTING
+
+changes for part 3 -------------------------------------------------------------------------------
+view:
+    The constructor now only takes in a ReadonlyNUPlannerSystem
+
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,
 or explain for each directory in your codebase what components it provides.
@@ -147,7 +152,7 @@ key:
 |  |+- XMLReader [read a given xml and place it in the central system]
 |  |+- XMLWriter [write a schedule to a given directory]
 | (** in additional to MVC and classes the src folder also contains example XML files
-      and a main method to RUN THE PROGRAM**)
+      and a main class (PlannerMain) to RUN THE PROGRAM**)
 /test
 |  |+-/model~
 |  |   |+-/eventfields~
@@ -159,3 +164,4 @@ key:
 
 (**outside of the src and testing folder there are screenshots of event panel,
                                                    schedule, and schedule events**)
+

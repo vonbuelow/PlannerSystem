@@ -6,7 +6,7 @@ import view.NUPlannerView;
 /**
  * Runs the planner system. Allows uploading schedules and editing user calendars.
  */
-public class PlannerRunner {
+public class PlannerMain {
 
   /**
    * The main method to run the system.
@@ -15,7 +15,8 @@ public class PlannerRunner {
   public static void main(String[] args) {
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
-    //Controller controller = new Controller(model, view);
+    Controller controller = new ControllerGUI(view);
+    controller.runPlanner(model);
     view.display();
   }
 }

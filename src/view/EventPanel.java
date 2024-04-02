@@ -12,7 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 
 import model.EventRep;
-import model.NUPlannerSystem;
+import model.ReadonlyNUPlannerSystem;
 
 /**
  * Describes capabilities of event frame's panel.
@@ -32,7 +32,7 @@ public class EventPanel extends JPanel {
    * @param selectedUser uid of the user selected on the panel
    * @param model system of users
    */
-  protected EventPanel(String selectedUser, NUPlannerSystem model) {
+  protected EventPanel(String selectedUser, ReadonlyNUPlannerSystem model) {
     eventNameField = new JTextField(15);
     startTimeField = new JTextField(15);
     endTimeField = new JTextField(15);
@@ -110,7 +110,7 @@ public class EventPanel extends JPanel {
    * @param event event to be presented in a panel
    * @param model system of users
    */
-  public EventPanel(EventRep event, NUPlannerSystem model) {
+  public EventPanel(EventRep event, ReadonlyNUPlannerSystem model) {
     this.eventNameField = new JTextField(event.getName());
     this.locationField = new JTextField(event.getLocation().getPlace());
     this.startTimeField = new JTextField(event.getTime().getStartTime());

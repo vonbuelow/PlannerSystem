@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.NUPlannerSystem;
+import model.ReadonlyNUPlannerSystem;
 
 /**
  * Describes capabilities of event frame.
@@ -15,7 +16,7 @@ import model.NUPlannerSystem;
 public class EventFrame extends JFrame {
   private EventPanel panel;
 
-  EventFrame(String name, NUPlannerSystem model) {
+  EventFrame(String name, ReadonlyNUPlannerSystem model) {
     this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -26,7 +27,7 @@ public class EventFrame extends JFrame {
     this.setVisible(true);
   }
 
-  private void buttonLayout(EventFrame eventFrame, NUPlannerSystem model) {
+  private void buttonLayout(EventFrame eventFrame, ReadonlyNUPlannerSystem model) {
     JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
     JButton modifyEvent = new JButton("Modify Event");
     eventButtonListener(modifyEvent, true, eventFrame);

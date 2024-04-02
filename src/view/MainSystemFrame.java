@@ -18,29 +18,30 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import controller.Controller;
-import model.NUPlannerSystem;
+import model.ReadonlyNUPlannerSystem;
 
 /**
  * Describes capabilities of main system frame, therefore whole view.
  */
 public class MainSystemFrame extends JFrame implements NUPlannerView {
-  private final NUPlannerSystem model;
+  private final ReadonlyNUPlannerSystem model;
   private JMenuBar menuBar;
   private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
 
   /**
-   * This represents a main system frame of a nuplanner system as a GUI view.
+   * This represents a main system frame of a ReadOnlyNUPlannerSystem system as a GUI view.
    * @param     model the model of the planner system being run on.
    */
-  public MainSystemFrame(NUPlannerSystem model) {
+  public MainSystemFrame(ReadonlyNUPlannerSystem model) {
+    super();
+    this.setMinimumSize(new Dimension(700, 480));
     this.model = model;
     createMSFrame(this);
     createMenu();
     this.setJMenuBar(this.menuBar);
     this.content = new SchedulePanel(model);
     this.add(this.content);
-    this.setMinimumSize(new Dimension(700, 480));
     this.pack();
   }
 
