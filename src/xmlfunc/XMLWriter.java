@@ -17,9 +17,9 @@ public class XMLWriter {
    * Write a given schedule as a file and to a specific directory.
    * @param     sched a selected users schedule.
    */
-  public static void writeToFile(ScheduleRep sched, String directoryPath) {
+  public static void writeToFile(ScheduleRep sched, File directory) {
     // Use the provided directory path
-    File directory = new File(directoryPath);
+    File dir = new File(directory.getAbsolutePath());
     if (!directory.exists()) {
       directory.mkdirs(); // Create the directory if it does not exist
     }

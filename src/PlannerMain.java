@@ -1,3 +1,5 @@
+import controller.NUController;
+import controller.NUPlannerGUIController;
 import model.CentralSystem;
 import model.NUPlannerSystem;
 import view.MainSystemFrame;
@@ -15,8 +17,7 @@ public class PlannerMain {
   public static void main(String[] args) {
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
-    Controller controller = new ControllerGUI(view);
+    NUController controller = new NUPlannerGUIController(view);
     controller.runPlanner(model);
-    view.display();
   }
 }

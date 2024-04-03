@@ -68,7 +68,7 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalArgumentException("give a valid folder");
     }
     for (ScheduleRep schedule: this.allSchedules.values()) {
-      XMLWriter.writeToFile(schedule, folderToSaveTo.getAbsolutePath());
+      XMLWriter.writeToFile(schedule, folderToSaveTo);
     }
   }
 

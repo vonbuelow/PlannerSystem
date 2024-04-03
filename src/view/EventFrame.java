@@ -7,6 +7,8 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import controller.NUFeature;
 import model.NUPlannerSystem;
 import model.ReadonlyNUPlannerSystem;
 
@@ -15,8 +17,10 @@ import model.ReadonlyNUPlannerSystem;
  */
 public class EventFrame extends JFrame {
   private EventPanel panel;
+  private NUFeature executer;
 
-  EventFrame(String name, ReadonlyNUPlannerSystem model) {
+  EventFrame(String name, ReadonlyNUPlannerSystem model, NUFeature executer) {
+    this.executer = executer;
     this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,15 +63,12 @@ public class EventFrame extends JFrame {
       if (eventName.isEmpty() || location.isEmpty() || startDay == null
               || startTime.isEmpty() || endDay == null || endTime.isEmpty()
               || selectedUser == null) {
-        System.out.println("Error: One or more fields are empty.");
+        // ERROR BOX ASF
         return;
       }
 
       if (modify) {
-        System.out.println("Modify event: " + eventName + ", "
-                + location + ", " + startDay + ", " + startTime
-                + ", " + endDay + ", " + endTime + ", Host: "
-                + selectedUser);
+        // MODIFY EVENT: CREATE EVENT INSIDE OF THE
         eventFrame.dispose();
       } else {
         System.out.println("Remove event: " + eventName + ", "
@@ -79,3 +80,20 @@ public class EventFrame extends JFrame {
     });
   }
 }
+
+// FAKE VIEW
+/*
+behavior:
+  registar for events
+  fake view component for testing
+
+  features, the view calls the features which takes in arguments
+  controller -> model -> view
+
+  delegating
+
+  view:
+    - visible (boolean class) [mock -> string builder -> recording that]
+    - switching user -> different schedule pops up -> repaint (how to tell the view to repaint)
+    -
+ */

@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import controller.Controller;
+import controller.NUController;
+import controller.NUFeature;
 import model.ReadonlyNUPlannerSystem;
 
 /**
@@ -28,6 +30,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private JMenuBar menuBar;
   private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
+  private NUFeature executer;
 
   /**
    * This represents a main system frame of a ReadOnlyNUPlannerSystem system as a GUI view.
@@ -117,10 +120,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("click") && isSchedule) {
-          JDialog event = new JDialog(new EventFrame("Emma", model));
+          JDialog event = new JDialog(new EventFrame("Emma", model, executer));
         }
         else {
-          JDialog event = new JDialog(new EventFrame("ur mom", model));
+          JDialog event = new JDialog(new EventFrame("ur mom", model, executer));
         }
       }
     });
@@ -137,7 +140,8 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
         // Check if a directory was selected
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-          model.addUser(fileChooser.getSelectedFile());
+          //model.addUser(fileChooser.getSelectedFile());
+          executer.addUser(fileChooser.getSelectedFile());
           String[] names = model.usersInSystem().toArray(new String[0]);
           updateListOfUsers();
           content.updateView();
@@ -156,8 +160,8 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   @Override
-  public void setListener(Controller controller) {
-    // this would be a listener given the controller.
+  public void setListener(NUFeature executer) {
+    this.executer = executer;
   }
 
   @Override
