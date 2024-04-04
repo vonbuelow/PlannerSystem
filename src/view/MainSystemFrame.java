@@ -17,8 +17,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
-import controller.Controller;
-import controller.NUController;
 import controller.NUFeature;
 import model.ReadonlyNUPlannerSystem;
 
@@ -38,7 +36,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
    */
   public MainSystemFrame(ReadonlyNUPlannerSystem model) {
     super();
-    this.setMinimumSize(new Dimension(700, 480));
+    this.setSize(new Dimension(700, 480));
     this.model = model;
     createMSFrame(this);
     createMenu();
@@ -80,18 +78,25 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   private void buttonLayout(MainSystemFrame frame) {
-    JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
+    JPanel buttonPanel = new JPanel(new FlowLayout());
+    // the list of users displayed at the bottom of the screen
     String[] names = this.model.usersInSystem().toArray(new String[0]);
     listOfUsers = new JComboBox<String>(names);
     usersListener(this.listOfUsers, frame);
     buttonPanel.add(listOfUsers);
+
+    // the create button
     JButton createButton = new JButton("Create Event");
     eventButtonListener(createButton, false, frame);
     buttonPanel.add(createButton);
     //createButton.addActionListener();
+
+    // the schedule button
     JButton scheduleButton = new JButton("Schedule Event");
     eventButtonListener(scheduleButton, true, frame);
     buttonPanel.add(scheduleButton);
+
+    // add schedule button
     JButton addSchedule = new JButton("Add Schedule");
     fileButtonListener(addSchedule, frame);
     buttonPanel.add(addSchedule);
@@ -107,7 +112,6 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
         String selectedUser = String.valueOf(listOfUsers.getSelectedItem());
         content.showSchedule(selectedUser);
         System.out.println("Selected User: " + selectedUser);
-        //content.repaint();
         frame.repaint();
       }
     });
@@ -140,15 +144,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
         // Check if a directory was selected
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-          //model.addUser(fileChooser.getSelectedFile());
           executer.addUser(fileChooser.getSelectedFile());
           String[] names = model.usersInSystem().toArray(new String[0]);
           updateListOfUsers();
           content.updateView();
-          System.out.println(model.usersInSystem().toString());
-          //System.out.println(model.getUserEvents("Gordisimo"));
-          System.out.println("Selected file: "
-                  + fileChooser.getSelectedFile().getAbsolutePath());
         }
       }
     });

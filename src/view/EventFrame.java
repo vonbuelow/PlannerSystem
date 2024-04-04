@@ -3,13 +3,10 @@ package view;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
-
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import controller.NUFeature;
-import model.NUPlannerSystem;
 import model.ReadonlyNUPlannerSystem;
 
 /**
@@ -80,20 +77,3 @@ public class EventFrame extends JFrame {
     });
   }
 }
-
-// FAKE VIEW
-/*
-behavior:
-  registar for events
-  fake view component for testing
-
-  features, the view calls the features which takes in arguments
-  controller -> model -> view
-
-  delegating
-
-  view:
-    - visible (boolean class) [mock -> string builder -> recording that]
-    - switching user -> different schedule pops up -> repaint (how to tell the view to repaint)
-    -
- */
