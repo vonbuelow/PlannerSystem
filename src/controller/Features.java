@@ -15,6 +15,12 @@ public interface Features {
   void addUser(File file);
 
   /**
+   * Save all the users in the system to a given Directory.
+   * @param     dir the directory to save all XML's to
+   */
+  void saveUsers(File dir);
+
+  /**
    * Add an event to all users schedules in the system.
    * @param     event the event to add to everyone's schedules.
    */

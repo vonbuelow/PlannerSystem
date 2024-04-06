@@ -18,4 +18,9 @@ public class NUFeature implements Features{
     this.model.addUser(file);
   }
 
+  @Override
+  public void saveUsers(File dir) {
+    this.model.saveSchedule(dir);
+  }
+
 }
