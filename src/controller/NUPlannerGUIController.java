@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.IOException;
+
 import model.NUPlannerSystem;
 import view.NUPlannerView;
 
@@ -16,8 +18,16 @@ public class NUPlannerGUIController implements NUController {
   public void runPlanner(NUPlannerSystem model) {
     this.model = model;
     this.features = new NUFeature(model);
-    this.view.setListener(this.features);
-    this.view.display();
+    try {
+      this.view.setListener(this.features);
+    } catch (IOException e) {
+      // show this is a bad bad appendable for listener
+    }
+    try {
+      this.view.display();
+    } catch (IOException e) {
+      // bad bad appendable for display
+    }
   }
 
 }

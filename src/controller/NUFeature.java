@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 
 import model.NUPlannerSystem;
 
@@ -15,12 +16,20 @@ public class NUFeature implements Features{
 
   @Override
   public void addUser(File file) {
-    this.model.addUser(file);
+    try {
+      this.model.addUser(file);
+    } catch (IOException e) {
+      // bad appendable for adding a user
+    }
   }
 
   @Override
   public void saveUsers(File dir) {
-    this.model.saveSchedule(dir);
+    try {
+      this.model.saveSchedule(dir);
+    } catch (IOException e) {
+      // bad appendable for saving a schedule
+    }
   }
 
 }
