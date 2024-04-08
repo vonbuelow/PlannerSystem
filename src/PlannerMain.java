@@ -18,6 +18,12 @@ public class PlannerMain {
     // COMMAND LINE ARGUMENTS
     // STRATEGY FACTORY
     // PASSING IN THE STRAT TO THE MODEL SOMEHOW ???
+
+    // 1. prompt
+    // 2. make
+    // 3. pass in to controller
+    //
+    // calling the
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
     NUController controller = new NUPlannerGUIController(view);

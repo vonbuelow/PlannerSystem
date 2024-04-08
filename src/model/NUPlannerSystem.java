@@ -1,6 +1,7 @@
 package model;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @param fileToSave place of where the users' schedule should be saved to
    * @throws IllegalArgumentException if the given file is null or doesn't exist
    */
-  void saveSchedule(File fileToSave);
+  void saveSchedule(File fileToSave) throws IOException;
 
   /**
    * Add a new event to the central system.
@@ -28,7 +29,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalArgumentException if event is null
    * @throws IllegalStateException if the event is already in the system
    */
-  void addEventToAllSchedules(EventRep event);
+  void addEventToAllSchedules(EventRep event) throws IOException;
 
   /**
    * Add an event to a single user's schedule.
@@ -37,7 +38,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalArgumentException if event or uid is null, or uid is empty
    * @throws IllegalStateException if given user cannot be found in the system
    */
-  void addEventToInviteeSchedule(String uid, EventRep event);
+  void addEventToInviteeSchedule(String uid, EventRep event) throws IOException;
 
   /**
    * Adds in a new user to the central/NUPlannerSystem.
@@ -48,7 +49,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalArgumentException if map is null/empty
    * @throws IllegalStateException if new user already exists in system
    */
-  void addNewUser(Map<String, ScheduleRep> newUser);
+  void addNewUser(Map<String, ScheduleRep> newUser) throws IOException;
 
   /**
    * Modifies the name of the given system event.
@@ -58,7 +59,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalArgumentException if event or eventName is null/empty
    * @throws IllegalStateException if event does not exist in system
    */
-  void modifyName(EventRep event, String eventName);
+  void modifyName(EventRep event, String eventName) throws IOException;
 
   /**
    * Modifies the time of the given system event.
@@ -68,7 +69,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalStateException if event does not exist in system, or time overlaps
    *     with another event in any invitee's schedule
    */
-  void modifyTime(EventRep event, Time time);
+  void modifyTime(EventRep event, Time time) throws IOException;
 
   /**
    * Modifies the location of the given system event.
@@ -78,7 +79,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalStateException if event does not exist in system, if given location
    *     is the same as the current
    */
-  void modifyLocation(EventRep event, Location loc);
+  void modifyLocation(EventRep event, Location loc) throws IOException;
 
   /**
    * Modifies the invitees of the given system event.
@@ -90,7 +91,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalStateException if event does not exist in system or the number of
    *     invitees to remove exceeds or is the number of current invitees
    */
-  void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd);
+  void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd) throws IOException;
 
   /**
    * Remove an existing event from the system. If event is removed from host's
@@ -103,7 +104,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalStateException if the given event is not currently in the system
    *     or the given uid is not invited to the given event
    */
-  void removeEvent(EventRep event, String uid);
+  void removeEvent(EventRep event, String uid) throws IOException;
 
   /**
    * Allows client to give a user schedule as an XML file to the system.
@@ -111,5 +112,5 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @param file user schedule as xml file
    * @throws IllegalArgumentException if given file is null
    */
-  void addUser(File file);
+  void addUser(File file) throws IOException;
 }

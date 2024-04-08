@@ -2,7 +2,6 @@ package controller;
 
 import java.io.File;
 import java.util.List;
-
 import model.EventRep;
 
 public interface Features {

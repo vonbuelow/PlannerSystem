@@ -113,19 +113,17 @@ public class CentralSystem implements NUPlannerSystem {
       throw new IllegalStateException("uid is not in system");
     }
 
-    boolean added = false;
     // will add an event to all schedules when applicable for invitees/host.
     try {
       this.allSchedules.get(uid).addEvent(event);
-      added = true;
-    } catch (IllegalStateException e) {
-      // ignore
+    }
+    catch (IllegalStateException e) {
+      // NEW**
+      throw new IllegalStateException(e);
     }
 
-    if (added) {
-      if (!eventList.contains(event)) {
-        eventList.add(event);
-      }
+    if (!eventList.contains(event)) {
+      eventList.add(event);
     }
   }
 
