@@ -6,6 +6,8 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import controller.Features;
 import controller.NUFeature;
 import model.ReadonlyNUPlannerSystem;
 
@@ -14,9 +16,9 @@ import model.ReadonlyNUPlannerSystem;
  */
 public class EventFrame extends JFrame {
   private EventPanel panel;
-  private NUFeature executer;
+  private Features executer;
 
-  EventFrame(String name, ReadonlyNUPlannerSystem model, NUFeature executer) {
+  EventFrame(String name, ReadonlyNUPlannerSystem model, Features executer) {
     this.executer = executer;
     this.setTitle("Event Info!");
     this.setResizable(false);

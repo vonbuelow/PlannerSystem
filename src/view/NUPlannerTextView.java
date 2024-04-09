@@ -3,6 +3,8 @@ package view;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+
+import controller.Features;
 import controller.NUFeature;
 import model.ReadonlyNUPlannerSystem;
 import model.ScheduleRep;
@@ -38,7 +40,7 @@ public class NUPlannerTextView implements NUPlannerView {
   }
 
   @Override
-  public void setListener(NUFeature executer) {
+  public void setListener(Features executer) {
     // do nothing because this is the console view
   }
 

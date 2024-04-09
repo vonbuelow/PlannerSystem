@@ -2,8 +2,13 @@ package view;
 
 import java.io.IOException;
 
+import controller.Features;
 import controller.NUFeature;
 
+/**
+ * Mocks an NUPlannerView but logs the inputs given from an NUController to the
+ * current view.
+ */
 public class MockView implements NUPlannerView {
   public Appendable output;
 
@@ -12,14 +17,14 @@ public class MockView implements NUPlannerView {
   }
 
   @Override
-  public void setListener(NUFeature executer) throws IOException {
+  public void setListener(Features executer) throws IOException {
     // constructing
-    output.append("The NUFeatures input: ").append(String.valueOf(executer));
+    output.append("The NUFeatures input: ").append(String.valueOf(executer)).append("\n");
   }
 
   @Override
   public void display() throws IOException {
     // calls this.setVisible
-    output.append("setVisible was called");
+    output.append("setVisible was called\n");
   }
 }

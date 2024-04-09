@@ -2,6 +2,7 @@ package xmlfunc;
 
 import org.junit.Test;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,7 @@ public class XMLTest {
 
   // test the reader makes an instance of a schedule
   @Test
-  public void testReadingSchedule() {
+  public void testReadingSchedule() throws IOException {
     XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\"
             + "Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
     // a reader
@@ -72,7 +73,7 @@ public class XMLTest {
 
   // testing the writer
   @Test
-  public void testWriter() {
+  public void testWriter() throws IOException {
     XMLWriter writer = new XMLWriter();
     File usersxmls = new File("C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc");
     XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"

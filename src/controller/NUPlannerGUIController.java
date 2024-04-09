@@ -1,22 +1,22 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import model.NUPlannerSystem;
 import view.NUPlannerView;
 
 public class NUPlannerGUIController implements NUController {
-
-  private NUPlannerView view;
+  private final NUPlannerView view;
   private NUPlannerSystem model;
-  private NUFeature features;
+  private Features features;
 
   public NUPlannerGUIController(NUPlannerView view) {
     this.view = view;
   }
 
   public void runPlanner(NUPlannerSystem model) {
-    this.model = model;
+    this.model = Objects.requireNonNull(model);
     this.features = new NUFeature(model);
     try {
       this.view.setListener(this.features);

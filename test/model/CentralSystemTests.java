@@ -3,6 +3,7 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -130,7 +131,7 @@ public class CentralSystemTests {
    * Event does not conflict with any invited user's existing events.
    */
   @Test
-  public void testAddEventToAllSchedulesNoConflicts() {
+  public void testAddEventToAllSchedulesNoConflicts() throws IOException {
     assertFalse(profLuciaSched.eventsPlanned().contains(event2));
     assertFalse(emmaVBSched.eventsPlanned().contains(event2));
     assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
@@ -149,7 +150,7 @@ public class CentralSystemTests {
    * Event does not get added to the system's list of events.
    */
   @Test
-  public void testAddEventToAllSchedulesSomeConflict() {
+  public void testAddEventToAllSchedulesSomeConflict() throws IOException {
     // one user is invited to an event
     assertFalse(emmaVBSched.eventsPlanned().contains(event2));
     assertFalse(emmaVBSched.eventsPlanned().contains(event3));
@@ -177,7 +178,7 @@ public class CentralSystemTests {
    * Event does not get added to the system's list of events.
    */
   @Test
-  public void testAddEventToAllSchedulesTotalConflict() {
+  public void testAddEventToAllSchedulesTotalConflict() throws IOException {
     assertFalse(profLuciaSched.eventsPlanned().contains(event2));
     assertFalse(emmaVBSched.eventsPlanned().contains(event2));
     assertFalse(noelisA1Sched.eventsPlanned().contains(event2));
@@ -245,7 +246,7 @@ public class CentralSystemTests {
    * Invitees' schedules have the updated event.
    */
   @Test
-  public void testModifyNameValid() {
+  public void testModifyNameValid() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Lecture Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -288,7 +289,7 @@ public class CentralSystemTests {
    * Tests modifying the time of an event to a different start hour.
    */
   @Test
-  public void testModifyTimeValidDifferentStartHour() {
+  public void testModifyTimeValidDifferentStartHour() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -319,7 +320,7 @@ public class CentralSystemTests {
    * Tests modifying the time of an event to a different end hour.
    */
   @Test
-  public void testModifyTimeValidDifferentEndHour() {
+  public void testModifyTimeValidDifferentEndHour() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"),
             new Location(false, "Churchill Hall 101"),
@@ -350,7 +351,7 @@ public class CentralSystemTests {
    * Tests modifying the time of an event to a different start day.
    */
   @Test
-  public void testModifyTimeValidDifferentStartDay() {
+  public void testModifyTimeValidDifferentStartDay() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -381,7 +382,7 @@ public class CentralSystemTests {
    * Tests modifying the time of an event to a different end day.
    */
   @Test
-  public void testModifyTimeValidDifferentEndDay() {
+  public void testModifyTimeValidDifferentEndDay() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -462,7 +463,7 @@ public class CentralSystemTests {
    * Changes the online status.
    */
   @Test
-  public void testModifyLocationOnline() {
+  public void testModifyLocationOnline() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(true, "Churchill Hall 101"),
@@ -494,7 +495,7 @@ public class CentralSystemTests {
    * Changes the place of the event.
    */
   @Test
-  public void testModifyLocationPlace() {
+  public void testModifyLocationPlace() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "somewhere else"),
@@ -555,7 +556,7 @@ public class CentralSystemTests {
    * Adding at least one new invitee for event with at least two invitees.
    */
   @Test
-  public void testModifyInviteesAddOneNewInvitee() {
+  public void testModifyInviteesAddOneNewInvitee() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -592,7 +593,7 @@ public class CentralSystemTests {
    * Adding people that already exist and at least one does not.
    */
   @Test
-  public void testModifyInviteesAddingExistingAndNew() {
+  public void testModifyInviteesAddingExistingAndNew() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -630,7 +631,7 @@ public class CentralSystemTests {
    * Removing people that exist and don't.
    */
   @Test
-  public void testModifyInviteesRemovingExistingAndNew() {
+  public void testModifyInviteesRemovingExistingAndNew() throws IOException {
     EventRep newEvent1 = new Event("CS3500 Day 1",
             new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
@@ -683,7 +684,7 @@ public class CentralSystemTests {
    * Tests host removing valid existing events for removeEvent in CentralSystem.
    */
   @Test
-  public void testRemoveEventValidByHost() {
+  public void testRemoveEventValidByHost() throws IOException {
     assertEquals(event1, system1.getUserEvents(profLucia).get(0));
     assertEquals(event1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(event1, system1.getUserEvents(noelisA1).get(0));
@@ -702,7 +703,7 @@ public class CentralSystemTests {
    * Tests non-host removing valid existing events for removeEvent in CentralSystem.
    */
   @Test
-  public void testRemoveEventValidByNonHost() {
+  public void testRemoveEventValidByNonHost() throws IOException {
     assertEquals(event1, system1.getUserEvents(profLucia).get(0));
     assertEquals(event1, system1.getUserEvents(emmaVB).get(0));
     assertEquals(event1, system1.getUserEvents(noelisA1).get(0));

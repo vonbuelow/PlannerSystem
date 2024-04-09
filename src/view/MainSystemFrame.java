@@ -17,6 +17,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
+
+import controller.Features;
 import controller.NUFeature;
 import model.ReadonlyNUPlannerSystem;
 
@@ -28,7 +30,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private JMenuBar menuBar;
   private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
-  private NUFeature executer;
+  private Features executer;
 
   /**
    * This represents a main system frame of a ReadOnlyNUPlannerSystem system as a GUI view.
@@ -118,6 +120,12 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   }
 
+  /**
+   * Represents 
+   * @param createButton
+   * @param isSchedule
+   * @param frame
+   */
   private void eventButtonListener(JButton createButton,
                                    boolean isSchedule, MainSystemFrame frame) {
     createButton.addActionListener(new ActionListener() {
@@ -159,7 +167,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   @Override
-  public void setListener(NUFeature executer) {
+  public void setListener(Features executer) {
     this.executer = executer;
   }
 
