@@ -34,9 +34,9 @@ public class MockModelTests {
     model = new MockModel(mockModelOutput);
     view = new NUPlannerTextView(model);
     controller = new NUPlannerGUIController(view);
-    features = new NUFeature(model);
+    features = new NUFeature(model, view);
     fileToSave =
-            new File("C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc");
+            new File(".\\src\\xmlfunc");
   }
 
   @Test
@@ -44,12 +44,13 @@ public class MockModelTests {
     features.saveUsers(fileToSave);
     outLines = mockModelOutput.toString().split("\n");
     assertEquals("user is saving a file to this path: "
-            + "C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc",
+                    + "C:\\Users\\Owner\\Desktop\\cs3500 "
+                    + "- Object-Oriented Design\\PlannerSystem\\.\\src\\xmlfunc",
             outLines[0]);
   }
 
-  @Test
+  /*@Test
   public void testAddUser() {
-    "Adding in a new users schedule from" + file.getAbsolutePath()
-  }
+    assertEquals("Adding in a new users schedule from .\\src\\xmlfunc"
+  }*/
 }

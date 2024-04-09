@@ -22,28 +22,67 @@ public class MockModel implements NUPlannerSystem {
 
   @Override
   public void saveSchedule(File fileToSave) throws IOException {
-    output.append("user is saving a file to this path: " + fileToSave.getAbsolutePath() + "\n");
+    this.addNewLine(output.append("user is saving a file to this path: ")
+            .append(fileToSave.getAbsolutePath()));
   }
 
   @Override
   public void addEventToAllSchedules(EventRep event) throws IOException {
-    output.append("Adding an event to all schedules" + event.toString() + "\n");
+    this.addNewLine(output.append("Adding an event to all schedules")
+            .append(event.toString()));
   }
 
   @Override
   public void addEventToInviteeSchedule(String uid, EventRep event) throws IOException {
-    this.output.append("Add event: " +event.toString()+ "to " + uid + " schedule" + "\n");
+    this.addNewLine(this.output.append("Add event: ").append(event.toString())
+            .append("to ").append(uid).append(" schedule"));
   }
 
   @Override
   public void addNewUser(Map<String, ScheduleRep> newUser) throws IOException {
-    this.addNewLine(this.output.append("Add " + newUser.keySet() + "'s schedule" + newUser.values() + "\n"));
+    this.addNewLine(this.output.append("Add ")
+            .append(String.valueOf(newUser.keySet()))
+            .append("'s schedule").append(String.valueOf(newUser.values())));
   }
 
   @Override
   public void modifyName(EventRep event, String eventName) throws IOException {
-    this.addNewLine(this.output.append("Modify" + event.toString() + " to have a"
-            + " new name of" + eventName + "\n"));
+    this.addNewLine(this.output.append("Modify").append(event.toString())
+            .append(" to have a").append(" new name of").append(eventName));
+  }
+
+  @Override
+  public void modifyTime(EventRep event, Time time) throws IOException {
+    this.addNewLine(this.output.append("Modify").append(event.toString())
+            .append(" to have a").append(" new time of").append(time.toString()));
+  }
+
+  @Override
+  public void modifyLocation(EventRep event, Location loc) throws IOException {
+    this.addNewLine(this.output.append("Modify").append(event.toString())
+            .append(" to have a").append(" new location of")
+            .append(String.valueOf(loc)));
+  }
+
+  @Override
+  public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd)
+          throws IOException {
+    this.addNewLine(this.output.append("Modify").append(event.toString())
+            .append(" to have").append(" new invitees")
+            .append(String.valueOf(invitees)).append(". Are we adding them? ")
+            .append(String.valueOf(toAdd)));
+  }
+
+  @Override
+  public void removeEvent(EventRep event, String uid) throws IOException {
+    this.addNewLine(this.output.append("Removing this event: ")
+            .append(event.toString()).append(" For ").append(uid));
+  }
+
+  @Override
+  public void addUser(File file) throws IOException {
+    this.addNewLine(this.output.append("Adding in a new users schedule from")
+            .append(file.getAbsolutePath()));
   }
 
   /**
@@ -52,35 +91,6 @@ public class MockModel implements NUPlannerSystem {
    */
   private void addNewLine(Appendable log) throws IOException {
     log.append("\n");
-  }
-
-  @Override
-  public void modifyTime(EventRep event, Time time) throws IOException {
-    this.output.append("Modify" + event.toString() +" to have a"
-            +" new time of" + time.toString() + "\n");
-  }
-
-  @Override
-  public void modifyLocation(EventRep event, Location loc) throws IOException {
-    this.output.append("Modify" + event.toString() +" to have a"
-            +" new location of" + loc + "\n");
-  }
-
-  @Override
-  public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd)
-          throws IOException {
-    this.output.append("Modify" + event.toString() +" to have"
-            +" new invitees" + invitees + ". Are we adding them? " + toAdd + "\n");
-  }
-
-  @Override
-  public void removeEvent(EventRep event, String uid) throws IOException {
-    this.output.append("Removing this event: " + event.toString() + " For " + uid + "\n");
-  }
-
-  @Override
-  public void addUser(File file) throws IOException {
-    this.output.append("Adding in a new users schedule from" + file.getAbsolutePath() + "\n");
   }
 
   @Override

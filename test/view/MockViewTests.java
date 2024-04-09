@@ -30,7 +30,7 @@ public class MockViewTests {
     view = new MockView(mockViewLog);
     controller = new NUPlannerGUIController(view);
     model = new CentralSystem();
-    features = new NUFeature(model);
+    features = new NUFeature(model, view);
   }
 
   @Test

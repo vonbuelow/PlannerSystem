@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import controller.Features;
 import controller.NUFeature;
+import model.EventRep;
 
 /**
  * Mocks an NUPlannerView but logs the inputs given from an NUController to the
@@ -26,5 +27,10 @@ public class MockView implements NUPlannerView {
   public void display() throws IOException {
     // calls this.setVisible
     output.append("setVisible was called\n");
+  }
+
+  @Override
+  public void openEventFrame(EventRep event, String selectedUser) throws IOException {
+
   }
 }
