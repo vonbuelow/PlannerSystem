@@ -21,6 +21,14 @@ public interface Features {
   void saveUsers(File dir);
 
   /**
+   * Handle clicking on an event if there is one there and display the event frame.
+   * @param     hour The hour the event is taking place
+   * @param     day The day the event is taking place
+   * @param     selectedUser The selected user of the event.
+   */
+  void handleClick(double hour, int day, String selectedUser);
+
+  /**
    * Add an event to all users schedules in the system.
    * @param     event the event to add to everyone's schedules.
    */

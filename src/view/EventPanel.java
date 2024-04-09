@@ -2,6 +2,7 @@ package view;
 
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPanel;
@@ -34,10 +35,11 @@ public class EventPanel extends JPanel {
    */
   protected EventPanel(String selectedUser, ReadonlyNUPlannerSystem model) {
     eventNameField = new JTextField(15);
+    this.startDayComboBox = new JComboBox<>(defaultDays());
     startTimeField = new JTextField(15);
+    this.endDayComboBox = new JComboBox<>(defaultDays());
     endTimeField = new JTextField(15);
     locationField = new JTextField(15);
-    defaultDays();
     this.layout = (new FlowLayout(FlowLayout.LEFT));
     eventNamePanel(this);
     locationPanel(this);
@@ -45,6 +47,23 @@ public class EventPanel extends JPanel {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setVisible(true);
     // how to display all users to select?? with the first person being the host
+  }
+
+  protected EventPanel(String selectedUser, EventRep event, ReadonlyNUPlannerSystem model) {
+    eventNameField = new JTextField(event.getName());
+    this.startDayComboBox = new JComboBox<>(defaultDays());
+    this.startDayComboBox.setSelectedItem(event.getTime().getStartDay());
+    startTimeField = new JTextField(event.getTime().getStartTime());
+    this.endDayComboBox = new JComboBox<>(defaultDays());
+    this.endDayComboBox.setSelectedItem(event.getTime().getEndDay());
+    endTimeField = new JTextField(event.getTime().getEndTime());
+    locationField = new JTextField(event.getLocation().getPlace());
+    this.layout = (new FlowLayout(FlowLayout.LEFT));
+    eventNamePanel(this);
+    locationPanel(this);
+    userPanel(this, event.getInvitedUsers(), selectedUser);
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    this.setVisible(true);
   }
 
   /**
@@ -60,6 +79,22 @@ public class EventPanel extends JPanel {
     userListPanel.add(availableUsersList);
     eventPanel.add(userListPanel);
   }
+
+  /**
+   * Adds user to given event panel.
+   * @param eventPanel event panel to be added to
+   * @param strings users available
+   */
+  private void userPanel(EventPanel eventPanel, List<String> strings, String selected) {
+    JPanel userListPanel = new JPanel();
+    userListPanel.setLayout(layout);
+    userListPanel.add(new JLabel("Available users:"), BorderLayout.NORTH);
+    availableUsersList = new JList<String>(strings.toArray(new String[0]));
+    availableUsersList.setSelectedValue(selected, false);
+    userListPanel.add(availableUsersList);
+    eventPanel.add(userListPanel);
+  }
+
 
   /**
    * Adds location to given event panel.
@@ -133,11 +168,9 @@ public class EventPanel extends JPanel {
   /**
    * Gives default days to choose from for starting and ending events.
    */
-  private void defaultDays() {
-    String[] dayOptions = {"Sunday", "Monday", "Tuesday",
+  private String[] defaultDays() {
+    return new String[]{"Sunday", "Monday", "Tuesday",
         "Wednesday", "Thursday", "Friday", "Saturday"};
-    this.startDayComboBox = new JComboBox<>(dayOptions);
-    this.endDayComboBox = new JComboBox<>(dayOptions);
   }
 
   /**

@@ -19,7 +19,10 @@ When running the system a user should open up out PlannerMain which... runs the 
 To add in some events to the schedule/nuplanner a user should go into their file system and
 find where the provided XMLs are (the xmls which are in the src folder). Then a user can navigate
 to those XMLs in their file explorer and add them to the system. To see a schedule a user will need
-to click on a user they want to see. Then the respective schedule should pop up.
+to click on a user they want to see. Then the respective schedule should pop up. *NEW* The addUser
+method in CentralSystem is how you load up the xml files as Files. The reason for files being that
+the model does not need to know about how to get a file path. The model delegates this to the
+XML reader.
 --------------------------------------------------------------------------------------------------
 Key components: Explain the highest-level components in your system, and what they do.
 

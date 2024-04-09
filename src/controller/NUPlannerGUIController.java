@@ -17,15 +17,17 @@ public class NUPlannerGUIController implements NUController {
 
   public void runPlanner(NUPlannerSystem model) {
     this.model = Objects.requireNonNull(model);
-    this.features = new NUFeature(model);
+    this.features = new NUFeature(model, view);
     try {
       this.view.setListener(this.features);
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       // show this is a bad bad appendable for listener
     }
     try {
       this.view.display();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       // bad bad appendable for display
     }
   }

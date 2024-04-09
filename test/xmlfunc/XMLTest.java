@@ -51,9 +51,8 @@ public class XMLTest {
 
   // test the reader makes an instance of a schedule
   @Test
-  public void testReadingSchedule() throws IOException {
-    XMLReader reader = new XMLReader(new File("C:\\Users\\emmaj\\OneDrive\\"
-            + "Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
+  public void testReadingSchedule() {
+    XMLReader reader = new XMLReader(new File(".\\src\\shortProf.xml"));
     // a reader
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
@@ -64,20 +63,21 @@ public class XMLTest {
     ScheduleRep schedule = new Schedule("Prof. Lucia", new ArrayList<>(Arrays.asList(event)));
     // model testing
     NUPlannerSystem model = new CentralSystem();
-    model.addUser(new File("C:\\Users\\emmaj\\OneDrive\\"
-            + "Desktop\\cs3000\\PlannerSystem\\src\\shortProf.xml"));
-
+    try {
+      model.addUser(new File(".\\src\\shortProf.xml"));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     //System.out.println(model.getUserEvents("Prof. Lucia"));
     assertEquals(schedule.eventsPlanned(), profLuciaSched.get("Prof. Lucia").eventsPlanned());
   }
 
   // testing the writer
   @Test
-  public void testWriter() throws IOException {
+  public void testWriter() {
     XMLWriter writer = new XMLWriter();
-    File usersxmls = new File("C:\\Users\\Owner\\Desktop\\cs3500\\PlannerSystem\\src\\xmlfunc");
-    XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
-            + "PlannerSystem\\src\\shortProf.xml"));
+    File usersxmls = new File(".\\src\\xmlfunc");
+    XMLReader reader = new XMLReader(new File(".\\src\\shortProf.xml"));
 
     Map<String, ScheduleRep> profLuciaSched = reader.readXML();
     Time time = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
@@ -88,7 +88,12 @@ public class XMLTest {
     NUPlannerSystem system = new CentralSystem(profLuciaSched,
             new ArrayList<>(Arrays.asList(event)));
 
-    system.saveSchedule(usersxmls);
+    try {
+      system.saveSchedule(usersxmls);
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
     // contains lucias schedule!!!!!!!
     assertEquals("Prof. Lucia-sched.xml",
             Objects.requireNonNull(usersxmls.listFiles())[0].getName());

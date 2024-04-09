@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import controller.Features;
 import controller.NUFeature;
+import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 import model.ScheduleRep;
 
@@ -47,5 +48,10 @@ public class NUPlannerTextView implements NUPlannerView {
   @Override
   public void display() {
     // do nothing because this is the console view
+  }
+
+  @Override
+  public void openEventFrame(EventRep event, String selectedUser) {
+    // don't do anything because this is the console view
   }
 }

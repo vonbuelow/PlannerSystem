@@ -20,6 +20,7 @@ import javax.swing.JDialog;
 
 import controller.Features;
 import controller.NUFeature;
+import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
 /**
@@ -155,7 +156,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
           executer.addUser(fileChooser.getSelectedFile());
           String[] names = model.usersInSystem().toArray(new String[0]);
           updateListOfUsers();
-          content.updateView();
+          //content.updateView(); ?????
         }
       }
     });
@@ -174,5 +175,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   @Override
   public void display() {
     this.setVisible(true);
+  }
+
+  @Override
+  public void openEventFrame(EventRep event, String selectedUser) {
+
   }
 }

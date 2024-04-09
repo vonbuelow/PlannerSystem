@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import controller.Features;
 import controller.NUFeature;
+import model.EventRep;
 
 /**
  * The interface used to track all public methods of different NUPlanner views.
@@ -22,4 +23,12 @@ public interface NUPlannerView {
    */
   void display() throws IOException;
 
+  /**
+   * Depending on what a user has clicked on open an event frame with the given event info.
+   * This info will be displayed onto the event frame.
+   *
+   * @param event        The event to be displayed.
+   * @param selectedUser
+   */
+  void openEventFrame(EventRep event, String selectedUser) throws IOException;
 }

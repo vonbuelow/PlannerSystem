@@ -3,12 +3,13 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JPanel;
+
+import controller.Features;
 import model.EventRep;
-import model.NUPlannerSystem;
 import model.ReadonlyNUPlannerSystem;
 
 /**
@@ -27,18 +28,36 @@ public class SchedulePanel extends JPanel {
     this.setLayout(new BorderLayout());
   }
 
-  private class PanelListener extends MouseAdapter {
-    int x;
-    int y;
+  public void addClickListener(Features features) {
+    this.addMouseListener(new MouseListener() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        SchedulePanel panel = SchedulePanel.this;
+        double hour = ((double) e.getY() / ((double) panel.getHeight() / 24)); // + 1????
+        int day = (e.getX() / (panel.getWidth() / 7)); // + 1???
+        features.handleClick(hour, day, selectedUser);
+      }
 
-    public void mousePressed(MouseEvent e) {
-      x = e.getX();
-      y = e.getY();
-      // go put that x and y and see if there is an event there
-      // then after make sure that the event panel pops up
-      // then if there is any modification say that there was some modification
-      repaint();
-    }
+      @Override
+      public void mousePressed(MouseEvent e) {
+
+      }
+
+      @Override
+      public void mouseReleased(MouseEvent e) {
+
+      }
+
+      @Override
+      public void mouseEntered(MouseEvent e) {
+
+      }
+
+      @Override
+      public void mouseExited(MouseEvent e) {
+
+      }
+    });
   }
 
   @Override
@@ -109,10 +128,6 @@ public class SchedulePanel extends JPanel {
     }
   }
 
-  public void updateView() {
-    //this.paintComponent(new );
-  }
-
   protected void showSchedule(String selectedUser) {
     this.selectedUser = selectedUser;
     repaint();
@@ -145,4 +160,5 @@ public class SchedulePanel extends JPanel {
     }
     return -1;
   }
+
 }

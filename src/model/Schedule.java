@@ -11,9 +11,14 @@ import model.eventfields.Day;
  * This contains the users name and the events in their schedule.
  */
 public class Schedule implements ScheduleRep {
-  String name;
-  List<EventRep> events;
+  private final String name;
+  private final List<EventRep> events;
 
+  /**
+   * Construct a schedule with a users name and the events of their schedule.
+   * @param     name The name of the user whose schedule this is
+   * @param     events The list of events this user is invited to
+   */
   public Schedule(String name, List<EventRep> events) {
     this.name = name;
     this.events = Objects.requireNonNull(events); // can be empty or have elements inside it
