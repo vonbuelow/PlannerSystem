@@ -2,6 +2,7 @@ import controller.NUController;
 import controller.NUPlannerGUIController;
 import controller.strategy.AnyTimeStrat;
 import controller.strategy.ScheduleStrat;
+import controller.strategy.StratFactory;
 import controller.strategy.WorkHoursStrat;
 import model.CentralSystem;
 import model.NUPlannerSystem;
@@ -18,20 +19,22 @@ public class PlannerMain {
    * @param     args the user input to control the systems actions.
    */
   public static void main(String[] args) {
-
-
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
     NUController controller = new NUPlannerGUIController(view);
-    //String stratName = args[0];
-    //ScheduleStrat strat;
+    StratFactory stratFactory = new StratFactory();
+    ScheduleStrat strat;
 
-    /*switch (stratName) {
-      case "workday": strat = new WorkHoursStrat(model);
-      case "anytime": strat = new AnyTimeStrat(model);
-      default: strat = new AnyTimeStrat(model);
-    }*/
+    if (args[0].equalsIgnoreCase("workday")) {
+      strat = stratFactory.makeStrat("workday", model);
+    }
+    else if (args[0].equalsIgnoreCase("anytime")) {
+      strat = stratFactory.makeStrat("anytime", model);
+    }
+    else {
+      strat = stratFactory.makeStrat("workday", model);
+    }
 
-    controller.runPlanner(model, new WorkHoursStrat(model));
+    controller.runPlanner(model, strat);
   }
 }
