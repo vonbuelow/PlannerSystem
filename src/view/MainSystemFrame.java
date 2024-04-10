@@ -133,10 +133,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
       @Override
       public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("click") && isSchedule) {
-          JDialog event = new JDialog(new EventFrame("Emma", model, executer));
+          JDialog event = new JDialog(new SchedulingEventFrame("schedule", model, executer));
         }
         else {
-          JDialog event = new JDialog(new EventFrame("ur mom", model, executer));
+          JDialog event = new JDialog(new EventCreateFrame("create", model, executer));
         }
       }
     });

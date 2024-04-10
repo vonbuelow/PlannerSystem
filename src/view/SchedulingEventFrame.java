@@ -9,7 +9,7 @@ import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
 public class SchedulingEventFrame extends JFrame {
-  private EventPanel panel;
+  private SchedulingEventPanel panel;
   private Features executer;
   private String name;
   private ReadonlyNUPlannerSystem model;
@@ -43,7 +43,7 @@ public class SchedulingEventFrame extends JFrame {
    * @param     model
    */
   void setPanel(SchedulingEventFrame frame,  String name, ReadonlyNUPlannerSystem model) {
-    panel = new EventPanel(name, model);
+    panel = new SchedulingEventPanel(name, model);
     this.add(panel);
   }
 
@@ -74,13 +74,12 @@ public class SchedulingEventFrame extends JFrame {
       String duration = panel.getDuration();
       String selectedUser = panel.getSelectedUser();
 
-      if (eventName.isEmpty() || location.isEmpty() || startDay == null
-              || startTime.isEmpty() || endDay == null || endTime.isEmpty()
+      if (eventName.isEmpty() || location.isEmpty() || !duration.equals("0")
               || selectedUser == null) {
-        // ERROR BOX ASF
+        // ERROR BOX
         return;
       }
-      this.executer.schedule();
+      //this.executer.schedule();
     });
   }
 }
