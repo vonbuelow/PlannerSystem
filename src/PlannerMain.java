@@ -15,6 +15,7 @@ public class PlannerMain {
    * @param     args the user input to control the systems actions.
    */
   public static void main(String[] args) {
+
     // COMMAND LINE ARGUMENTS
     // STRATEGY FACTORY
     // PASSING IN THE STRAT TO THE MODEL SOMEHOW ???
