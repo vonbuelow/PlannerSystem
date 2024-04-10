@@ -18,18 +18,20 @@ public class PlannerMain {
    * @param     args the user input to control the systems actions.
    */
   public static void main(String[] args) {
+
+
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
     NUController controller = new NUPlannerGUIController(view);
-    String stratName = args[0];
-    ScheduleStrat strat;
+    //String stratName = args[0];
+    //ScheduleStrat strat;
 
-    switch (stratName) {
+    /*switch (stratName) {
       case "workday": strat = new WorkHoursStrat(model);
       case "anytime": strat = new AnyTimeStrat(model);
       default: strat = new AnyTimeStrat(model);
-    }
+    }*/
 
-    controller.runPlanner(model, strat);
+    controller.runPlanner(model, new WorkHoursStrat(model));
   }
 }

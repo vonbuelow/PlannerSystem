@@ -132,7 +132,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     createButton.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("click") && isSchedule) {
+        if (isSchedule) {
           JDialog event = new JDialog(new SchedulingEventFrame("schedule", model, executer));
         }
         else {
@@ -180,7 +180,6 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   @Override
   public void openEventFrame(EventRep event, String selectedUser) {
-    //this.content.
     JDialog eventFrame = new JDialog(new EventScheduleFrame(selectedUser, model, executer, event));
   }
 }
