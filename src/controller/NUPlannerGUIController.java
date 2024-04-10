@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.Objects;
 
+import controller.strategy.ScheduleStrat;
 import model.NUPlannerSystem;
 import view.NUPlannerView;
 
@@ -15,7 +16,8 @@ public class NUPlannerGUIController implements NUController {
     this.view = view;
   }
 
-  public void runPlanner(NUPlannerSystem model) {
+  @Override
+  public void runPlanner(NUPlannerSystem model, ScheduleStrat strat) {
     this.model = Objects.requireNonNull(model);
     this.features = new NUFeature(model, view);
     try {

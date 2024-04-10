@@ -31,6 +31,6 @@ public class MockView implements NUPlannerView {
 
   @Override
   public void openEventFrame(EventRep event, String selectedUser) throws IOException {
-
+    output.append("opened the event frame \n");
   }
 }

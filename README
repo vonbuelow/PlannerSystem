@@ -121,6 +121,11 @@ view:
 central system:
     saveSchedule: now only takes in the file and passes it along to the writer, before it got the
                   absolute path then passed that along.
+EXTRA CREDIT:
+    Resizable View: Adding line 48 to setting the view to have a preferred size is the only change
+                    that I made to to allow the view to be completely resizeable.
+    Lenient Strategy:
+
 
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,

@@ -46,22 +46,51 @@ public class NUFeature implements Features{
   public void handleClick(double time, int day, String selectedUser) {
     int hour = (int) time;
     int min = (int) ((time-hour) * 60);
-    EventRep event = makeEvent(hour, min, makeDay(day), selectedUser);
+    EventRep event = makeEvent(hour , min, makeDay(day), selectedUser);
+    EventRep eventDisplay = event; // don't want to use null so it will change
     boolean openEventFrame = false;
 
     for(EventRep e: this.model.getUserEvents(selectedUser)) {
       if (!e.overlapsWith(event)) {
+        eventDisplay = e;
         openEventFrame = true;
+        break;
       }
     }
 
     if (openEventFrame) {
       try {
-        this.view.openEventFrame(event, selectedUser);
+        this.view.openEventFrame(eventDisplay, selectedUser);
       } catch (IOException e) {
         throw new RuntimeException(e);
       }
     }
+  }
+
+  @Override
+  public void modify(EventRep event) {
+    System.out.print("modify");
+  }
+
+  @Override
+  public void remove(EventRep event, String user) {
+    System.out.print("remove");
+    try {
+      this.model.removeEvent(event, user);
+    }
+    catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override
+  public void create(EventRep event) {
+    // create a new event
+  }
+
+  @Override
+  public void schedule(String name, Location loc, int duration, List<String> invitees) {
+
   }
 
   /**
@@ -99,8 +128,9 @@ public class NUFeature implements Features{
    * @return
    */
   private EventRep makeEvent(int hour, int min, Day day, String selectedUser) {
-    String hourlyTime = String.valueOf(hour) + String.valueOf(min);
-    Time time = new Time(day, hourlyTime, day, hourlyTime);
+    String startTime = String.format("%04d", (hour * 100) + min);
+    String endTime = String.format("%04d",(hour * 100) + (min + 1));
+    Time time = new Time(day, startTime, day, endTime);
     Location loc = new Location(true, "mock place");
     List<String> invitee = new ArrayList<>(Arrays.asList(selectedUser, "Mock Partier"));
     return new Event("Mock Place", time, loc, invitee);

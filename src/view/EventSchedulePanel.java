@@ -1,23 +1,15 @@
 package view;
 
-import java.awt.FlowLayout;
-import java.awt.BorderLayout;
-import java.util.Set;
+import java.awt.*;
+import java.util.List;
 
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
-/**
- * Describes capabilities of event frame's panel.
- */
-public class EventPanel extends JPanel {
+public class EventSchedulePanel extends JPanel {
+
   private final JTextField eventNameField;
   private JComboBox<String> startDayComboBox;
   private JComboBox<String> endDayComboBox;
@@ -27,47 +19,36 @@ public class EventPanel extends JPanel {
   private JList<String> availableUsersList;
   private FlowLayout layout;
 
-  /**
-   * Creates a panel to view information about an event's name, time, location, etc.
-   * @param selectedUser uid of the user selected on the panel
-   * @param model system of users
-   */
-  protected EventPanel(String selectedUser, ReadonlyNUPlannerSystem model) {
-    eventNameField = new JTextField(15);
+  public EventSchedulePanel(String selectedUser, EventRep event, ReadonlyNUPlannerSystem model) {
+    this.eventNameField = new JTextField(event.getName());
     this.startDayComboBox = new JComboBox<>(defaultDays());
-    startTimeField = new JTextField(15);
+    this.startDayComboBox.setSelectedItem(event.getTime().getStartDay());
+    this.startTimeField = new JTextField(event.getTime().getStartTime());
     this.endDayComboBox = new JComboBox<>(defaultDays());
-    endTimeField = new JTextField(15);
-    locationField = new JTextField(15);
+    this.endDayComboBox.setSelectedItem(event.getTime().getEndDay());
+    this.endTimeField = new JTextField(event.getTime().getEndTime());
+    this.locationField = new JTextField(event.getLocation().getPlace());
     this.layout = (new FlowLayout(FlowLayout.LEFT));
     eventNamePanel(this);
     locationPanel(this);
-    userPanel(this, model.usersInSystem());
+    userPanel(this, event.getInvitedUsers(), selectedUser);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.setVisible(true);
-    // how to display all users to select?? with the first person being the host
   }
 
   /**
-   * Adds user to given event panel.
+   * Adds an event name to a panel.
    * @param eventPanel event panel to be added to
-   * @param strings users available
    */
-  private void userPanel(EventPanel eventPanel, Set<String> strings) {
-    JPanel userListPanel = new JPanel();
-    userListPanel.setLayout(layout);
-    userListPanel.add(new JLabel("Available users:"), BorderLayout.NORTH);
-    availableUsersList = new JList<String>(strings.toArray(new String[0]));
-    userListPanel.add(availableUsersList);
-    eventPanel.add(userListPanel);
+  private void eventNamePanel(EventSchedulePanel eventPanel) {
+    JPanel eventNamePanel = new JPanel();
+    eventNamePanel.setLayout(layout);
+    eventNamePanel.add(new JLabel("Event name:"));
+    eventNamePanel.add(eventNameField);
+    eventPanel.add(eventNamePanel);
   }
 
-
-  /**
-   * Adds location to given event panel.
-   * @param eventPanel event panel to be added to
-   */
-  private void locationPanel(EventPanel eventPanel) {
+  private void locationPanel(EventSchedulePanel eventPanel) {
     defaultDays();
 
     JPanel location = new JPanel();
@@ -108,28 +89,18 @@ public class EventPanel extends JPanel {
   }
 
   /**
-   * Constructor for potential controller use.
-   * @param event event to be presented in a panel
-   * @param model system of users
-   */
-  public EventPanel(EventRep event, ReadonlyNUPlannerSystem model) {
-    this.eventNameField = new JTextField(event.getName());
-    this.locationField = new JTextField(event.getLocation().getPlace());
-    this.startTimeField = new JTextField(event.getTime().getStartTime());
-    this.endTimeField = new JTextField(event.getTime().getEndTime());
-    this.availableUsersList = new JList<>(model.usersInSystem().toArray(new String[0]));
-  }
-
-  /**
-   * Adds an event name to a panel.
+   * Adds user to given event panel.
    * @param eventPanel event panel to be added to
+   * @param strings users available
    */
-  private void eventNamePanel(EventPanel eventPanel) {
-    JPanel eventNamePanel = new JPanel();
-    eventNamePanel.setLayout(layout);
-    eventNamePanel.add(new JLabel("Event name:"));
-    eventNamePanel.add(eventNameField);
-    eventPanel.add(eventNamePanel);
+  private void userPanel(EventSchedulePanel eventPanel, List<String> strings, String selected) {
+    JPanel userListPanel = new JPanel();
+    userListPanel.setLayout(layout);
+    userListPanel.add(new JLabel("Available users:"), BorderLayout.NORTH);
+    availableUsersList = new JList<String>(strings.toArray(new String[0]));
+    availableUsersList.setSelectedValue(selected, true);
+    userListPanel.add(availableUsersList);
+    eventPanel.add(userListPanel);
   }
 
   /**
@@ -137,7 +108,7 @@ public class EventPanel extends JPanel {
    */
   private String[] defaultDays() {
     return new String[]{"Sunday", "Monday", "Tuesday",
-        "Wednesday", "Thursday", "Friday", "Saturday"};
+            "Wednesday", "Thursday", "Friday", "Saturday"};
   }
 
   /**

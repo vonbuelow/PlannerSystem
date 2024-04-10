@@ -43,14 +43,12 @@ public class MockModelTests {
   public void testSaveSchedule() {
     features.saveUsers(fileToSave);
     outLines = mockModelOutput.toString().split("\n");
-    assertEquals("user is saving a file to this path: "
-                    + "C:\\Users\\Owner\\Desktop\\cs3500 "
-                    + "- Object-Oriented Design\\PlannerSystem\\.\\src\\xmlfunc",
+    assertEquals("user is saving a file to this path: " + fileToSave.getAbsolutePath(),
             outLines[0]);
   }
 
-  /*@Test
+  @Test
   public void testAddUser() {
-    assertEquals("Adding in a new users schedule from .\\src\\xmlfunc"
-  }*/
+  //  "Adding in a new users schedule from" + file.getAbsolutePath()
+  }
 }

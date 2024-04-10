@@ -1,5 +1,6 @@
 package controller;
 
+import controller.strategy.ScheduleStrat;
 import model.NUPlannerSystem;
 
 public interface NUController {
@@ -9,6 +10,6 @@ public interface NUController {
    * @param     model a non-null planner system method.
    * @throws IllegalArgumentException if the given model is null
    */
-  void runPlanner(NUPlannerSystem model);
+  void runPlanner(NUPlannerSystem model, ScheduleStrat strat);
 
 }

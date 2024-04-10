@@ -33,7 +33,7 @@ public class SchedulePanel extends JPanel {
       @Override
       public void mouseClicked(MouseEvent e) {
         SchedulePanel panel = SchedulePanel.this;
-        double hour = ((double) e.getY() / ((double) panel.getHeight() / 24)); // + 1????
+        double hour = ((double) e.getY() / ((double) panel.getHeight() / 24)) + 1.0; // + 1????
         int day = (e.getX() / (panel.getWidth() / 7)); // + 1???
         features.handleClick(hour, day, selectedUser);
       }

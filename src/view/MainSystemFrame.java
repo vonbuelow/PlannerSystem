@@ -39,13 +39,13 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
    */
   public MainSystemFrame(ReadonlyNUPlannerSystem model) {
     super();
-    this.setSize(new Dimension(700, 480));
     this.model = model;
     createMSFrame(this);
     createMenu();
     this.setJMenuBar(this.menuBar);
     this.content = new SchedulePanel(model);
     this.add(this.content);
+    this.setPreferredSize(new Dimension(700, 480));
     this.pack();
   }
 
@@ -170,6 +170,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   @Override
   public void setListener(Features executer) {
     this.executer = executer;
+    this.content.addClickListener(this.executer);
   }
 
   @Override
@@ -179,6 +180,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
 
   @Override
   public void openEventFrame(EventRep event, String selectedUser) {
-
+    //this.content.
+    JDialog eventFrame = new JDialog(new EventScheduleFrame(selectedUser, model, executer, event));
   }
 }
