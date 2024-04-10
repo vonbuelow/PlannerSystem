@@ -1,5 +1,8 @@
 import controller.NUController;
 import controller.NUPlannerGUIController;
+import controller.strategy.AnyTimeStrat;
+import controller.strategy.ScheduleStrat;
+import controller.strategy.WorkHoursStrat;
 import model.CentralSystem;
 import model.NUPlannerSystem;
 import view.MainSystemFrame;
@@ -15,19 +18,18 @@ public class PlannerMain {
    * @param     args the user input to control the systems actions.
    */
   public static void main(String[] args) {
-
-    // COMMAND LINE ARGUMENTS
-    // STRATEGY FACTORY
-    // PASSING IN THE STRAT TO THE MODEL SOMEHOW ???
-
-    // 1. prompt
-    // 2. make
-    // 3. pass in to controller
-    //
-    // calling the
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
     NUController controller = new NUPlannerGUIController(view);
-    controller.runPlanner(model);
+    String stratName = args[0];
+    ScheduleStrat strat;
+
+    switch (stratName) {
+      case "workday": strat = new WorkHoursStrat(model);
+      case "anytime": strat = new AnyTimeStrat(model);
+      default: strat = new AnyTimeStrat(model);
+    }
+
+    controller.runPlanner(model, strat);
   }
 }
