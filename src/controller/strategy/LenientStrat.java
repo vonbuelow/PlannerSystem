@@ -2,6 +2,7 @@ package controller.strategy;
 
 import java.util.List;
 
+import model.Event;
 import model.EventRep;
 import model.eventfields.Location;
 

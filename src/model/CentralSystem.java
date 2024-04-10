@@ -281,6 +281,13 @@ public class CentralSystem implements NUPlannerSystem {
     addOrRemoveInvitees(event, invitees, toAdd, eventToModify);
   }
 
+  /**
+   * Adds the given invitees to or removes them from the given event in the system.
+   * @param event the original event
+   * @param invitees users to be added or removed from event invitees
+   * @param toAdd whether to add (true) or remove (false) the given invitees
+   * @param eventToModify the original event that will be changed
+   */
   private void addOrRemoveInvitees(EventRep event, List<String> invitees,
                                    boolean toAdd, EventRep eventToModify) {
     if (toAdd) {

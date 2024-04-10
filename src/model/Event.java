@@ -15,7 +15,7 @@ public class Event implements EventRep {
   private String name;
   private Time time;
   private Location loc;
-  private List<String> invitees;
+  private final List<String> invitees;
 
   /**
    * An event which has a name, time, location, and those who are invited.
