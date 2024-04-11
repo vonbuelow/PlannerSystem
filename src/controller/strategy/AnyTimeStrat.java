@@ -21,9 +21,9 @@ public class AnyTimeStrat implements ScheduleStrat {
 
   @Override
   public EventRep schedule(String name, Location loc, int duration, List<String> invitees) {
-    if (duration > 10080 || duration < 1) {
+    if (duration >= 10080 || duration < 1) {
       throw new IllegalArgumentException(
-              "duration must be at least 1 min but not more than 10080");
+              "duration must be at least 1 min but can't be 10080 or more");
     }
 
     List<Day> daysOfTheWeek = new ArrayList<>(
@@ -60,23 +60,37 @@ public class AnyTimeStrat implements ScheduleStrat {
     String startTime = convertedHr + convertedMin;
 
     int hrsToAdd = (min + duration) / 60;
-    int endHr = hr + hrsToAdd;
+    int endHrBeforeMod = hr + hrsToAdd;
+    int numDays = endHrBeforeMod / 24;
+    int endHr = endHrBeforeMod % 24;
     int endMin = (min + duration) % 60;
-    int numDays = hrsToAdd / 24;
+
 
     String endHrStr = convertTimeNum(endHr);
     String endMinStr = convertTimeNum(endMin);
     int endDayVal = (startDay.orderOfDayInWeek() + numDays) % 7;
-    Day endDay;
+    Day endDay = null;
 
-    switch (endDayVal) {
-      case 0: endDay = Day.SUNDAY;
-      case 1: endDay = Day.MONDAY;
-      case 2: endDay = Day.TUESDAY;
-      case 3: endDay = Day.WEDNESDAY;
-      case 4: endDay = Day.THURSDAY;
-      case 5: endDay = Day.FRIDAY;
-      default: endDay = Day.SATURDAY;
+    if (endDayVal == 0) {
+      endDay = Day.SUNDAY;
+    }
+    else if (endDayVal == 1) {
+      endDay = Day.MONDAY;
+    }
+    else if (endDayVal == 2) {
+      endDay = Day.TUESDAY;
+    }
+    else if (endDayVal == 3) {
+      endDay = Day.WEDNESDAY;
+    }
+    else if (endDayVal == 4) {
+      endDay = Day.THURSDAY;
+    }
+    else if (endDayVal == 5) {
+      endDay = Day.FRIDAY;
+    }
+    else if (endDayVal == 6) {
+      endDay = Day.SATURDAY;
     }
 
     String endTime = endHrStr + endMinStr;

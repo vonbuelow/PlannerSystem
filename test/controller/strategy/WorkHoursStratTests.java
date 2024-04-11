@@ -23,7 +23,7 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-public class AnyTimeStratTests {
+public class WorkHoursStratTests {
   String profLucia;
   String emmaVB;
   String noelisA1;
@@ -41,7 +41,7 @@ public class AnyTimeStratTests {
   Map<String, ScheduleRep> allSchedulesInSystem1;
   List<EventRep> allEventsInSystem1;
   NUPlannerSystem system1;
-  ScheduleStrat anytime;
+  ScheduleStrat workhours;
 
 
   @Before
@@ -59,17 +59,17 @@ public class AnyTimeStratTests {
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event2 = new Event("CS3500 Day 2",
-            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+            new Time(Day.MONDAY, "0900", Day.MONDAY, "1040"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event3 = new Event("BBQ",
             new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
             new Location(true, "Not Churchill"),
-            new ArrayList<String>(Arrays.asList(emmaVB)));
+            new ArrayList<String>(Collections.singletonList(emmaVB)));
 
-    profLuciaEvents = new ArrayList<EventRep>(Arrays.asList(event1));
-    emmaVBEvents = new ArrayList<EventRep>(Arrays.asList(event1));
-    noelisA1Events = new ArrayList<EventRep>(Arrays.asList(event1));
+    profLuciaEvents = new ArrayList<EventRep>(Collections.singletonList(event1));
+    emmaVBEvents = new ArrayList<EventRep>(Collections.singletonList(event1));
+    noelisA1Events = new ArrayList<EventRep>(Collections.singletonList(event1));
 
     profLuciaSched = new Schedule(profLucia, profLuciaEvents);
     emmaVBSched = new Schedule(emmaVB, emmaVBEvents);
@@ -84,31 +84,26 @@ public class AnyTimeStratTests {
 
     system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
 
-    anytime = new AnyTimeStrat(system1);
+    workhours = new WorkHoursStrat(system1);
   }
 
   @Test
   public void testSchedule() {
-    assertThrows("duration must be at least 1 min but can't be 10080 or more",
+    assertThrows("duration must be at least 1 min but can't be more than 480",
             IllegalArgumentException.class,
-            () -> anytime.schedule("CS3500 Day 2",
+            () -> workhours.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     10080, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));
-    assertThrows("duration must be at least 1 min but can't be 10080 or more",
+    assertThrows("duration must be at least 1 min but can't be more than 480",
             IllegalArgumentException.class,
-            () -> anytime.schedule("CS3500 Day 2",
+            () -> workhours.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     0, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));
-    /*assertEquals(event2, anytime.schedule("CS3500 Day 2",
+    assertEquals(event2, workhours.schedule("CS3500 Day 2",
             new Location(false, "Churchill Hall 101"),
             100, new ArrayList<String>(
-                    Arrays.asList(profLucia, emmaVB, noelisA1))));*/
-    /*assertThrows("not all invitees can schedule an event",
-            IllegalStateException.class,
-            () -> anytime.schedule("BBQ",
-                    new Location(true, "Not Churchill"),
-                    100, new ArrayList<>(Collections.singletonList(emmaVB))));*/
+                    Arrays.asList(profLucia, emmaVB, noelisA1))));
   }
 }

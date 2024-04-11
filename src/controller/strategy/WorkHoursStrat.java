@@ -23,7 +23,7 @@ public class WorkHoursStrat implements ScheduleStrat {
   public EventRep schedule(String name, Location loc, int duration, List<String> invitees) {
     if (duration > 480 || duration < 1) {
       throw new IllegalArgumentException(
-              "duration must be at least 1 min but not more than 10080");
+              "duration must be at least 1 min but can't be more than 480");
     }
 
     List<Day> workdays = new ArrayList<>(
