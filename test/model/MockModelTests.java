@@ -13,7 +13,6 @@ import view.NUPlannerTextView;
 import view.NUPlannerView;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests that an NUPlannerSystem has its methods called appropriately (with the
