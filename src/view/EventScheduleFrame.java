@@ -12,20 +12,22 @@ import controller.Features;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
+/**
+ * This represents the event schedule frame which pops up when clicking on an event.
+ * The frame has two buttons to either remove or modify the event.
+ */
 public class EventScheduleFrame extends JFrame{
   private EventSchedulePanel panel;
-  private Features executer;
 
   /**
    * Construct an event schedule frame.
-   * @param     name
-   * @param     model
-   * @param     executer
-   * @param     event
+   * @param     name the name of the selected user.
+   * @param     model the given model.
+   * @param     executer the features interface.
+   * @param     event the given event to show.
    */
   EventScheduleFrame(String name, ReadonlyNUPlannerSystem model,
                      Features executer, EventRep event) {
-    this.executer = executer;
     this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,6 +38,13 @@ public class EventScheduleFrame extends JFrame{
   }
 
 
+  /**
+   * Create the given panel and its respective parameters to this frame.
+   * @param     frame the given frame to add the panel to.
+   * @param     name The name of the selected user.
+   * @param     model the given model to work off of.
+   * @param     event the given event to set the panel to.
+   */
   public void setPanel(EventScheduleFrame frame,  String name,
                        ReadonlyNUPlannerSystem model, EventRep event) {
     panel = new EventSchedulePanel(name, event, model);
@@ -43,6 +52,11 @@ public class EventScheduleFrame extends JFrame{
   }
 
 
+  /**
+   * Set up the buttons for this event frame, with just schedule.
+   * @param     frame the given frame to add the buttons to.
+   * @param     model the given model to work off of.
+   */
   public void setButton(EventScheduleFrame frame, ReadonlyNUPlannerSystem model) {
     JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
     JButton modifyEvent = new JButton("Modify Event");
@@ -55,6 +69,12 @@ public class EventScheduleFrame extends JFrame{
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Listening for either removing or modifying an event.
+   * @param     button the given button.
+   * @param     modify if the event should be modified
+   * @param     eventFrame this event frame to listen out for.
+   */
   private void eventButtonListener(JButton button, boolean modify, EventScheduleFrame eventFrame) {
     button.addActionListener(e -> {
       String eventName = panel.getEventName();

@@ -49,6 +49,9 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     this.pack();
   }
 
+  /**
+   * Creates the menu
+   */
   private void createMenu() {
     this.menuBar = new JMenuBar();
     JMenu menu = new JMenu("File");
@@ -58,6 +61,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     menu.add(saveAllItem);
   }
 
+  /**
+   * Save all listener to then go and save all the users schedules.
+   * @param     saveAllItem The menu item which represents how to save all schedules.
+   */
   private void saveAllListener(JMenuItem saveAllItem) {
     saveAllItem.addActionListener(new ActionListener() {
       @Override
@@ -80,6 +87,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     buttonLayout(frame);
   }
 
+  /**
+   * Set up the button layout
+   * @param     frame The given frame to update.
+   */
   private void buttonLayout(MainSystemFrame frame) {
     JPanel buttonPanel = new JPanel(new FlowLayout());
     // the list of users displayed at the bottom of the screen
@@ -107,6 +118,11 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * The given user to display on the system.
+   * @param     listOfUsers the list of users in the system.
+   * @param     frame the frame to update.
+   */
   private void usersListener(JComboBox<String> listOfUsers, MainSystemFrame frame) {
     listOfUsers.addActionListener(new ActionListener() {
       @Override
@@ -114,7 +130,6 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
         // Update selectedUser with the currently selected item
         String selectedUser = String.valueOf(listOfUsers.getSelectedItem());
         content.showSchedule(selectedUser);
-        System.out.println("Selected User: " + selectedUser);
         frame.repaint();
       }
     });
@@ -122,10 +137,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   /**
-   * Represents 
-   * @param createButton
-   * @param isSchedule
-   * @param frame
+   * Represents the button listener for schedule and create.
+   * @param     createButton the given button either create or schedule.
+   * @param     isSchedule determine which button was hit.
+   * @param     frame The given frame to listen to.
    */
   private void eventButtonListener(JButton createButton,
                                    boolean isSchedule, MainSystemFrame frame) {
@@ -142,6 +157,11 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     });
   }
 
+  /**
+   * The file system which should be observed.
+   * @param     button The given button to listen to.
+   * @param     frame The given frame to open a frame on.
+   */
   private void fileButtonListener(JButton button, MainSystemFrame frame) {
     button.addActionListener(new ActionListener() {
       @Override
@@ -162,6 +182,9 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     });
   }
 
+  /**
+   * Updating the list of users on the frame.
+   */
   private void updateListOfUsers() {
     String[] names = model.usersInSystem().toArray(new String[0]);
     listOfUsers.setModel(new DefaultComboBoxModel<>(names));

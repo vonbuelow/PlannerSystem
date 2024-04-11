@@ -1,14 +1,19 @@
 package view;
 
-import java.awt.*;
-import java.util.List;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.Set;
-
-import javax.swing.*;
-
-import model.EventRep;
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import model.ReadonlyNUPlannerSystem;
 
+/**
+ * This represents the event panel which shows up when scheduling.
+ */
 public class SchedulingEventPanel extends JPanel {
   private final JTextField eventNameField;
   private final JTextField duration;
@@ -16,6 +21,13 @@ public class SchedulingEventPanel extends JPanel {
   private JList<String> availableUsersList;
   private FlowLayout layout;
 
+  /**
+   * Represents the event panel which pops up when attempting to schedule an event.
+   * This panel only contains some of the information the other event panels show.
+   * The reason for not abstracting it is due to how we implemented the setting up the GUI.
+   * @param     selectedUser The selected user for the given event panel.
+   * @param     model The model being used to schedule an event with.
+   */
   public SchedulingEventPanel(String selectedUser, ReadonlyNUPlannerSystem model) {
     eventNameField = new JTextField(15);
     this.duration = new JTextField(15);
@@ -40,6 +52,10 @@ public class SchedulingEventPanel extends JPanel {
     eventPanel.add(eventNamePanel);
   }
 
+  /**
+   * Set up the location panel.
+   * @param      eventPanel The event panel to add the components to.
+   */
   private void locationPanel(SchedulingEventPanel eventPanel) {
     defaultDays();
 
@@ -109,7 +125,11 @@ public class SchedulingEventPanel extends JPanel {
     return availableUsersList.getSelectedValue();
   }
 
-  public String getDuration() {
+  /**
+   * Get the duration of the event the client is trying to schedule.
+   * @return    A string which represents the duration of the event.
+   */
+  protected String getDuration() {
     return duration.getText();
   }
 }

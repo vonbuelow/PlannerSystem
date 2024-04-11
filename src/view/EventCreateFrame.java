@@ -84,7 +84,6 @@ public class EventCreateFrame extends JFrame {
       if (eventName.isEmpty() || location.isEmpty() || startDay == null
               || startTime.isEmpty() || endDay == null || endTime.isEmpty()
               || selectedUser == null) {
-        // ERROR BOX ASF
         return;
       }
 

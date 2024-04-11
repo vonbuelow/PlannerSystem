@@ -8,13 +8,16 @@ import controller.Features;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
+/**
+ * Representing a scheduling event frame.
+ * This frame pops up when a user wants to schedule an event.
+ * The frame only allows the user to either X out or schedule.
+ */
 public class SchedulingEventFrame extends JFrame {
   private SchedulingEventPanel panel;
   private Features executer;
   private String name;
   private ReadonlyNUPlannerSystem model;
-
-
 
   /**
    * The frame of an event with lays out more components within the frame.
@@ -38,9 +41,9 @@ public class SchedulingEventFrame extends JFrame {
 
   /**
    * Create the given panel and its respective parameters to this frame.
-   * @param     frame
-   * @param     name
-   * @param     model
+   * @param     frame the given frame to add the panel to.
+   * @param     name The name of the selected user.
+   * @param     model the given model to work off of.
    */
   void setPanel(SchedulingEventFrame frame,  String name, ReadonlyNUPlannerSystem model) {
     panel = new SchedulingEventPanel(name, model);
@@ -48,9 +51,9 @@ public class SchedulingEventFrame extends JFrame {
   }
 
   /**
-   *
-   * @param frame
-   * @param model
+   * Set up the buttons for this event frame, with just schedule.
+   * @param     frame the given frame to add the buttons to.
+   * @param     model the given model to work off of.
    */
   void setButton(SchedulingEventFrame frame, ReadonlyNUPlannerSystem model) {
     JPanel buttonPanel = new JPanel(new FlowLayout()); // default is flow layout
@@ -79,6 +82,8 @@ public class SchedulingEventFrame extends JFrame {
         // ERROR BOX
         return;
       }
+      // change up the executer to take in the information from the user to schedule
+      // and event.
       //this.executer.schedule();
     });
   }

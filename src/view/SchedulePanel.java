@@ -21,6 +21,7 @@ public class SchedulePanel extends JPanel {
 
   /**
    * put the content here of the actual schedule, called from the main system frame.
+   * @param     model the model of the given schedule system.
    */
   SchedulePanel(ReadonlyNUPlannerSystem model) {
     this.model = model;
@@ -67,6 +68,10 @@ public class SchedulePanel extends JPanel {
     drawLines(g);
   }
 
+  /**
+   * Drawing of the events as purple rectangles.
+   * @param     g The graphic being passed on from paintComponent.
+   */
   private void drawEvents(Graphics g) {
     if (selectedUser.equals("")) {
       return;
@@ -109,6 +114,10 @@ public class SchedulePanel extends JPanel {
     }
   }
 
+  /**
+   * Draw the lines of the schedule.
+   * @param     g a graphic which comes from paint component.
+   */
   private void drawLines(Graphics g) {
     int width = getWidth();
     int height = getHeight();
@@ -128,17 +137,33 @@ public class SchedulePanel extends JPanel {
     }
   }
 
+  /**
+   * Show the schedule of the given user.
+   * This is done by repainting and updating which user should be viewed.
+   * Less about the user and more the view.
+   * @param     selectedUser The user whose schedule should be shown.
+   */
   protected void showSchedule(String selectedUser) {
     this.selectedUser = selectedUser;
     repaint();
   }
 
+  /**
+   * Given the time go in and get the hours and minutes.
+   * @param     time The time being parsed.
+   * @return    An array of both hours first and then minutes.
+   */
   private int[] parseTime(String time) {
     int hour = Integer.parseInt(time.substring(0, 2));
     int minute = Integer.parseInt(time.substring(2, 4));
     return new int[]{hour, minute};
   }
 
+  /**
+   * Get the given day starting index.
+   * @param      startDay The day we are trying to index.
+   * @return The index to match the string of the day
+   */
   private int dayIndex(String startDay) {
     switch (startDay) {
       case "Sunday":

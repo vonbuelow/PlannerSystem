@@ -1,13 +1,21 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.List;
-
-import javax.swing.*;
-
+import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
+/**
+ * This represents the event schedule panel.
+ * This panel pops up with the given event it is clicked on.
+ */
 public class EventSchedulePanel extends JPanel {
 
   private final JTextField eventNameField;
@@ -19,6 +27,12 @@ public class EventSchedulePanel extends JPanel {
   private JList<String> availableUsersList;
   private FlowLayout layout;
 
+  /**
+   * Create an event schedule panel.
+   * @param     selectedUser The selected user for the given schedule panel.
+   * @param     event The given event to display.
+   * @param     model The model being used to schedule an event with.
+   */
   public EventSchedulePanel(String selectedUser, EventRep event, ReadonlyNUPlannerSystem model) {
     this.eventNameField = new JTextField(event.getName());
     this.startDayComboBox = new JComboBox<>(defaultDays());
@@ -48,6 +62,10 @@ public class EventSchedulePanel extends JPanel {
     eventPanel.add(eventNamePanel);
   }
 
+  /**
+   * Set up the location panel.
+   * @param      eventPanel The event panel to add the components to.
+   */
   private void locationPanel(EventSchedulePanel eventPanel) {
     defaultDays();
 

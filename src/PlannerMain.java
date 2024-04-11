@@ -1,9 +1,7 @@
 import controller.NUController;
 import controller.NUPlannerGUIController;
-import controller.strategy.AnyTimeStrat;
 import controller.strategy.ScheduleStrat;
 import controller.strategy.StratFactory;
-import controller.strategy.WorkHoursStrat;
 import model.CentralSystem;
 import model.NUPlannerSystem;
 import view.MainSystemFrame;
