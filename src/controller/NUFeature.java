@@ -14,12 +14,11 @@ import model.eventfields.Location;
 import model.eventfields.Time;
 import view.NUPlannerView;
 
-public class NUFeature implements Features{
-
+public class NUFeature implements Features {
   private NUPlannerSystem model;
   private NUPlannerView view;
 
-  public NUFeature (NUPlannerSystem model, NUPlannerView view) {
+  public NUFeature(NUPlannerSystem model, NUPlannerView view) {
     this.model = model;
     this.view = view;
   }
@@ -45,12 +44,12 @@ public class NUFeature implements Features{
   @Override
   public void handleClick(double time, int day, String selectedUser) {
     int hour = (int) time;
-    int min = (int) ((time-hour) * 60);
+    int min = (int) ((time - hour) * 60);
     EventRep event = makeEvent(hour , min, makeDay(day), selectedUser);
     EventRep eventDisplay = event; // don't want to use null so it will change
     boolean openEventFrame = false;
 
-    for(EventRep e: this.model.getUserEvents(selectedUser)) {
+    for (EventRep e: this.model.getUserEvents(selectedUser)) {
       if (!e.overlapsWith(event)) {
         eventDisplay = e;
         openEventFrame = true;
@@ -69,12 +68,11 @@ public class NUFeature implements Features{
 
   @Override
   public void modify(EventRep event) {
-    System.out.print("modify");
+    // will modify given event
   }
 
   @Override
   public void remove(EventRep event, String user) {
-    System.out.print("remove");
     try {
       this.model.removeEvent(event, user);
     }
@@ -90,7 +88,7 @@ public class NUFeature implements Features{
 
   @Override
   public void schedule(String name, Location loc, int duration, List<String> invitees) {
-
+    // will schedule event with given parameters using the given strategy
   }
 
   /**
@@ -122,10 +120,10 @@ public class NUFeature implements Features{
   /**
    * Given an hour and minute from the clicked time and taking out the hours and minutes.
    * Make an event based on the given time. MOCK EVENT TO CHECK FOR OVERLAP.
-   * @param hour
-   * @param min
-   * @param selectedUser
-   * @return
+   * @param hour start and end hour of event made
+   * @param min minutes of event time
+   * @param selectedUser user to invite to made event
+   * @return a mock event based on the given parameters
    */
   private EventRep makeEvent(int hour, int min, Day day, String selectedUser) {
     String startTime = String.format("%04d", (hour * 100) + min);

@@ -23,14 +23,14 @@ public class PlannerMain {
     StratFactory stratFactory = new StratFactory();
     ScheduleStrat strat;
 
-    if (args[0].equalsIgnoreCase("workday")) {
-      strat = stratFactory.makeStrat("workday", model);
+    if (args[0].equalsIgnoreCase("workhours")) {
+      strat = stratFactory.makeStrat("workhours", model);
     }
     else if (args[0].equalsIgnoreCase("anytime")) {
       strat = stratFactory.makeStrat("anytime", model);
     }
     else {
-      strat = stratFactory.makeStrat("workday", model);
+      strat = stratFactory.makeStrat("workhours", model);
     }
 
     controller.runPlanner(model, strat);

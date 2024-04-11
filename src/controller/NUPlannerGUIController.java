@@ -7,21 +7,26 @@ import controller.strategy.ScheduleStrat;
 import model.NUPlannerSystem;
 import view.NUPlannerView;
 
+/**
+ * Controller to mediate between a GUI view and model.
+ */
 public class NUPlannerGUIController implements NUController {
   private final NUPlannerView view;
-  private NUPlannerSystem model;
-  private Features features;
 
+  /**
+   * Makes a controller, given the view for a planner system.
+   * @param view view for a planner system
+   */
   public NUPlannerGUIController(NUPlannerView view) {
-    this.view = view;
+    this.view = Objects.requireNonNull(view);
   }
 
   @Override
   public void runPlanner(NUPlannerSystem model, ScheduleStrat strat) {
-    this.model = Objects.requireNonNull(model);
-    this.features = new NUFeature(model, view);
+    NUPlannerSystem model1 = Objects.requireNonNull(model);
+    Features features = new NUFeature(model1, view);
     try {
-      this.view.setListener(this.features);
+      this.view.setListener(features);
     }
     catch (IOException e) {
       // show this is a bad bad appendable for listener

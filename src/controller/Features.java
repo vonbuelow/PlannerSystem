@@ -6,6 +6,10 @@ import java.util.List;
 import model.EventRep;
 import model.eventfields.Location;
 
+/**
+ * Represents the public methods for features needed from a planner system, such as
+ * adding a user or modifying events.
+ */
 public interface Features {
 
   /**
