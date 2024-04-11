@@ -1,11 +1,12 @@
 package controller.strategy;
 
 import java.util.List;
-
-import model.Event;
 import model.EventRep;
 import model.eventfields.Location;
 
+/**
+ * The extra credit with a strategy with the commented description.
+ */
 public class LenientStrat implements ScheduleStrat {
   @Override
   public EventRep schedule(String name, Location loc, int duration, List<String> invitees) {

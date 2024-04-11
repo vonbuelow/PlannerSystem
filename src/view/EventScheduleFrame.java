@@ -16,7 +16,7 @@ import model.ReadonlyNUPlannerSystem;
  * This represents the event schedule frame which pops up when clicking on an event.
  * The frame has two buttons to either remove or modify the event.
  */
-public class EventScheduleFrame extends JFrame{
+public class EventScheduleFrame extends JFrame {
   private EventSchedulePanel panel;
 
   /**

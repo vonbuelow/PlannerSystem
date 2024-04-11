@@ -1,9 +1,7 @@
 package view;
 
 import java.io.IOException;
-
 import controller.Features;
-import controller.NUFeature;
 import model.EventRep;
 
 /**

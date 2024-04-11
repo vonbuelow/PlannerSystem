@@ -1,9 +1,11 @@
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import controller.Features;
 import model.ReadonlyNUPlannerSystem;
 
@@ -13,11 +15,6 @@ import model.ReadonlyNUPlannerSystem;
  */
 public class EventCreateFrame extends JFrame {
   private EventPanel panel;
-  private Features executer;
-  private String name;
-  private ReadonlyNUPlannerSystem model;
-
-
 
   /**
    * The frame of an event with lays out more components within the frame.
@@ -27,9 +24,6 @@ public class EventCreateFrame extends JFrame {
    * @param     executer The features interface if the model has to be changed in any way.
    */
   EventCreateFrame(String name, ReadonlyNUPlannerSystem model, Features executer) {
-    this.name = name;
-    this.model = model;
-    this.executer = executer;
     this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -43,7 +37,7 @@ public class EventCreateFrame extends JFrame {
    * Create the given panel and its respective parameters to this frame.
    * @param     frame the given frame to add components to
    * @param     name The name of the selected user
-   * @param     model
+   * @param     model The given model of the system.
    */
   void setPanel(EventCreateFrame frame,  String name, ReadonlyNUPlannerSystem model) {
     panel = new EventPanel(name, model);

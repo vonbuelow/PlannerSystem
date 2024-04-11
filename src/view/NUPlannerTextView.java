@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import controller.Features;
-import controller.NUFeature;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 import model.ScheduleRep;

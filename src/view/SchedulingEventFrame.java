@@ -1,11 +1,12 @@
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import controller.Features;
-import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
 /**
@@ -15,9 +16,6 @@ import model.ReadonlyNUPlannerSystem;
  */
 public class SchedulingEventFrame extends JFrame {
   private SchedulingEventPanel panel;
-  private Features executer;
-  private String name;
-  private ReadonlyNUPlannerSystem model;
 
   /**
    * The frame of an event with lays out more components within the frame.
@@ -27,9 +25,6 @@ public class SchedulingEventFrame extends JFrame {
    * @param     executer The features interface if the model has to be changed in any way.
    */
   SchedulingEventFrame(String name, ReadonlyNUPlannerSystem model, Features executer) {
-    this.name = name;
-    this.model = model;
-    this.executer = executer;
     this.setTitle("Event Info!");
     this.setResizable(false);
     this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

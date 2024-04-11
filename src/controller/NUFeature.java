@@ -14,6 +14,10 @@ import model.eventfields.Location;
 import model.eventfields.Time;
 import view.NUPlannerView;
 
+/**
+ * The class which ties in the features a controller has to a model.
+ * Given the view calls back onto this class.
+ */
 public class NUFeature implements Features {
   private NUPlannerSystem model;
   private NUPlannerView view;

@@ -12,6 +12,10 @@ import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
 
+/**
+ * The strategy for only scheduling in work hours.
+ * Those hours being 0900-1700 and Mon-Fri.
+ */
 public class WorkHoursStrat implements ScheduleStrat {
   private final NUPlannerSystem model;
 

@@ -17,9 +17,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
-
 import controller.Features;
-import controller.NUFeature;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 
@@ -50,7 +48,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   /**
-   * Creates the menu
+   * Creates the menu of the frame.
    */
   private void createMenu() {
     this.menuBar = new JMenuBar();
@@ -80,6 +78,10 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     });
   }
 
+  /**
+   * Setting up the default frame.
+   * @param     frame The frame to set up.
+   */
   private void createMSFrame(MainSystemFrame frame) {
     frame.setTitle("NU Planner System");
     frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -88,7 +90,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   }
 
   /**
-   * Set up the button layout
+   * Set up the button layout of the frame.
    * @param     frame The given frame to update.
    */
   private void buttonLayout(MainSystemFrame frame) {

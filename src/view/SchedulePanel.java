@@ -29,6 +29,10 @@ public class SchedulePanel extends JPanel {
     this.setLayout(new BorderLayout());
   }
 
+  /**
+   * Add in a click listener and allowing the features to be called back on.
+   * @param     features The way to start the command call backs.
+   */
   public void addClickListener(Features features) {
     this.addMouseListener(new MouseListener() {
       @Override
@@ -41,22 +45,22 @@ public class SchedulePanel extends JPanel {
 
       @Override
       public void mousePressed(MouseEvent e) {
-
+        //press
       }
 
       @Override
       public void mouseReleased(MouseEvent e) {
-
+        //release
       }
 
       @Override
       public void mouseEntered(MouseEvent e) {
-
+        //entered
       }
 
       @Override
       public void mouseExited(MouseEvent e) {
-
+        //exited
       }
     });
   }

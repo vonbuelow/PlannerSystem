@@ -2,14 +2,11 @@ package controller.strategy;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import model.CentralSystem;
 import model.Event;
 import model.EventRep;
@@ -19,10 +16,12 @@ import model.ScheduleRep;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * Testing for anytime strategy.
+ * Making sure that an event is it schedule is at anytime.
+ */
 public class AnyTimeStratTests {
   String profLucia;
   String emmaVB;
@@ -90,14 +89,12 @@ public class AnyTimeStratTests {
   @Test
   public void testSchedule() {
     assertThrows("duration must be at least 1 min but can't be 10080 or more",
-            IllegalArgumentException.class,
-            () -> anytime.schedule("CS3500 Day 2",
+            IllegalArgumentException.class, () -> anytime.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     10080, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));
     assertThrows("duration must be at least 1 min but can't be 10080 or more",
-            IllegalArgumentException.class,
-            () -> anytime.schedule("CS3500 Day 2",
+            IllegalArgumentException.class, () -> anytime.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     0, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));

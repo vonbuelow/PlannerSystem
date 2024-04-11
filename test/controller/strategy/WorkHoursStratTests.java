@@ -23,6 +23,10 @@ import model.eventfields.Time;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+/**
+ * The strategies for work hours tests.
+ * Testing for scheduling an event in work hours.
+ */
 public class WorkHoursStratTests {
   String profLucia;
   String emmaVB;
@@ -90,14 +94,12 @@ public class WorkHoursStratTests {
   @Test
   public void testSchedule() {
     assertThrows("duration must be at least 1 min but can't be more than 480",
-            IllegalArgumentException.class,
-            () -> workhours.schedule("CS3500 Day 2",
+            IllegalArgumentException.class, () -> workhours.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     10080, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));
     assertThrows("duration must be at least 1 min but can't be more than 480",
-            IllegalArgumentException.class,
-            () -> workhours.schedule("CS3500 Day 2",
+            IllegalArgumentException.class, () -> workhours.schedule("CS3500 Day 2",
                     new Location(false, "Churchill Hall 101"),
                     0, new ArrayList<String>(
                             Arrays.asList(profLucia, emmaVB, noelisA1))));

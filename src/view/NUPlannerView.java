@@ -3,7 +3,6 @@ package view;
 import java.io.IOException;
 
 import controller.Features;
-import controller.NUFeature;
 import model.EventRep;
 
 /**
@@ -28,7 +27,7 @@ public interface NUPlannerView {
    * This info will be displayed onto the event frame.
    *
    * @param event        The event to be displayed.
-   * @param selectedUser
+   * @param selectedUser the given selected user.
    */
   void openEventFrame(EventRep event, String selectedUser) throws IOException;
 }

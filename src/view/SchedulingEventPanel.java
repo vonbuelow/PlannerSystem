@@ -98,7 +98,7 @@ public class SchedulingEventPanel extends JPanel {
    */
   private String[] defaultDays() {
     return new String[]{"Sunday", "Monday", "Tuesday",
-            "Wednesday", "Thursday", "Friday", "Saturday"};
+        "Wednesday", "Thursday", "Friday", "Saturday"};
   }
 
   /**

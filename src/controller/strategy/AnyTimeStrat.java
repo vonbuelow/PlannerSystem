@@ -12,6 +12,9 @@ import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
 
+/**
+ * A strategy to be used with an event that can be placed at anytime.
+ */
 public class AnyTimeStrat implements ScheduleStrat {
   private final NUPlannerSystem model;
 

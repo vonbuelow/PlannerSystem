@@ -9,11 +9,11 @@ import controller.Features;
 import controller.NUController;
 import controller.NUFeature;
 import controller.NUPlannerGUIController;
-import view.MainSystemFrame;
 import view.NUPlannerTextView;
 import view.NUPlannerView;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests that an NUPlannerSystem has its methods called appropriately (with the
@@ -45,10 +45,5 @@ public class MockModelTests {
     outLines = mockModelOutput.toString().split("\n");
     assertEquals("user is saving a file to this path: " + fileToSave.getAbsolutePath(),
             outLines[0]);
-  }
-
-  @Test
-  public void testAddUser() {
-  //  "Adding in a new users schedule from" + file.getAbsolutePath()
   }
 }
