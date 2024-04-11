@@ -18,6 +18,10 @@ import model.eventfields.Time;
 public class AnyTimeStrat implements ScheduleStrat {
   private final NUPlannerSystem model;
 
+  /**
+   * Creates an "anytime" strategy to use for scheduling events for the given system.
+   * @param model planner system to schedule events for
+   */
   public AnyTimeStrat(NUPlannerSystem model) {
     this.model = Objects.requireNonNull(model);
   }

@@ -19,6 +19,10 @@ import model.eventfields.Time;
 public class WorkHoursStrat implements ScheduleStrat {
   private final NUPlannerSystem model;
 
+  /**
+   * Creates a "workhours" strategy to use for scheduling events for the given system.
+   * @param model planner system to schedule events for
+   */
   public WorkHoursStrat(NUPlannerSystem model) {
     this.model = Objects.requireNonNull(model);
   }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import controller.strategy.ScheduleStrat;
 import model.Event;
 import model.EventRep;
 import model.NUPlannerSystem;
@@ -91,8 +92,10 @@ public class NUFeature implements Features {
   }
 
   @Override
-  public void schedule(String name, Location loc, int duration, List<String> invitees) {
+  public void schedule(String name, Location loc, int duration,
+                       List<String> invitees, ScheduleStrat strat) {
     // will schedule event with given parameters using the given strategy
+    strat.schedule(name, loc, duration, invitees);
   }
 
   /**

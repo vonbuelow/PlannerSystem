@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.util.List;
 
+import controller.strategy.ScheduleStrat;
 import model.EventRep;
 import model.eventfields.Location;
 
@@ -58,7 +59,8 @@ public interface Features {
    * @param     loc The location of the event
    * @param     duration The duration of the event
    * @param     invitees The invitees to the event
+   * @param     strat The strategy to schedule events with
    */
-  void schedule(String name, Location loc, int duration, List<String> invitees);
+  void schedule(String name, Location loc, int duration, List<String> invitees, ScheduleStrat strat);
 
 }
