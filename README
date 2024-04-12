@@ -124,9 +124,15 @@ central system:
 EXTRA CREDIT:
     Resizable View: Adding line 48 to setting the view to have a preferred size is the only change
                     that I made to to allow the view to be completely resizeable.
-    Lenient Strategy:
-
-
+Contoller - Features
+    Adding in the features interface for call back from the view
+    Strategy:
+        Adding in the anytime and work hours to allow for an event to be added for specific times.
+View:
+    Making the mutation happen through call back
+    Frame: Adding the current event information
+            Create event
+            Only modify and remove for existing events
 --------------------------------------------------------------------------------------------------
 Source organization: Either explain for each component where to find it in your codebase,
 or explain for each directory in your codebase what components it provides.

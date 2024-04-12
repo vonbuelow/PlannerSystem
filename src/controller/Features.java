@@ -61,6 +61,7 @@ public interface Features {
    * @param     invitees The invitees to the event
    * @param     strat The strategy to schedule events with
    */
-  void schedule(String name, Location loc, int duration, List<String> invitees, ScheduleStrat strat);
+  void schedule(String name, Location loc, int duration,
+                List<String> invitees, ScheduleStrat strat);
 
 }
