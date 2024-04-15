@@ -1,9 +1,7 @@
 package provider.view;
 
 import provider.controller.Features;
-import provider.strategies.AnytimeSystemPlanner;
 import provider.model.ReadOnlySystemInterface;
-//import provider.strategies.SystemPlanner;
 //import provider.model.User;
 
 import javax.swing.BoxLayout;

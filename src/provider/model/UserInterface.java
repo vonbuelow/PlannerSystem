@@ -1,4 +1,4 @@
-package model;
+package provider.model;
 
 public interface UserInterface {
   public String getUsername();
