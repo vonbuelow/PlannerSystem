@@ -2,7 +2,7 @@ package provider.controller;
 
 import java.util.List;
 
-//import provider.model.Event;
+import provider.model.EventInterface;
 
 /**
  * Interface Features that represents all the functionalities that the user can use to affect view.
@@ -67,7 +67,7 @@ public interface Features {
    * To populate the modify and remove event frame and display it in the view.
    * @param event that is getting modified or removed
    */
-  void modifyOrRemoveEventFrame(Event event);
+  void modifyOrRemoveEventFrame(EventInterface event);
 
   /**
    * To modify an event in the model.
@@ -83,11 +83,11 @@ public interface Features {
    */
   void modifyEvent(String name, String startDayString, String startTimeString,
                    String endDayString, String endTimeString, String location,
-                   boolean isOnline, List<String> participants, Event oldEvent);
+                   boolean isOnline, List<String> participants, EventInterface oldEvent);
 
   /**
    * To remove an event on the view.
    * @param event that is going to be removed.
    */
-  void removeEvent(Event event);
+  void removeEvent(EventInterface event);
 }

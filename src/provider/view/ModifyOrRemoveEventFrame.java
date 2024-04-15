@@ -1,7 +1,9 @@
 package provider.view;
 
-import controller.Features;
-import provider.strategies.AnytimeSystemPlanner;
+//import controller.Features;
+import provider.model.EventInterface;
+import provider.model.UserInterface;
+import provider.controller.Features;
 import model.Event;
 import provider.model.ReadOnlySystemInterface;
 //import model.SystemPlanner;
@@ -41,7 +43,7 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
   private JList<String> userList;
   private JButton modifyButton;
   private JButton removeButton;
-  private Event event;
+  private EventInterface event;
 
   /**
    * Constructor for ModifyOrRemoveEventFrame that takes in a model, event, and currentUser.
@@ -49,7 +51,8 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
    * @param event event that is clicked on.
    * @param currentUser user that is selected by the user.
    */
-  public ModifyOrRemoveEventFrame(ReadOnlySystemInterface model, Event event, String currentUser) {
+  public ModifyOrRemoveEventFrame(ReadOnlySystemInterface model, EventInterface event,
+                                  String currentUser) {
     this.event = event;
 
     modifyOrRemoveEventFrameHelper(model, event);
@@ -118,7 +121,8 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
    * @param model the model of the system
    * @param event the event to be displayed
    */
-  private void modifyOrRemoveEventFrameHelper(ReadOnlySystemInterface model, Event event) {
+  private void modifyOrRemoveEventFrameHelper(ReadOnlySystemInterface model,
+                                              EventInterface event) {
     eventNameTextField = new JTextField(event.getName());
     locationTextField = new JTextField(event.getLocation());
     isOnlineCheckBox = new JCheckBox("Is online");
@@ -197,10 +201,10 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
       public void run() {
         // just for testing, remove later
         ReadOnlySystemInterface model = new AnytimeSystemPlanner();
-        User prof = new User("Prof. Lucia");
-        User anon = new User("Student Anon");
-        User chat = new User("Chat");
-        User random = new User("Random Guy");
+        UserInterface prof = new User("Prof. Lucia");
+        UserInterface anon = new User("Student Anon");
+        UserInterface chat = new User("Chat");
+        UserInterface random = new User("Random Guy");
         ((SystemPlanner) model).addUser(prof);
         ((SystemPlanner) model).addUser(anon);
         ((SystemPlanner) model).addUser(chat);

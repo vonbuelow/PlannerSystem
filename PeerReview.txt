@@ -9,7 +9,13 @@ this course, and extrapolate from them the kinds of issues to examine. For examp
 - How capable are the views?
 - How convenient was it to reuse their code?
 - How cleanly written and well-documented was their code?
+
 - If you needed to request changes from them, what were they and why were they needed?
+We requested interfaces for User, Event, and Schedule, since we did not have access
+to the class implementations with the same sets of methods. In multiple interfaces
+such as SystemInterface, there were methods with a User or Event parameter/return
+type instead of an interface type, so we needed new interfaces to implement the
+existing ones.
 
 Write a short (3-4 paragraph) review of their code. Your review should have the
 following sections: Design critique, implementation critique, documentation critique,

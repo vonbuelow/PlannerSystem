@@ -23,29 +23,43 @@ public class PlannerMain {
     StratFactory stratFactory = new StratFactory();
     ScheduleStrat strat;
 
-    // restrict to only two arguments
-    if(args.length != 2) {
-      throw new IllegalArgumentException("Only allowed to input 2 arguments");
+    if (args.length == 1) {
+      strat = getScheduleStrat(args, stratFactory, model);
     }
-
-    if(args[0].equalsIgnoreCase("provider")) {
-      // make the providers view
+    else if (args.length == 2) {
+      strat = getScheduleStrat(args, stratFactory, model);
+      if (args[1].equalsIgnoreCase("provider")) {
+        // make the providers view
+      }
+      else {
+        // make our view
+      }
     }
     else {
-      // make our view
+      throw new IllegalArgumentException("Needs exactly 1-2 arguments");
     }
+    controller.runPlanner(model, strat);
+  }
 
-    // check second args value?
-    if (args[1].equalsIgnoreCase("workhours")) {
+  /**
+   * Returns a strategy to use for scheduling events.
+   * @param args command-line arguments to choose a strategy
+   * @param stratFactory creator of strategies
+   * @param model model of system to attach the strategy to
+   * @return an automatic scheduling strategy for the planner system
+   */
+  private static ScheduleStrat getScheduleStrat(String[] args, StratFactory stratFactory,
+                                                NUPlannerSystem model) {
+    ScheduleStrat strat;
+    if (args[0].equalsIgnoreCase("workhours")) {
       strat = stratFactory.makeStrat("workhours", model);
     }
-    else if (args[1].equalsIgnoreCase("anytime")) {
+    else if (args[0].equalsIgnoreCase("anytime")) {
       strat = stratFactory.makeStrat("anytime", model);
     }
     else {
       strat = stratFactory.makeStrat("workhours", model);
     }
-
-    controller.runPlanner(model, strat);
+    return strat;
   }
 }

@@ -21,7 +21,7 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * @param fileName the file name to be saved
    * @param user the user to save the file for
    */
-  void saveUserSchedule(String fileName, User user);
+  void saveUserSchedule(String fileName, UserInterface user);
 
   /**
    * Create a user and add them to the system.
@@ -33,14 +33,14 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * Add an existing user to the system.
    * @param user the user to be added
    */
-  void addUser(User user);
+  void addUser(UserInterface user);
 
   /**
    * Add an event to a given user's schedule.
    * @param user the user to add the event for
    * @param event the event to be added
    */
-  void addEvent(User user, Event event);
+  void addEvent(UserInterface user, EventInterface event);
 
   /**
    * Creates an event.
@@ -63,14 +63,14 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * @param oldEvent the old event to be modified
    * @param newEvent the new version of the event
    */
-  void modifyEvent(User user, Event oldEvent, Event newEvent);
+  void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent);
 
   /**
    * Removes an event from a given user's schedule.
    * @param user the user to remove the event for
    * @param event the event to be removed
    */
-  void removeEvent(User user, Event event);
+  void removeEvent(UserInterface user, EventInterface event);
 
   /**
    * Automatically schedule an event for a user.
