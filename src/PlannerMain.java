@@ -23,10 +23,23 @@ public class PlannerMain {
     StratFactory stratFactory = new StratFactory();
     ScheduleStrat strat;
 
-    if (args[0].equalsIgnoreCase("workhours")) {
+    // restrict to only two arguments
+    if(args.length != 2) {
+      throw new IllegalArgumentException("Only allowed to input 2 arguments");
+    }
+
+    if(args[0].equalsIgnoreCase("provider")) {
+      // make the providers view
+    }
+    else {
+      // make our view
+    }
+
+    // check second args value?
+    if (args[1].equalsIgnoreCase("workhours")) {
       strat = stratFactory.makeStrat("workhours", model);
     }
-    else if (args[0].equalsIgnoreCase("anytime")) {
+    else if (args[1].equalsIgnoreCase("anytime")) {
       strat = stratFactory.makeStrat("anytime", model);
     }
     else {

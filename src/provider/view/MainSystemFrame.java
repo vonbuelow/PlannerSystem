@@ -1,6 +1,6 @@
 package provider.view;
 
-import controller.Features;
+import provider.controller.Features;
 import provider.strategies.AnytimeSystemPlanner;
 import model.Event;
 import provider.model.ReadOnlySystemInterface;
