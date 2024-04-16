@@ -1,11 +1,9 @@
 package provider.view;
 
 import provider.controller.Features;
-import provider.strategies.AnytimeSystemPlanner;
+import provider.model.EventInterface;
 import model.Event;
 import provider.model.ReadOnlySystemInterface;
-//import model.SystemPlanner;
-//import model.User;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,7 +13,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -211,9 +208,9 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
 
     System.out.println("Clicked on: " + "(X: " + x + ", Y: " + y + ")");
 
-    List<Event> currentUserEvents = model.getUserEventList(model.getUser(currentUser));
+    List<EventInterface> currentUserEvents = model.getUserEventList(model.getUser(currentUser));
     if (currentUserEvents != null && !currentUserEvents.isEmpty()) {
-      for (Event event : currentUserEvents) {
+      for (EventInterface event : currentUserEvents) {
         double dayWidth = (double) schedulePanel.getWidth() / 7;
         double hourHeight = (double) schedulePanel.getHeight() / 24;
         double minuteHeight = hourHeight / 60;
@@ -335,9 +332,9 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
    */
   private void drawEvents(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
-    List<Event> currentUserEvents = model.getUserEventList(model.getUser(currentUser));
+    List<EventInterface> currentUserEvents = model.getUserEventList(model.getUser(currentUser));
     if (currentUserEvents != null && !currentUserEvents.isEmpty()) {
-      for (Event event : currentUserEvents) {
+      for (EventInterface event : currentUserEvents) {
         LocalDateTime startTime = event.getStartTime();
         LocalDateTime endTime = event.getEndTime();
 
@@ -411,7 +408,7 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
    *
    * @param args arguments
    */
-  public static void main(String[] args) {
+  /*public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
@@ -429,5 +426,5 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
         new MainSystemFrame(model).render();
       }
     });
-  }
+  }*/
 }

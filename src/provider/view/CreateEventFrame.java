@@ -1,11 +1,7 @@
 package provider.view;
 
-import model.ScheduleInterface;
 import provider.controller.Features;
 import provider.model.ReadOnlySystemInterface;
-import provider.model.UserInterface;
-//import provider.model.User;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -19,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 
 import java.util.List;
 
@@ -93,11 +88,11 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
 
     if (eventName.isEmpty() || location.isEmpty() || startTime.isEmpty()
             || endTime.isEmpty() || participants.isEmpty()) {
-      System.out.println("Please fill in all the fields.");
+      //System.out.println("Please fill in all the fields.");
       JOptionPane.showMessageDialog(null, "Cannot create event",
               "Message", JOptionPane.INFORMATION_MESSAGE);
     } else {
-      System.out.println("Creating Event: ");
+      /*System.out.println("Creating Event: ");
       System.out.println("Event name: " + eventName);
       System.out.println("Event location: " + location);
       System.out.println("Event online: " + isOnline);
@@ -106,7 +101,7 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
       System.out.println("Event end day: " + endDay);
       System.out.println("Event end time: " + endTime);
       System.out.println("Event host: " + currentUser);
-      System.out.println("Event participants: " + participants);
+      System.out.println("Event participants: " + participants);*/
     }
   }
 
@@ -154,10 +149,10 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
     return panel;
   }
 
-  /**
+/*  *//**
    * Main method that actually helps run populating the CreateEventFrame.
    * @param args arguments inputted to run the main method.
-   */
+   *//*
   public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
@@ -174,5 +169,5 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
         new CreateEventFrame(model, prof.getUsername());
       }
     });
-  }
+  }*/
 }

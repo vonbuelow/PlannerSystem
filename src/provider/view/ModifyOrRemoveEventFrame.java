@@ -1,14 +1,8 @@
 package provider.view;
 
-//import controller.Features;
 import provider.model.EventInterface;
-import provider.model.UserInterface;
 import provider.controller.Features;
-import model.Event;
 import provider.model.ReadOnlySystemInterface;
-//import model.SystemPlanner;
-//import model.User;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,7 +14,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,7 +188,7 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
    * Main method that actually helps run populating the CreateEventFrame.
    * @param args arguments inputted to run the main method.
    */
-  public static void main(String[] args) {
+ /* public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
@@ -214,5 +207,5 @@ public class ModifyOrRemoveEventFrame extends JFrame implements EventFrameInterf
                 prof.getUsername());
       }
     });
-  }
+  }*/
 }

@@ -1,8 +1,6 @@
-package model;
+package provider.model;
 
 import java.util.List;
-
-import provider.model.EventInterface;
 
 /**
  * Class representing a schedule.

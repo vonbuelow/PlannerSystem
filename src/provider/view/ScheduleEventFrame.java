@@ -1,11 +1,7 @@
 package provider.view;
 
-//import controller.Features;
 import provider.controller.Features;
 import provider.model.ReadOnlySystemInterface;
-import provider.model.UserInterface;
-//import model.SystemPlanner;
-//import model.User;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import java.util.List;
 
 /**
@@ -138,7 +133,7 @@ public class ScheduleEventFrame extends JFrame implements EventFrameInterface {
    * Main method that actually helps run populating the CreateEventFrame.
    * @param args arguments inputted to run the main method.
    */
-  public static void main(String[] args) {
+  /*public static void main(String[] args) {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
@@ -155,5 +150,5 @@ public class ScheduleEventFrame extends JFrame implements EventFrameInterface {
         new ScheduleEventFrame(model, prof.getUsername());
       }
     });
-  }
+  }*/
 }
