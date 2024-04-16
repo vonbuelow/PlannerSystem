@@ -1,8 +1,8 @@
 package provider.model;
 
-import model.Schedule;
+import model.ScheduleInterface;
 
 public interface UserInterface {
-  public String getUsername();
-  public Schedule getSchedule();
+  String getUsername();
+  ScheduleInterface getSchedule();
 }

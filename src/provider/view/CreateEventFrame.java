@@ -2,6 +2,7 @@ package provider.view;
 
 import provider.controller.Features;
 import provider.model.ReadOnlySystemInterface;
+import provider.model.UserInterface;
 //import provider.model.User;
 
 import javax.swing.BoxLayout;
@@ -161,10 +162,10 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
       @Override
       public void run() {
         ReadOnlySystemInterface model = new AnytimeSystemPlanner();
-        User prof = new User("Prof. Lucia");
-        User anon = new User("Student Anon");
-        User chat = new User("Chat");
-        User random = new User("Random Guy");
+        UserInterface prof = new User("Prof. Lucia");
+        UserInterface anon = new User("Student Anon");
+        UserInterface chat = new User("Chat");
+        UserInterface random = new User("Random Guy");
         ((SystemPlanner) model).addUser(prof);
         ((SystemPlanner) model).addUser(anon);
         ((SystemPlanner) model).addUser(chat);
