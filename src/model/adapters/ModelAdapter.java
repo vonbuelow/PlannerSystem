@@ -22,7 +22,7 @@ public class ModelAdapter implements SystemInterface {
   private final NUPlannerSystem adaptee;
 
   public ModelAdapter(NUPlannerSystem adaptee) {
-    this.adaptee = adaptee;
+    this.adaptee = Objects.requireNonNull(adaptee);
   }
 
   @Override

@@ -13,7 +13,7 @@ public class EventAdapter implements EventInterface {
   private final EventRep adaptee;
 
   public EventAdapter(EventRep adaptee) {
-    this.adaptee = adaptee;
+    this.adaptee = Objects.requireNonNull(adaptee);
   }
 
   @Override

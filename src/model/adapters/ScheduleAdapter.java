@@ -1,5 +1,6 @@
 package model.adapters;
 
+import java.io.ObjectStreamException;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ public class ScheduleAdapter implements ScheduleInterface {
   private final ScheduleRep adaptee;
 
   public ScheduleAdapter(ScheduleRep adaptee) {
-    this.adaptee = adaptee;
+    this.adaptee = Objects.requireNonNull(adaptee);
   }
 
   @Override
