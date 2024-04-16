@@ -1,5 +1,6 @@
 package provider.view;
 
+import model.ScheduleInterface;
 import provider.controller.Features;
 import provider.model.ReadOnlySystemInterface;
 import provider.model.UserInterface;
@@ -166,7 +167,7 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
         UserInterface anon = new User("Student Anon");
         UserInterface chat = new User("Chat");
         UserInterface random = new User("Random Guy");
-        ((SystemPlanner) model).addUser(prof);
+        ((ScheduleInterface) model).addUser(prof);
         ((SystemPlanner) model).addUser(anon);
         ((SystemPlanner) model).addUser(chat);
         ((SystemPlanner) model).addUser(random);

@@ -6,4 +6,5 @@ package provider.view;
  * so left empty for now.
  */
 public interface EventFrameInterface {
+
 }
