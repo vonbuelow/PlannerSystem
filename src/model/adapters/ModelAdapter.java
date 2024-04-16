@@ -14,87 +14,84 @@ import model.NUPlannerSystem;
 import model.ScheduleRep;
 import model.eventfields.Location;
 import model.eventfields.Time;
+import provider.model.EventInterface;
 import provider.model.SystemInterface;
+import provider.model.UserInterface;
 
-public class ModelAdapter implements NUPlannerSystem {
-  private final SystemInterface adaptee;
+public class ModelAdapter implements SystemInterface {
+  private final NUPlannerSystem adaptee;
 
-  public ModelAdapter(SystemInterface adaptee) {
-    this.adaptee = Objects.requireNonNull(adaptee);
+  public ModelAdapter(NUPlannerSystem adaptee) {
+    this.adaptee = adaptee;
   }
 
   @Override
-  public void saveSchedule(File fileToSave) throws IOException {
-    adaptee.saveUserSchedule(fileToSave.getAbsolutePath(), );
-  }
-
-  @Override
-  public void addEventToAllSchedules(EventRep event) throws IOException {
-
-  }
-
-  @Override
-  public void addEventToInviteeSchedule(String uid, EventRep event) throws IOException {
-
-  }
-
-  @Override
-  public void addNewUser(Map<String, ScheduleRep> newUser) throws IOException {
-
-  }
-
-  @Override
-  public void modifyName(EventRep event, String eventName) throws IOException {
-
-  }
-
-  @Override
-  public void modifyTime(EventRep event, Time time) throws IOException {
-
-  }
-
-  @Override
-  public void modifyLocation(EventRep event, Location loc) throws IOException {
-
-  }
-
-  @Override
-  public void modifyInvitees(EventRep event, List<String> invitees, boolean toAdd) throws IOException {
-
-  }
-
-  @Override
-  public void removeEvent(EventRep event, String uid) throws IOException {
-
-  }
-
-  @Override
-  public void addUser(File file) throws IOException {
-
-  }
-
-  @Override
-  public Map<String, ScheduleRep> usersSchedules() {
+  public UserInterface getUser(String username) {
     return null;
   }
 
   @Override
-  public Set<String> usersInSystem() {
+  public List<String> getAllUsers() {
     return null;
   }
 
   @Override
-  public boolean doesOverlap(EventRep event) {
+  public boolean isConflictWithAllUsers(EventInterface event) {
     return false;
   }
 
   @Override
-  public List<EventRep> getUserEvents(String uid) {
+  public List<EventInterface> getUserEventList(UserInterface user) {
     return null;
   }
 
   @Override
-  public List<EventRep> getSystemEvents() {
+  public List<EventInterface> seeEvent(UserInterface user, LocalDateTime time) {
     return null;
+  }
+
+  @Override
+  public void uploadXML(String fileName) {
+
+  }
+
+  @Override
+  public void saveUserSchedule(String fileName, UserInterface user) {
+
+  }
+
+  @Override
+  public void createUser(String username) {
+
+  }
+
+  @Override
+  public void addUser(UserInterface user) {
+
+  }
+
+  @Override
+  public void addEvent(UserInterface user, EventInterface event) {
+
+  }
+
+  @Override
+  public void createEvent(String name, DayOfWeek startDayEnum, String startTimeString, DayOfWeek endDayEnum, String endTimeString, String location, Boolean isOnline, List<String> users) {
+
+  }
+
+  @Override
+  public void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent) {
+
+  }
+
+  @Override
+  public void removeEvent(UserInterface user, EventInterface event) {
+
+  }
+
+  @Override
+  public void automaticallyScheduleEvent(String name, int duration, String location, Boolean isOnline, List<String> users) {
+
   }
 }

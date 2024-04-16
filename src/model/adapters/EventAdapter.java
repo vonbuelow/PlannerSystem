@@ -9,58 +9,75 @@ import model.eventfields.Location;
 import model.eventfields.Time;
 import provider.model.EventInterface;
 
-public class EventAdapter implements EventRep {
-  private final EventInterface adaptee;
+public class EventAdapter implements EventInterface {
+  private final EventRep adaptee;
 
-  public EventAdapter(EventInterface adaptee) {
-    this.adaptee = Objects.requireNonNull(adaptee);
-  }
-
-  @Override
-  public Time getTime() {
-    LocalDateTime start = adaptee.getStartTime();
-    LocalDateTime end = adaptee.getEndTime();
-
-    return ;
-  }
-
-  @Override
-  public boolean overlapsWith(EventRep e) {
-    return this.getTime().overlapsWith(e.getTime());
+  public EventAdapter(EventRep adaptee) {
+    this.adaptee = adaptee;
   }
 
   @Override
   public String getName() {
-    return adaptee.getName();
-  }
-
-  @Override
-  public List<String> getInvitedUsers() {
     return null;
   }
 
   @Override
-  public Location getLocation() {
+  public void setName(String name) {
+
+  }
+
+  @Override
+  public LocalDateTime getStartTime() {
     return null;
   }
 
   @Override
-  public void modifyName(String name) {
+  public void setStartTime(LocalDateTime startTime) {
 
   }
 
   @Override
-  public void modifyTime(Time time) {
+  public LocalDateTime getEndTime() {
+    return null;
+  }
+
+  @Override
+  public void setEndTime(LocalDateTime endTime) {
 
   }
 
   @Override
-  public void modifyLocation(Location loc) {
+  public String getLocation() {
+    return null;
+  }
+
+  @Override
+  public void setLocation(String location) {
 
   }
 
   @Override
-  public void modifyInvitees(List<String> invitees, boolean toAdd) {
+  public boolean isOnline() {
+    return false;
+  }
+
+  @Override
+  public void setIsOnline(boolean isOnline) {
+
+  }
+
+  @Override
+  public String getHost() {
+    return null;
+  }
+
+  @Override
+  public List<String> getUsers() {
+    return null;
+  }
+
+  @Override
+  public void setUsers(List<String> users) {
 
   }
 }

@@ -6,36 +6,37 @@ import java.util.Objects;
 import model.EventRep;
 import model.ScheduleInterface;
 import model.ScheduleRep;
+import provider.model.EventInterface;
 
-public class ScheduleAdapter implements ScheduleRep {
-  private final ScheduleInterface adaptee;
+public class ScheduleAdapter implements ScheduleInterface {
+  private final ScheduleRep adaptee;
 
-  public ScheduleAdapter(ScheduleInterface adaptee) {
-    this.adaptee = Objects.requireNonNull(adaptee);
+  public ScheduleAdapter(ScheduleRep adaptee) {
+    this.adaptee = adaptee;
   }
 
   @Override
-  public String scheduleOwner() {
-    return ;
+  public List<String> getEventListAllParticipants() {
+    return null;
   }
 
   @Override
-  public List<EventRep> eventsPlanned() {
-    return adaptee.getEventList();
+  public List<EventInterface> getEventList() {
+    return null;
   }
 
   @Override
-  public void addEvent(EventRep event) {
-
-  }
-
-  @Override
-  public void removeEvent(EventRep event) {
+  public void addEventList(List<EventInterface> eventList) {
 
   }
 
   @Override
-  public boolean overlapWith(EventRep event) {
-    return false;
+  public void addEvent(EventInterface event) {
+
+  }
+
+  @Override
+  public void removeEvent(EventInterface event) {
+
   }
 }
