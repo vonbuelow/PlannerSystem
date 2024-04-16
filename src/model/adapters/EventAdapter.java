@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import model.EventRep;
-import model.eventfields.Location;
-import model.eventfields.Time;
 import provider.model.EventInterface;
 
 public class EventAdapter implements EventInterface {
@@ -18,37 +16,37 @@ public class EventAdapter implements EventInterface {
 
   @Override
   public String getName() {
-    return null;
+    return adaptee.getName();
   }
 
   @Override
   public void setName(String name) {
-
+    adaptee.modifyName(name);
   }
 
   @Override
   public LocalDateTime getStartTime() {
-    return null;
+    return null; //adaptee.getTime().getStartTime()
   }
 
   @Override
   public void setStartTime(LocalDateTime startTime) {
-
+    //adaptee.modifyTime(new Time(endTime.getDayOfWeek()...));
   }
 
   @Override
   public LocalDateTime getEndTime() {
-    return null;
+    return null; //adaptee.getTime().getEndTime()
   }
 
   @Override
   public void setEndTime(LocalDateTime endTime) {
-
+    //adaptee.modifyTime(new Time(endTime.getDayOfWeek()...));
   }
 
   @Override
   public String getLocation() {
-    return null;
+    return adaptee.getLocation().toString();
   }
 
   @Override

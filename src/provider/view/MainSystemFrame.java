@@ -383,7 +383,6 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
   /**
    * Helper method for displaying an event's coordinates that are drawn.
    * Simply for testing/debugging purposes.
-   *
    * @param event    the event
    * @param startX   the start x coordinate
    * @param dayWidth the width of a day in the schedule
@@ -405,7 +404,6 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
 
   /**
    * Main method to run the main view.
-   *
    * @param args arguments
    */
   /*public static void main(String[] args) {

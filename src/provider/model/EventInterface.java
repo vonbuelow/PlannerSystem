@@ -4,17 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventInterface {
-  public String getName();
-  public void setName(String name);
-  public LocalDateTime getStartTime();
-  public void setStartTime(LocalDateTime startTime);
-  public LocalDateTime getEndTime();
-  public void setEndTime(LocalDateTime endTime);
-  public String getLocation();
-  public void setLocation(String location);
-  public boolean isOnline();
-  public void setIsOnline(boolean isOnline);
-  public String getHost();
-  public List<String> getUsers();
-  public void setUsers(List<String> users); 
+  String getName();
+  void setName(String name);
+  LocalDateTime getStartTime();
+  void setStartTime(LocalDateTime startTime);
+  LocalDateTime getEndTime();
+  void setEndTime(LocalDateTime endTime);
+  String getLocation();
+  void setLocation(String location);
+  boolean isOnline();
+  void setIsOnline(boolean isOnline);
+  String getHost();
+  List<String> getUsers();
+  void setUsers(List<String> users);
 }
