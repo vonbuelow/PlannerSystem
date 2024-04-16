@@ -1,13 +1,10 @@
 package model.adapters;
 
-import java.io.ObjectStreamException;
 import java.util.List;
 import java.util.Objects;
-
-import model.EventRep;
-import model.ScheduleInterface;
 import model.ScheduleRep;
 import provider.model.EventInterface;
+import provider.model.ScheduleInterface;
 
 public class ScheduleAdapter implements ScheduleInterface {
   private final ScheduleRep adaptee;
