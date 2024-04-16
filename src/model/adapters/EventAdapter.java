@@ -1,4 +1,4 @@
-package model;
+package model.adapters;
 
 import java.time.LocalDateTime;
 import java.util.List;

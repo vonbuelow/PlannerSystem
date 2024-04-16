@@ -1,4 +1,4 @@
-package provider.model;
+package model.adapters;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import model.NUPlannerSystem;
 import model.ScheduleRep;
 import model.eventfields.Location;
 import model.eventfields.Time;
+import provider.model.SystemInterface;
 
 public class ModelAdapter implements NUPlannerSystem {
   private final SystemInterface adaptee;

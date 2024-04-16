@@ -1,4 +1,4 @@
-package model;
+package model.adapters;
 
 import java.util.List;
 import java.util.Objects;
