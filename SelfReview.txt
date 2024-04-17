@@ -1,8 +1,15 @@
-Submit a second, smaller review of your experience of this exercise.
-This review should include the following two aspects:
+What do you wish you had done differently in your design/implementation?
 
-- What do you wish you had done differently in your design/implementation?
 Did you learn any lessons from the code given to you,
 or the updates you had to make for your customers?
 
-- What was your experience like with your providers?
+One overall lesson is the importance of MODULARITY having an interface from the jump is a great way
+to design especially when considering adapters since interfaces are the glue between a patch-worked
+program. This came from both the code given to us when requesting additional interfaces and
+interfaces such as Time and Location which we overlooked to make modular.
+
+---------------------------------------------------------------------------------------------------
+What was your experience like with your providers?
+
+Our providers did amazing with communication and delivering interfaces within a reasonable time.
+Whenever we had a question they did a good job of explaining their implementation in simple way.

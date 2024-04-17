@@ -1,29 +1,35 @@
-As customers of the providers’ code, you have the opportunity to praise, critique,
-comment upon, and suggest improvements to their code. In short, you should provide
-a *code review* of their code.
-
-In that review, consider all the self-evaluation questions you have been asked during
-this course, and extrapolate from them the kinds of issues to examine. For example:
+Code Review:
 
 - How flexible are the interfaces you were given?
+There intially were not that many interfaces when it came to parameter and subclass implementation.
+That consisted of changing their code to implement the interfaces we requested as mentioned
+below.
+
 - How capable are the views?
+!!!!!!!!!!
+
 - How convenient was it to reuse their code?
+It was less a matter of convenience and more so how could we adapt in a round about way to go from
+one representation of a schedule to the other. Our first instance of this would be our providers
+had a class representing a user, that user had a name and a schedule. Where our schedule impl.
+had a name and schedule so keeping track of what is ours and their implementation.
+
 - How cleanly written and well-documented was their code?
 
-- If you needed to request changes from them, what were they and why were they needed?
+The code was well documented and written for the most part but when it came to adjusting to
+the parameters that is where we requested additional documentation.
+--------------------------------------------------------------------------------------------------
+If you needed to request changes from them, what were they and why were they needed?
+
 We requested interfaces for User, Event, and Schedule, since we did not have access
 to the class implementations with the same sets of methods. In multiple interfaces
 such as SystemInterface, there were methods with a User or Event parameter/return
 type instead of an interface type, so we needed new interfaces to implement the
-existing ones.
+existing ones. Then adapting to their use of the java classes representing time and adjusting
+to the new representation.
 
 Write a short (3-4 paragraph) review of their code. Your review should have the
 following sections: Design critique, implementation critique, documentation critique,
 design/code limitations and suggestions on how to address them.
 
-**Please concentrate on writing a review that is honest, but constructive.
-The reader should be able to understand what was wrong, and how to correct it.
-Please avoid simply criticizing the code given to you with no suggestions on
-how to make it better. Similarly avoid blanket praise: every implementation
-has flaws or limitations! Most importantly, please be professional in your writing.
-In summary, write a review that you would not mind receiving and acting upon.**
+Be Nice!
