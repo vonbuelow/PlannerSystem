@@ -1,22 +1,24 @@
 Code Review:
 
-- How flexible are the interfaces you were given?
+How flexible are the interfaces you were given?
+
 There intially were not that many interfaces when it came to parameter and subclass implementation.
 That consisted of changing their code to implement the interfaces we requested as mentioned
 below.
 
 The strategies when scheduling an event were very tightly coupled to the model.
 
-- How capable are the views?
+How capable are the views?
 !!!!!!!!!!
 
-- How convenient was it to reuse their code?
+How convenient was it to reuse their code?
+
 It was less a matter of convenience and more so how could we adapt in a round about way to go from
 one representation of a schedule to the other. Our first instance of this would be our providers
 had a class representing a user, that user had a name and a schedule. Where our schedule impl.
 had a name and list of events so keeping track of what is ours and their implementation.
 
-- How cleanly written and well-documented was their code?
+How cleanly written and well-documented was their code?
 
 Could've done a slightly better job conveying/documenting the excpetions they throw with certain
 methods. A lot of methods don't have java docs at all especially the interfaces they made for us
@@ -33,6 +35,11 @@ existing ones. Then adapting to their use of the java classes representing time 
 to the new representation. It seemed as though we were requesting a lot which made us hesitant to
 ask for even more in certain cases like java docs and their documentation of methods and
 exceptions.
+
+As for changes we made we had to alter the Day enum to account for the
+providers use of LocalDateTime.
+
+---------------------------------------------------------------------------------------------------
 
 Write a short (3-4 paragraph) review of their code. Your review should have the
 following sections: Design critique, implementation critique, documentation critique,

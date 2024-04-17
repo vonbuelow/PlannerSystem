@@ -3,13 +3,8 @@ package model.adapters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import model.Event;
 import model.EventRep;
 import model.ScheduleRep;
-import model.eventfields.Day;
-import model.eventfields.Location;
-import model.eventfields.Time;
 import provider.model.EventInterface;
 import provider.model.ScheduleInterface;
 import provider.model.UserInterface;
