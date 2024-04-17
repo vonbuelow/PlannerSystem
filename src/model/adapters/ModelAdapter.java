@@ -29,18 +29,12 @@ public class ModelAdapter extends AbstractAdapter implements SystemInterface {
 
   @Override
   public UserInterface getUser(String username) {
-    return null;
+    return new ScheduleAdapter(new Schedule(username, adaptee.getUserEvents(username)));
   }
 
   @Override
   public List<String> getAllUsers() {
-    List<String> ret = new ArrayList<>();
-
-    for (String user: this.adaptee.usersInSystem()) {
-      ret.add(user);
-    }
-
-    return ret;
+    return new ArrayList<>(this.adaptee.usersInSystem());
   }
 
   @Override

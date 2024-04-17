@@ -42,5 +42,27 @@ public enum Day {
   public String toString() {
     return this.val + ": ";
   }
+
+  public int getLocalDateVal() {
+    if (this.equals(Day.SUNDAY)) {
+      return 7;
+    }
+    else if (this.equals(Day.MONDAY)) {
+      return 1;
+    }
+    else if (this.equals(Day.TUESDAY)) {
+      return 2;
+    }
+    else if (this.equals(Day.WEDNESDAY)) {
+      return 3;
+    }
+    else if (this.equals(Day.THURSDAY)) {
+      return 4;
+    }
+    else if (this.equals(Day.FRIDAY)) {
+      return 5;
+    }
+    return 6;
+  }
   // don't need to override equals since it is an Enum and has a given unique hashcode
 }

@@ -178,6 +178,15 @@ public class Time {
   }
 
   /**
+   * Gets the end day of the current time.
+   * Public for time observation in EventAdapter.
+   * @return the time's start day as a Day
+   */
+  public Day getEndDayDefault() {
+    return this.end;
+  }
+
+  /**
    * Gets a string abbreviation of the current time's end day.
    * Public for XML writer observation.
    * @return the time's end day abbreviated
