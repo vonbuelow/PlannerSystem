@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import model.EventRep;
+import model.eventfields.Location;
 import provider.model.EventInterface;
 
 public class EventAdapter implements EventInterface {
@@ -51,17 +52,20 @@ public class EventAdapter implements EventInterface {
 
   @Override
   public void setLocation(String location) {
-
+    /*Location locAsDefault = new Location()
+    adaptee.modifyLocation(locAsDefault);*/
   }
 
   @Override
   public boolean isOnline() {
-    return false;
+    String isOnTheLine = adaptee.getLocation().isOnline();
+    return isOnTheLine.equals("true");
   }
 
   @Override
   public void setIsOnline(boolean isOnline) {
-
+    Location defaultLoc = adaptee.getLocation();
+    adaptee.modifyLocation(new Location(isOnline, defaultLoc.getPlace()));
   }
 
   @Override
@@ -71,11 +75,16 @@ public class EventAdapter implements EventInterface {
 
   @Override
   public List<String> getUsers() {
-    return null;
+    List<String> allInvitees = adaptee.getInvitedUsers();
+    allInvitees.remove(0);
+    return allInvitees;
   }
 
   @Override
   public void setUsers(List<String> users) {
-
+    /*List<String> usersToRemove = adaptee.getInvitedUsers()
+            .stream().filter(u -> !users.contains(u));*/
+    // adaptee.modifyInvitees(usersToRemove, false);
+    //adaptee.modifyInvitees(users, true);
   }
 }

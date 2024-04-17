@@ -12,7 +12,7 @@ below.
 It was less a matter of convenience and more so how could we adapt in a round about way to go from
 one representation of a schedule to the other. Our first instance of this would be our providers
 had a class representing a user, that user had a name and a schedule. Where our schedule impl.
-had a name and schedule so keeping track of what is ours and their implementation.
+had a name and list of events so keeping track of what is ours and their implementation.
 
 - How cleanly written and well-documented was their code?
 

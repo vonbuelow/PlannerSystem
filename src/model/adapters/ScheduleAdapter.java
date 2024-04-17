@@ -1,8 +1,13 @@
 package model.adapters;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import model.Event;
+import model.EventRep;
 import model.ScheduleRep;
+import model.eventfields.Time;
 import provider.model.EventInterface;
 import provider.model.ScheduleInterface;
 
@@ -15,12 +20,17 @@ public class ScheduleAdapter implements ScheduleInterface {
 
   @Override
   public List<String> getEventListAllParticipants() {
-    return null;
+    return adaptee.getAllEventsParticipants();
   }
 
   @Override
   public List<EventInterface> getEventList() {
-    return null;
+    List<EventRep> eventsToAdapt = adaptee.eventsPlanned();
+    List<EventInterface> adaptedEvents = new ArrayList<>();
+    for (EventRep e : eventsToAdapt) {
+      adaptedEvents.add(makeProviderEvent(e));
+    }
+    return adaptedEvents;
   }
 
   @Override
@@ -30,11 +40,22 @@ public class ScheduleAdapter implements ScheduleInterface {
 
   @Override
   public void addEvent(EventInterface event) {
-
+    adaptee.addEvent(makeDefaultEvent(event));
   }
 
   @Override
   public void removeEvent(EventInterface event) {
+    adaptee.removeEvent(makeDefaultEvent(event));
+  }
 
+  private EventRep makeDefaultEvent(EventInterface event) {
+    return new Event(event.getName(),
+            new Time(event.getStartTime(), event.getEndTime())
+            event.getLocation(),
+            event.getUsers().add(0, event.getHost()));
+  }
+
+  private EventInterface makeProviderEvent(EventRep e) {
+    return new EventAdapter(e); //?????
   }
 }

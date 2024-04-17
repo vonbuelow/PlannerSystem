@@ -76,12 +76,15 @@ public class ModelAdapter implements SystemInterface {
   }
 
   @Override
-  public void createEvent(String name, DayOfWeek startDayEnum, String startTimeString, DayOfWeek endDayEnum, String endTimeString, String location, Boolean isOnline, List<String> users) {
+  public void createEvent(String name, DayOfWeek startDayEnum, String startTimeString,
+                          DayOfWeek endDayEnum, String endTimeString, String location,
+                          Boolean isOnline, List<String> users) {
 
   }
 
   @Override
-  public void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent) {
+  public void modifyEvent(UserInterface user, EventInterface oldEvent,
+                          EventInterface newEvent) {
 
   }
 
@@ -91,7 +94,8 @@ public class ModelAdapter implements SystemInterface {
   }
 
   @Override
-  public void automaticallyScheduleEvent(String name, int duration, String location, Boolean isOnline, List<String> users) {
+  public void automaticallyScheduleEvent(String name, int duration, String location,
+                                         Boolean isOnline, List<String> users) {
 
   }
 }
