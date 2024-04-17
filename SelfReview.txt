@@ -1,5 +1,16 @@
 What do you wish you had done differently in your design/implementation?
 
+This may not be a wish but the different ideas of a user and schedule for us were implemented
+differently than how we approached it. The way we set up a user coupled the schedule with a name.
+Where our provider has a user and then a schedule implementation. Which made it difficult to think
+of how to approach making adapters. Specifically create/add user in the model adapter. It is a back
+and forth of the schedule and user adapter.
+
+Wish we were less liberal in what we allowed the client to do as far as adding or removing invitees.
+In the future not allowing the client to add users that are already invited.
+
+---------------------------------------------------------------------------------------------------
+
 Did you learn any lessons from the code given to you,
 or the updates you had to make for your customers?
 
@@ -13,3 +24,4 @@ What was your experience like with your providers?
 
 Our providers did amazing with communication and delivering interfaces within a reasonable time.
 Whenever we had a question they did a good job of explaining their implementation in simple way.
+

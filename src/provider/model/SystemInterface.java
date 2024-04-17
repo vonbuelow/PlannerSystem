@@ -34,7 +34,7 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * Add an existing user to the system.
    * @param user the user to be added
    */
-  void addUser(UserInterface user);
+  void addUser(UserInterface user) throws IOException;
 
   /**
    * Add an event to a given user's schedule.
@@ -64,14 +64,14 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * @param oldEvent the old event to be modified
    * @param newEvent the new version of the event
    */
-  void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent);
+  void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent) throws IOException;
 
   /**
    * Removes an event from a given user's schedule.
    * @param user the user to remove the event for
    * @param event the event to be removed
    */
-  void removeEvent(UserInterface user, EventInterface event);
+  void removeEvent(UserInterface user, EventInterface event) throws IOException;
 
   /**
    * Automatically schedule an event for a user.

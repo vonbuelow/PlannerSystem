@@ -5,6 +5,8 @@ There intially were not that many interfaces when it came to parameter and subcl
 That consisted of changing their code to implement the interfaces we requested as mentioned
 below.
 
+The strategies when scheduling an event were very tightly coupled to the model.
+
 - How capable are the views?
 !!!!!!!!!!
 
