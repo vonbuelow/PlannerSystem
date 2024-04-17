@@ -41,7 +41,7 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * @param user the user to add the event for
    * @param event the event to be added
    */
-  void addEvent(UserInterface user, EventInterface event);
+  void addEvent(UserInterface user, EventInterface event) throws IOException;
 
   /**
    * Creates an event.
@@ -56,7 +56,7 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    */
   void createEvent(String name, DayOfWeek startDayEnum, String startTimeString,
                    DayOfWeek endDayEnum, String endTimeString,
-                   String location, Boolean isOnline, List<String> users);
+                   String location, Boolean isOnline, List<String> users) throws IOException;
 
   /**
    * Modifies an event for a user with a new event.

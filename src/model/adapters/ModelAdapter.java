@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import model.Event;
+import model.EventRep;
 import model.NUPlannerSystem;
 import model.eventfields.Location;
 import model.eventfields.Time;
@@ -33,7 +34,7 @@ public class ModelAdapter extends AbstractAdapter implements SystemInterface {
 
   @Override
   public boolean isConflictWithAllUsers(EventInterface event) {
-    return adaptee.doesOverlap(event);
+    return false;//adaptee.doesOverlap(makeDefaultEvent(event));
   }
 
   @Override
@@ -67,22 +68,28 @@ public class ModelAdapter extends AbstractAdapter implements SystemInterface {
   }
 
   @Override
-  public void addEvent(UserInterface user, EventInterface event) {
-
+  public void addEvent(UserInterface user, EventInterface event) throws IOException {
+    adaptee.addEventToInviteeSchedule(user.getUsername(), makeDefaultEvent(event));
   }
 
   @Override
   public void createEvent(String name, DayOfWeek startDayEnum, String startTimeString,
                           DayOfWeek endDayEnum, String endTimeString, String location,
-                          Boolean isOnline, List<String> users) {
-    adaptee.addEventToAllSchedules(new Event(name, new Time(startDayEnum, startTimeString,
-            endDayEnum, endTimeString), new Location(location, isOnline), users));
+                          Boolean isOnline, List<String> users) throws IOException {
+    adaptee.addEventToAllSchedules(
+            new Event(name,
+                    new Time(getDayFromVal(startDayEnum.getValue()),
+                            startTimeString,
+                            getDayFromVal(endDayEnum.getValue()), endTimeString),
+                    new Location(isOnline, location),
+                    users));
   }
 
   @Override
   public void modifyEvent(UserInterface user, EventInterface oldEvent,
                           EventInterface newEvent) {
-
+    if (!oldEvent.)
+    adaptee.
   }
 
   @Override

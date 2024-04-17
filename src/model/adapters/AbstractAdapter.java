@@ -1,5 +1,6 @@
 package model.adapters;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,12 +19,16 @@ public class AbstractAdapter {
     invitees.addAll(event.getUsers());
 
     return new Event(event.getName(),
-            new Time(getDayFromVal(event.getStartTime().getDayOfWeek().getValue()),
-                    event.getStartTime().toString(),
-                    getDayFromVal(event.getEndTime().getDayOfWeek().getValue()),
-                    event.getEndTime().toString()),
+            makeDefaultTime(event.getStartTime(), event.getEndTime()),
             new Location(event.isOnline(), event.getLocation()),
             invitees);
+  }
+
+  protected Time makeDefaultTime(LocalDateTime start, LocalDateTime end) {
+    return new Time(getDayFromVal(start.getDayOfWeek().getValue()),
+            start.toString(),
+            getDayFromVal(end.getDayOfWeek().getValue()),
+            end.toString());
   }
 
   /**
