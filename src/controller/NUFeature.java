@@ -23,6 +23,7 @@ public class NUFeature implements Features {
   private NUPlannerSystem model;
   private NUPlannerView view;
 
+
   public NUFeature(NUPlannerSystem model, NUPlannerView view) {
     this.model = model;
     this.view = view;
