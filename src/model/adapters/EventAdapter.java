@@ -53,8 +53,8 @@ public class EventAdapter extends AbstractAdapter implements EventInterface {
 
   @Override
   public void setLocation(String location) {
-    /*Location locAsDefault = new Location()
-    adaptee.modifyLocation(locAsDefault);*/
+    Location locAsDefault = adaptee.getLocation();
+    adaptee.modifyLocation(new Location(Boolean.parseBoolean(locAsDefault.isOnline()), location));
   }
 
   @Override

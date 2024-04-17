@@ -23,16 +23,19 @@ public class PlannerMain {
     NUPlannerSystem model = new CentralSystem();
     NUPlannerView view = new MainSystemFrame(model);
     StratFactory stratFactory = new StratFactory();
-    ScheduleStrat strat;
+    ScheduleStrat strat = stratFactory.makeStrat("workhours", model);
 
     // just get the requested strategy
-    if (args.length == 1) {
-      strat = getScheduleStrat(args, stratFactory, model);
+    if (args.length <= 1) {
+      if (args[0].equalsIgnoreCase("workhours")) {
+        strat = stratFactory.makeStrat("workhours", model);
+      }
+      else if (args[0].equalsIgnoreCase("anytime")) {
+        strat = stratFactory.makeStrat("anytime", model);
+      }
     }
     // otherwise see if they want the provider view
-    else if (args.length == 2) {
-      strat = getScheduleStrat(args, stratFactory, model);
-
+    if (args.length == 2) {
       // if the second argument is provider
       if (args[1].equalsIgnoreCase("provider")) {
         MainSystemFrameInterface msf = new provider.view.MainSystemFrame(new ModelAdapter(model));
@@ -46,27 +49,5 @@ public class PlannerMain {
 
     NUController controller = new NUPlannerGUIController(view);
     controller.runPlanner(model, strat);
-  }
-
-  /**
-   * Returns a strategy to use for scheduling events.
-   * @param args command-line arguments to choose a strategy
-   * @param stratFactory creator of strategies
-   * @param model model of system to attach the strategy to
-   * @return an automatic scheduling strategy for the planner system
-   */
-  private static ScheduleStrat getScheduleStrat(String[] args, StratFactory stratFactory,
-                                                NUPlannerSystem model) {
-    ScheduleStrat strat;
-    if (args[0].equalsIgnoreCase("workhours")) {
-      strat = stratFactory.makeStrat("workhours", model);
-    }
-    else if (args[0].equalsIgnoreCase("anytime")) {
-      strat = stratFactory.makeStrat("anytime", model);
-    }
-    else {
-      strat = stratFactory.makeStrat("workhours", model);
-    }
-    return strat;
   }
 }
