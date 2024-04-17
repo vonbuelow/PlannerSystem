@@ -12,8 +12,9 @@ import model.eventfields.Location;
 import model.eventfields.Time;
 import provider.model.EventInterface;
 import provider.model.ScheduleInterface;
+import provider.model.UserInterface;
 
-public class ScheduleAdapter implements ScheduleInterface {
+public class ScheduleAdapter extends AbstractAdapter implements ScheduleInterface, UserInterface {
   private final ScheduleRep adaptee;
 
   public ScheduleAdapter(ScheduleRep adaptee) {
@@ -22,7 +23,15 @@ public class ScheduleAdapter implements ScheduleInterface {
 
   @Override
   public List<String> getEventListAllParticipants() {
-    return adaptee.getAllEventsParticipants();
+    List<String> allParticipants = new ArrayList<>();
+    for (EventRep e : adaptee.eventsPlanned()) {
+      for (String participant : e.getInvitedUsers()) {
+        if (!allParticipants.contains(participant)) {
+          allParticipants.add(participant);
+        }
+      }
+    }
+    return allParticipants;
   }
 
   @Override
@@ -37,7 +46,9 @@ public class ScheduleAdapter implements ScheduleInterface {
 
   @Override
   public void addEventList(List<EventInterface> eventList) {
-
+    for (EventInterface ev : eventList) {
+      this.addEvent(ev);
+    }
   }
 
   @Override
@@ -50,50 +61,13 @@ public class ScheduleAdapter implements ScheduleInterface {
     adaptee.removeEvent(makeDefaultEvent(event));
   }
 
-  private EventRep makeDefaultEvent(EventInterface event) {
-    List<String> invitees
-    return new Event(event.getName(),
-            new Time(getDayFromVal(event.getStartTime().getDayOfWeek().getValue()),
-                    event.getStartTime().toString(),
-                    getDayFromVal(event.getEndTime().getDayOfWeek().getValue()),
-                    event.getEndTime().toString()),
-            new Location(event.isOnline(), event.getLocation()),
-            event.getHost().concat(event.getUsers());
+  @Override
+  public String getUsername() {
+    return adaptee.scheduleOwner();
   }
 
-  /**
-   * Get a given day based on the String entered.
-   * @param     day The string rep. of a day
-   * @return    The respective day enum to represent a day.
-   */
-  private Day getDayFromVal(int value) {
-    if (value == 7) {
-      return Day.SUNDAY;
-    }
-    else if (value == 1) {
-      return Day.MONDAY;
-    }
-    else if (value == 2) {
-      return Day.TUESDAY;
-    }
-    else if (value == 3) {
-      return Day.WEDNESDAY;
-    }
-    else if (value == 4) {
-      return Day.THURSDAY;
-    }
-    else if (value == 5) {
-      return Day.FRIDAY;
-    }
-    else if (value == 6) {
-      return Day.SATURDAY;
-    }
-    else {
-      throw new IllegalArgumentException("not a valid day value");
-    }
-  }
-
-  private EventInterface makeProviderEvent(EventRep e) {
-    return new EventAdapter(e); //?????
+  @Override
+  public ScheduleInterface getSchedule() {
+    return this;
   }
 }

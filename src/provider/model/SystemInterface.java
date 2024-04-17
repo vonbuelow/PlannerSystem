@@ -1,5 +1,6 @@
 package provider.model;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.util.List;
 
@@ -14,14 +15,14 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * Upload an XML file representing a user's schedule.
    * @param fileName the file to be read
    */
-  void uploadXML(String fileName);
+  void uploadXML(String fileName) throws IOException;
 
   /**
    * Save a user's schedule to an XML file.
    * @param fileName the file name to be saved
    * @param user the user to save the file for
    */
-  void saveUserSchedule(String fileName, UserInterface user);
+  void saveUserSchedule(String fileName, UserInterface user) throws IOException;
 
   /**
    * Create a user and add them to the system.

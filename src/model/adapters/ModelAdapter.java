@@ -1,16 +1,20 @@
 package model.adapters;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
+import model.Event;
 import model.NUPlannerSystem;
+import model.eventfields.Location;
+import model.eventfields.Time;
 import provider.model.EventInterface;
 import provider.model.SystemInterface;
 import provider.model.UserInterface;
 
-public class ModelAdapter implements SystemInterface {
+public class ModelAdapter extends AbstractAdapter implements SystemInterface {
   private final NUPlannerSystem adaptee;
 
   public ModelAdapter(NUPlannerSystem adaptee) {
@@ -29,7 +33,7 @@ public class ModelAdapter implements SystemInterface {
 
   @Override
   public boolean isConflictWithAllUsers(EventInterface event) {
-    return false;
+    return adaptee.doesOverlap(event);
   }
 
   @Override
@@ -43,23 +47,23 @@ public class ModelAdapter implements SystemInterface {
   }
 
   @Override
-  public void uploadXML(String fileName) {
-
+  public void uploadXML(String fileName) throws IOException {
+    adaptee.addUser(new File(fileName));
   }
 
   @Override
-  public void saveUserSchedule(String fileName, UserInterface user) {
-
+  public void saveUserSchedule(String fileName, UserInterface user) throws IOException {
+    adaptee.saveSchedule(new File(fileName));
   }
 
   @Override
   public void createUser(String username) {
-
+    //adaptee.addNewUser(new HashMap<String, ScheduleRep>().put(username, new Schedule()));
   }
 
   @Override
   public void addUser(UserInterface user) {
-
+    //
   }
 
   @Override
@@ -71,7 +75,8 @@ public class ModelAdapter implements SystemInterface {
   public void createEvent(String name, DayOfWeek startDayEnum, String startTimeString,
                           DayOfWeek endDayEnum, String endTimeString, String location,
                           Boolean isOnline, List<String> users) {
-
+    adaptee.addEventToAllSchedules(new Event(name, new Time(startDayEnum, startTimeString,
+            endDayEnum, endTimeString), new Location(location, isOnline), users));
   }
 
   @Override

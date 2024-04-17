@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.Event;
 import model.EventRep;
+import model.adapters.AbstractAdapter;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
@@ -14,7 +15,7 @@ import provider.model.EventInterface;
 /**
  * The adapter which represents the relationship with provider features and our controller.
  */
-public class FeaturesAdapter implements Features {
+public class FeaturesAdapter extends AbstractAdapter implements Features {
 
   // i believe instead of a controller it would take in our features
   private final controller.Features features;
@@ -133,32 +134,5 @@ public class FeaturesAdapter implements Features {
             new Location(isonline, place), invitees);
 
     features.remove(eventRep, event.getHost());
-  }
-
-  private Day getDayFromVal(int value) {
-    if (value == 7) {
-      return Day.SUNDAY;
-    }
-    else if (value == 1) {
-      return Day.MONDAY;
-    }
-    else if (value == 2) {
-      return Day.TUESDAY;
-    }
-    else if (value == 3) {
-      return Day.WEDNESDAY;
-    }
-    else if (value == 4) {
-      return Day.THURSDAY;
-    }
-    else if (value == 5) {
-      return Day.FRIDAY;
-    }
-    else if (value == 6) {
-      return Day.SATURDAY;
-    }
-    else {
-      throw new IllegalArgumentException("not a valid day value");
-    }
   }
 }

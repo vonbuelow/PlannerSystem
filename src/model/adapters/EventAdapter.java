@@ -8,7 +8,7 @@ import model.EventRep;
 import model.eventfields.Location;
 import provider.model.EventInterface;
 
-public class EventAdapter implements EventInterface {
+public class EventAdapter extends AbstractAdapter implements EventInterface {
   private final EventRep adaptee;
 
   public EventAdapter(EventRep adaptee) {
