@@ -1,19 +1,11 @@
 package model.adapters;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
-import model.EventRep;
 import model.NUPlannerSystem;
-import model.ScheduleRep;
-import model.eventfields.Location;
-import model.eventfields.Time;
 import provider.model.EventInterface;
 import provider.model.SystemInterface;
 import provider.model.UserInterface;

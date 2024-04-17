@@ -27,7 +27,8 @@ public class EventAdapter implements EventInterface {
 
   @Override
   public LocalDateTime getStartTime() {
-    return null; //adaptee.getTime().getStartTime()
+    return null;
+    //return adaptee.getTime().getStartTime();
   }
 
   @Override
@@ -70,7 +71,7 @@ public class EventAdapter implements EventInterface {
 
   @Override
   public String getHost() {
-    return null;
+    return adaptee.getInvitedUsers().get(0);
   }
 
   @Override
