@@ -16,8 +16,10 @@ had a name and list of events so keeping track of what is ours and their impleme
 
 - How cleanly written and well-documented was their code?
 
-The code was well documented and written for the most part but when it came to adjusting to
-the parameters that is where we requested additional documentation.
+Could've done a slightly better job conveying/documenting the excpetions they throw with certain
+methods. A lot of methods don't have java docs at all especially the interfaces they made for us
+upon request. The code was well documented and written for the most part but when it came to
+adjusting to the parameters that is where we requested additional documentation.
 --------------------------------------------------------------------------------------------------
 If you needed to request changes from them, what were they and why were they needed?
 
@@ -26,7 +28,9 @@ to the class implementations with the same sets of methods. In multiple interfac
 such as SystemInterface, there were methods with a User or Event parameter/return
 type instead of an interface type, so we needed new interfaces to implement the
 existing ones. Then adapting to their use of the java classes representing time and adjusting
-to the new representation.
+to the new representation. It seemed as though we were requesting a lot which made us hesitant to
+ask for even more in certain cases like java docs and their documentation of methods and
+exceptions.
 
 Write a short (3-4 paragraph) review of their code. Your review should have the
 following sections: Design critique, implementation critique, documentation critique,
