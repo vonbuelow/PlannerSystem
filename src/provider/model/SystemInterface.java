@@ -64,7 +64,8 @@ public interface SystemInterface extends ReadOnlySystemInterface {
    * @param oldEvent the old event to be modified
    * @param newEvent the new version of the event
    */
-  void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent) throws IOException;
+  void modifyEvent(UserInterface user, EventInterface oldEvent, EventInterface newEvent)
+          throws IOException;
 
   /**
    * Removes an event from a given user's schedule.

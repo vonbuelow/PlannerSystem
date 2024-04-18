@@ -70,7 +70,7 @@ public class ModelAdapter extends AbstractAdapter implements SystemInterface {
     List<EventInterface> ret = new ArrayList<>();
 
     for (EventInterface event: user.getSchedule().getEventList()) {
-      if(ret.size() != 1) {
+      if (ret.size() != 1) {
         if (makeDefaultEvent(event).getTime().overlapsWith(realTime)) {
           ret.add(event);
         }
@@ -149,17 +149,14 @@ public class ModelAdapter extends AbstractAdapter implements SystemInterface {
       }
       this.adaptee.modifyInvitees(makeDefaultEvent(oldEvent), remUsers, false);
       this.adaptee.modifyInvitees(makeDefaultEvent(oldEvent), addUsers, true);
-    }
-    else if (!oldEvent.getName().equals(newEvent.getName())) {
+    } else if (!oldEvent.getName().equals(newEvent.getName())) {
       this.adaptee.modifyName(makeDefaultEvent(oldEvent), newEvent.getName());
-    }
-    else if (!oldEvent.getLocation().equals(newEvent.getLocation()) ||
-    !((Boolean.valueOf(oldEvent.isOnline())).equals(newEvent.isOnline()))) {
+    } else if (!oldEvent.getLocation().equals(newEvent.getLocation()) ||
+            !((Boolean.valueOf(oldEvent.isOnline())).equals(newEvent.isOnline()))) {
       this.adaptee.modifyLocation(makeDefaultEvent(oldEvent), new Location(newEvent.isOnline(),
               newEvent.getLocation()));
-    }
-    else if (!oldEvent.getStartTime().equals(newEvent.getStartTime()) ||
-    !oldEvent.getEndTime().equals(newEvent.getEndTime())) {
+    } else if (!oldEvent.getStartTime().equals(newEvent.getStartTime()) ||
+            !oldEvent.getEndTime().equals(newEvent.getEndTime())) {
       this.adaptee.modifyTime(makeDefaultEvent(oldEvent), makeDefaultTime(newEvent.getStartTime(),
               newEvent.getEndTime()));
     }

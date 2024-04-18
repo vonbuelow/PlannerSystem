@@ -3,7 +3,7 @@ package view.adapter;
 import java.io.IOException;
 import java.util.Objects;
 
-import javax.swing.*;
+import javax.swing.JDialog;
 
 import controller.Features;
 import controller.FeaturesAdapter;
@@ -11,9 +11,11 @@ import model.EventRep;
 import model.adapters.ModelAdapter;
 import provider.view.MainSystemFrameInterface;
 import provider.view.ScheduleEventFrame;
-import view.EventScheduleFrame;
 import view.NUPlannerView;
 
+/**
+ * Adapt the providers view as an adaptee to our implementation/functionality of a view.
+ */
 public class ViewAdapter implements NUPlannerView {
 
   private final MainSystemFrameInterface adaptee;

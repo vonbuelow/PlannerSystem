@@ -13,4 +13,10 @@ Functionality with adapters:
 
 WHAT WORKS:
 1. the types are all accounted for
-2. the functionality of showing their view frame, without the lines or
+2. the functionality of showing their view frame, without the lines or being able to actually add
+   a users schedule.
+
+   WHY THIS DOESN'T WORK:
+    Their save users and add users does not take in a file so we would be unable to call our
+    features implementation on their instance of adding or saving because of the
+    lack of information. This is due to the differences in our implementations.

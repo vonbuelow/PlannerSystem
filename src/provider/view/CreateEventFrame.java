@@ -38,7 +38,6 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
   private JList<String> userList;
   private JButton createButton;
   private ReadOnlySystemInterface model;
-  private String currentUser;
 
   /**
    * Constructor for createEventFrame that takes in a model and currentUser.
@@ -48,7 +47,6 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
    */
   public CreateEventFrame(ReadOnlySystemInterface model, String currentUser) {
     this.model = model;
-    this.currentUser = currentUser;
 
     createEventFrameHelper();
     createButton.setActionCommand("Create event");
@@ -148,26 +146,4 @@ public class CreateEventFrame extends JFrame implements EventFrameInterface {
     panel.add(components);
     return panel;
   }
-
-/*  *//**
-   * Main method that actually helps run populating the CreateEventFrame.
-   * @param args arguments inputted to run the main method.
-   *//*
-  public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        ReadOnlySystemInterface model = new AnytimeSystemPlanner();
-        UserInterface prof = new User("Prof. Lucia");
-        UserInterface anon = new User("Student Anon");
-        UserInterface chat = new User("Chat");
-        UserInterface random = new User("Random Guy");
-        ((ScheduleInterface) model).addUser(prof);
-        ((SystemPlanner) model).addUser(anon);
-        ((SystemPlanner) model).addUser(chat);
-        ((SystemPlanner) model).addUser(random);
-        new CreateEventFrame(model, prof.getUsername());
-      }
-    });
-  }*/
 }

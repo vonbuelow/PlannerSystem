@@ -223,8 +223,7 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
           startX = 0;
         }
         double endX = endTime.getDayOfWeek().getValue() * dayWidth;
-        double startY = (startTime.getHour() * hourHeight) +
-                (startTime.getMinute() * minuteHeight);
+        double startY = (startTime.getHour() * hourHeight) + (startTime.getMinute() * minuteHeight);
         double endY = (endTime.getHour() * hourHeight) + (endTime.getMinute() * minuteHeight);
 
         if (x >= startX && x <= startX + dayWidth && y >= startY && y <= endY) {
@@ -348,8 +347,7 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
           startX = 0;
         }
         double endX = endTime.getDayOfWeek().getValue() * dayWidth;
-        double startY = (startTime.getHour() * hourHeight) +
-                (startTime.getMinute() * minuteHeight);
+        double startY = (startTime.getHour() * hourHeight) + (startTime.getMinute() * minuteHeight);
         double endY = (endTime.getHour() * hourHeight) + (endTime.getMinute() * minuteHeight);
 
         // Handle events that span multiple days
@@ -401,28 +399,4 @@ public class MainSystemFrame extends JFrame implements MainSystemFrameInterface 
     System.out.println("End Y bounds for " + event.getName() + ": "
             + "(Y: " + 0 + ", Y2: " + endY + ")");
   }
-
-  /**
-   * Main method to run the main view.
-   * @param args arguments
-   */
-  /*public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        // just for testing, remove later
-        ReadOnlySystemInterface model = new AnytimeSystemPlanner();
-        User prof = new User("Prof. Lucia");
-        User anon = new User("Student Anon");
-        User chat = new User("Chat");
-        User random = new User("Random Guy");
-        ((SystemPlanner) model).addUser(prof);
-        ((SystemPlanner) model).addUser(anon);
-        ((SystemPlanner) model).addUser(chat);
-        ((SystemPlanner) model).addUser(random);
-        ((SystemPlanner) model).uploadXML("prof.xml");
-        new MainSystemFrame(model).render();
-      }
-    });
-  }*/
 }

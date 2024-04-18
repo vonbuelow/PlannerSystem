@@ -33,6 +33,26 @@ public class AbstractAdapter {
   }
 
   /**
+   * Make a default event with the given things.
+   * @param     name the name
+   * @param     startDayString the start day as a string
+   * @param     startTimeString the start time as a string
+   * @param     endDayString the end day as a string
+   * @param     endTimeString the end time as string
+   * @param     location the location as string
+   * @param     isOnline the boolean is it is online
+   * @param     participants the participants
+   * @return    an event representation
+   */
+  protected EventRep makeDefaultEvent(String name, String startDayString, String startTimeString,
+                                      String endDayString, String endTimeString, String location,
+                                      boolean isOnline, List<String> participants) {
+    return new Event(name, new Time(getDayFromStr(startDayString), startTimeString,
+            getDayFromStr(endDayString), endTimeString), new Location(isOnline, location),
+            participants);
+  }
+
+  /**
    * Creates a time of the default type based on the given start and end times of the
    * provider's type.
    * @param start start time (of a potential event)
@@ -72,6 +92,39 @@ public class AbstractAdapter {
       return Day.FRIDAY;
     }
     else if (value == 6) {
+      return Day.SATURDAY;
+    }
+    else {
+      throw new IllegalArgumentException("not a valid day value");
+    }
+  }
+
+  /**
+   * Get a given day based on the given string value.
+   * VALUES ARE BASED ON LOCALDATETIME.
+   * @param     str The string value of the day of the week
+   * @return    The respective day enum to represent a day.
+   */
+  protected Day getDayFromStr(String str) {
+    if (str.equalsIgnoreCase("sunday")) {
+      return Day.SUNDAY;
+    }
+    else if (str.equalsIgnoreCase("monday")) {
+      return Day.MONDAY;
+    }
+    else if (str.equalsIgnoreCase("tuesday")) {
+      return Day.TUESDAY;
+    }
+    else if (str.equalsIgnoreCase("wednesday")) {
+      return Day.WEDNESDAY;
+    }
+    else if (str.equalsIgnoreCase("thursday")) {
+      return Day.THURSDAY;
+    }
+    else if (str.equalsIgnoreCase("friday")) {
+      return Day.FRIDAY;
+    }
+    else if (str.equalsIgnoreCase("saturday")) {
       return Day.SATURDAY;
     }
     else {

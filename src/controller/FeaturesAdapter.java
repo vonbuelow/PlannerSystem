@@ -1,7 +1,7 @@
 package controller;
+
 import java.time.LocalDateTime;
 import java.util.List;
-
 import model.Event;
 import model.EventRep;
 import model.adapters.AbstractAdapter;
@@ -17,7 +17,7 @@ import provider.model.EventInterface;
  */
 public class FeaturesAdapter extends AbstractAdapter implements Features {
 
-  // i believe instead of a controller it would take in our features
+  // I believe instead of a controller it would take in our features
   private final controller.Features features;
 
 
@@ -29,18 +29,21 @@ public class FeaturesAdapter extends AbstractAdapter implements Features {
   @Override
   public void addCalendar() {
     // how to add a calendar without a file?
-    // features.addUser();
+    throw new UnsupportedOperationException("do not have file to support action");
+    //features.addUser();
   }
 
   @Override
   public void saveCalendars() {
     // how to save a calendar without a directory?
+    throw new UnsupportedOperationException("do not have file to support action");
     //features.saveUsers();
   }
 
   @Override
   public void selectUser(String selectedUser) {
     // can add a field in features to account for tracking the selected user.
+    throw new UnsupportedOperationException("this is tracked in the view");
   }
 
   @Override
@@ -109,7 +112,8 @@ public class FeaturesAdapter extends AbstractAdapter implements Features {
 
   @Override
   public void modifyOrRemoveEventFrame(EventInterface event) {
-
+    throw new UnsupportedOperationException("Do not have access to the "
+            + "views frames from our features ");
   }
 
   @Override
@@ -117,6 +121,8 @@ public class FeaturesAdapter extends AbstractAdapter implements Features {
                           String endDayString, String endTimeString, String location,
                           boolean isOnline, List<String> participants, EventInterface oldEvent) {
 
+    this.features.modify(makeDefaultEvent(name, startDayString, startTimeString, endDayString,
+            endTimeString, location, isOnline, participants));
   }
 
   @Override

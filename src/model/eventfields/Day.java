@@ -43,6 +43,10 @@ public enum Day {
     return this.val + ": ";
   }
 
+  /**
+   * Get the actual value associated with a day.
+   * @return    The int with is related to the day.
+   */
   public int getLocalDateVal() {
     if (this.equals(Day.SUNDAY)) {
       return 7;

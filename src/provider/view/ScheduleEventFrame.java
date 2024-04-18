@@ -128,27 +128,4 @@ public class ScheduleEventFrame extends JFrame implements EventFrameInterface {
     panel.add(components);
     return panel;
   }
-
-  /**
-   * Main method that actually helps run populating the CreateEventFrame.
-   * @param args arguments inputted to run the main method.
-   */
-  /*public static void main(String[] args) {
-    SwingUtilities.invokeLater(new Runnable() {
-      @Override
-      public void run() {
-        // just for testing, remove later
-        ReadOnlySystemInterface model = new AnytimeSystemPlanner();
-        UserInterface prof = new User("Prof. Lucia");
-        UserInterface anon = new User("Student Anon");
-        UserInterface chat = new User("Chat");
-        UserInterface random = new User("Random Guy");
-        ((SystemPlanner) model).addUser(prof);
-        ((SystemPlanner) model).addUser(anon);
-        ((SystemPlanner) model).addUser(chat);
-        ((SystemPlanner) model).addUser(random);
-        new ScheduleEventFrame(model, prof.getUsername());
-      }
-    });
-  }*/
 }
