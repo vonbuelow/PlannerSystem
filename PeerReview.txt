@@ -1,48 +1,52 @@
 Code Review:
-
-How flexible are the interfaces you were given?
-
-There intially were not that many interfaces when it came to parameter and subclass implementation.
-That consisted of changing their code to implement the interfaces we requested as mentioned
-below.
-
-The strategies when scheduling an event were very tightly coupled to the model.
-
-How capable are the views?
-!!!!!!!!!!
-
-How convenient was it to reuse their code?
-
-It was less a matter of convenience and more so how could we adapt in a round about way to go from
-one representation of a schedule to the other. Our first instance of this would be our providers
-had a class representing a user, that user had a name and a schedule. Where our schedule impl.
-had a name and list of events so keeping track of what is ours and their implementation.
-
-How cleanly written and well-documented was their code?
-
-Could've done a slightly better job conveying/documenting the excpetions they throw with certain
-methods. A lot of methods don't have java docs at all especially the interfaces they made for us
-upon request. The code was well documented and written for the most part but when it came to
-adjusting to the parameters that is where we requested additional documentation.
 --------------------------------------------------------------------------------------------------
-If you needed to request changes from them, what were they and why were they needed?
-
-We requested interfaces for User, Event, and Schedule, since we did not have access
-to the class implementations with the same sets of methods. In multiple interfaces
-such as SystemInterface, there were methods with a User or Event parameter/return
-type instead of an interface type, so we needed new interfaces to implement the
-existing ones. Then adapting to their use of the java classes representing time and adjusting
-to the new representation. It seemed as though we were requesting a lot which made us hesitant to
-ask for even more in certain cases like java docs and their documentation of methods and
-exceptions.
-
-As for changes we made we had to alter the Day enum to account for the
-providers use of LocalDateTime.
-
----------------------------------------------------------------------------------------------------
-
 Write a short (3-4 paragraph) review of their code. Your review should have the
 following sections: Design critique, implementation critique, documentation critique,
 design/code limitations and suggestions on how to address them.
 
 Be Nice!
+________________________________
+ Design/Documentation critique |
+--------------------------------
+    There initially were not that many interfaces when it came to model and supporting class
+design. There was an interface to represent their system operations, but we had to request
+interfaces for event, user, and schedule. This implies that we would have personally addressed
+this issue by making interfaces for each of these supporting classes and documenting their purpose.
+They also did not document or seem to incorporate exceptions for any of their methods. We would fix
+this ourselves by especially thinking about edge cases/scenarios for different parameters to
+methods. For example, IllegalArgumentException for a parameter of a non-primitive type being null,
+is basic good design. Overall, they utilized Java in convenient ways to avoid making a Time class,
+for example, as we did for our representation of time. They kept things loosely coupled, aside from
+the usage of classes instead of interface types for supporters to the model and strategies when
+scheduling an event.
+
+__________________________
+ Implementation critique |
+--------------------------
+    Since the view was poorly undocumented it was hard to understand implementation choices,
+especially in main methods within the frames to test the views, even though it was not necessary.
+Also, for Features, it was difficult to figure out how to even obtain a file to add/save because
+it was not documented or taken in as a parameter to the methods. We would make clear where certain
+parameters come from if we were them (maybe a class or purpose overall to get the system running).
+Overall, EventInterface especially has an ideal implementation/design. The method names and
+purposes come across very clearly. They overall had good model and supporting interface method
+implementation (names were clear, and we could easily figure out how to adapt). Their ideas of what
+to implement logically were ideas we personally had when beginning the project (e.g. checking if
+strictly ALL users have a conflict with a given event).
+
+__________________________
+ Design/code limitations |
+--------------------------
+    We requested interfaces for User, Event, and Schedule, since we did not have access
+to the class implementations with the same sets of methods. In multiple interfaces
+such as SystemInterface, there were methods with a User or Event parameter/return
+type instead of an interface type, so we needed new interfaces to implement the
+existing ones. Then adapting to their use of the java classes representing time and adjusting
+to the new representation was difficult since the representations are very different in
+nature. We couldn't a large portion of FeatureAdapters, mostly because of widely different design
+choices. For example, when frames get called in their view, each frame needs to get called; ours has
+listeners that automatically handle additional frames. Also, our providers had a class representing
+a user, that user had a name and a schedule. Where our schedule impl. had a name and list of events
+so keeping track of what is ours and their implementation was something we had to fix by
+implementing two interfaces for a single adapter. As mentioned above, model adapters were generally
+easy to do because of good names and clear documentation (where it was provided).
