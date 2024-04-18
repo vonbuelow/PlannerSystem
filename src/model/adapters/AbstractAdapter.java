@@ -12,8 +12,16 @@ import model.eventfields.Location;
 import model.eventfields.Time;
 import provider.model.EventInterface;
 
+/**
+ * Contains methods for model and supporting class adapters to convert interface types
+ * to appropriate type (provider -> default or default -> provider).
+ */
 public class AbstractAdapter {
-
+  /**
+   * Creates an event of the default type based on the given event of the provider's type.
+   * @param event event that has provider type
+   * @return an EventRep that represents the same event as the given
+   */
   protected EventRep makeDefaultEvent(EventInterface event) {
     List<String> invitees = new ArrayList<>(Arrays.asList(event.getHost()));
     invitees.addAll(event.getUsers());
@@ -24,6 +32,13 @@ public class AbstractAdapter {
             invitees);
   }
 
+  /**
+   * Creates a time of the default type based on the given start and end times of the
+   * provider's type.
+   * @param start start time (of a potential event)
+   * @param end end time (of a potential event)
+   * @return a Time that represents the same time as the given
+   */
   protected Time makeDefaultTime(LocalDateTime start, LocalDateTime end) {
     return new Time(getDayFromVal(start.getDayOfWeek().getValue()),
             start.toString(),
@@ -64,6 +79,11 @@ public class AbstractAdapter {
     }
   }
 
+  /**
+   * Creates an event that adapts to the provider's event type.
+   * @param e default type of event to be adapted
+   * @return an EventInterface type of event
+   */
   protected EventInterface makeProviderEvent(EventRep e) {
     return new EventAdapter(e);
   }

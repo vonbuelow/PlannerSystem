@@ -9,9 +9,16 @@ import provider.model.EventInterface;
 import provider.model.ScheduleInterface;
 import provider.model.UserInterface;
 
+/**
+ * Represents a provider type schedule that is adapted to by a default type of schedule.
+ */
 public class ScheduleAdapter extends AbstractAdapter implements ScheduleInterface, UserInterface {
   private final ScheduleRep adaptee;
 
+  /**
+   * Initializes the schedule type that will adapt to the provider's schedule specifications.
+   * @param adaptee default schedule type
+   */
   public ScheduleAdapter(ScheduleRep adaptee) {
     this.adaptee = Objects.requireNonNull(adaptee);
   }

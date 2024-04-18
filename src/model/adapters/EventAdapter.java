@@ -1,6 +1,5 @@
 package model.adapters;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +9,18 @@ import model.EventRep;
 import model.eventfields.Location;
 import provider.model.EventInterface;
 
+/**
+ * Represents a provider type event that is adapted to by a default type of event.
+ * Implements methods to modify/observe name, time, location and users based on provider
+ * implementation.
+ */
 public class EventAdapter extends AbstractAdapter implements EventInterface {
   private final EventRep adaptee;
 
+  /**
+   * Initializes the event type that will adapt to the provider's event specifications.
+   * @param adaptee default event type
+   */
   public EventAdapter(EventRep adaptee) {
     this.adaptee = Objects.requireNonNull(adaptee);
   }

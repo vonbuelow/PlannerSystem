@@ -20,9 +20,18 @@ import provider.model.EventInterface;
 import provider.model.SystemInterface;
 import provider.model.UserInterface;
 
+/**
+ * Represents a provider type system that is adapted to by a default type of system.
+ * Creating users, automatic scheduling and checking for schedule conflicts are
+ * unsupported operations due to reasons specified by their exception messages.
+ */
 public class ModelAdapter extends AbstractAdapter implements SystemInterface {
   private final NUPlannerSystem adaptee;
 
+  /**
+   * Initializes the model type that will adapt to the provider's model specifications.
+   * @param adaptee default model type
+   */
   public ModelAdapter(NUPlannerSystem adaptee) {
     this.adaptee = Objects.requireNonNull(adaptee);
   }
