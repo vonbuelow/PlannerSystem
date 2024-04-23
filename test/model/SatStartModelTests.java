@@ -11,11 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.SatStartDay;
 import model.eventfields.SatStartTime;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
 import static org.junit.Assert.assertEquals;
@@ -68,24 +66,29 @@ public class SatStartModelTests {
     noelisA1 = "Noelis Aponte";
     noelisA2 = "Noelis Aponte2";
 
-    time1 = new SatStartTime(SatStartDay.MONDAY, "1500", SatStartDay.MONDAY, "2000");
+    time1 = new SatStartTime(SatStartDay.MONDAY, "1500", SatStartDay.MONDAY,
+            "2000");
 
     loc1 = new Location(false, "restaurant");
 
     event1 = new SatStartEvent("CS3500 Day 1",
-            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY,
+                    "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     oldEvent1 = new SatStartEvent("CS3500 Day 1",
-            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY,
+                    "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event2 = new SatStartEvent("CS3500 Day 2",
-            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY, "1130"),
+            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY,
+                    "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     event3 = new SatStartEvent("BBQ",
-            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY, "1130"),
+            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY,
+                    "1130"),
             new Location(true, "Not Churchill"),
             new ArrayList<String>(Arrays.asList(emmaVB)));
 
@@ -223,11 +226,6 @@ public class SatStartModelTests {
             system1.addEventToInviteeSchedule("hi", event1));
   }
 
-  /*@Test
-  public void testAddEventToInviteeSchedule() {
-    //
-  }*/
-
   /**
    * Tests exceptions for modifyName in CentralSystem.
    */
@@ -252,8 +250,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyNameValid() {
-    EventRep newEvent1 = new Event("CS3500 Lecture Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Lecture Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertNotEquals(newEvent1, system1.getUserEvents(profLucia).get(0));
@@ -299,8 +297,9 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyTimeValidDifferentStartHour() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0850", SatStartDay.TUESDAY,
+                    "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -314,7 +313,8 @@ public class SatStartModelTests {
 
     try {
       system1.modifyTime(oldEvent1,
-              new Time(Day.TUESDAY, "0850", Day.TUESDAY, "1130"));
+              new SatStartTime(SatStartDay.TUESDAY, "0850", SatStartDay.TUESDAY,
+                      "1130"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -334,8 +334,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyTimeValidDifferentEndHour() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1230"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -349,7 +349,7 @@ public class SatStartModelTests {
 
     try {
       system1.modifyTime(oldEvent1,
-              new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1230"));
+              new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1230"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -369,8 +369,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyTimeValidDifferentStartDay() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.SUNDAY, "0950", SatStartDay.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -384,7 +384,7 @@ public class SatStartModelTests {
 
     try {
       system1.modifyTime(oldEvent1,
-              new Time(Day.SUNDAY, "0950", Day.THURSDAY, "1130"));
+              new SatStartTime(SatStartDay.SUNDAY, "0950", SatStartDay.THURSDAY, "1130"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -404,8 +404,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyTimeValidDifferentEndDay() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.THURSDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -419,7 +419,7 @@ public class SatStartModelTests {
 
     try {
       system1.modifyTime(oldEvent1,
-              new Time(Day.TUESDAY, "0950", Day.THURSDAY, "1130"));
+              new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.THURSDAY, "1130"));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -440,8 +440,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyTimeOneUserTimeConflict() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.FRIDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -456,8 +456,8 @@ public class SatStartModelTests {
     emmaVBSched.addEvent(event3); // BBQ conflicts with lecture time to be modified
     assertThrows("at least one user has a conflict with the new time",
             IllegalStateException.class, () ->
-                    system1.modifyTime(oldEvent1, new Time(Day.FRIDAY, "0950",
-                            Day.TUESDAY, "1130")));
+                    system1.modifyTime(oldEvent1, new SatStartTime(SatStartDay.FRIDAY, "0950",
+                            SatStartDay.TUESDAY, "1130")));
 
     // therefore event does not change times
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -489,8 +489,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyLocationOnline() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(true, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -525,8 +525,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyLocationPlace() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "somewhere else"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -590,8 +590,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyInviteesAddOneNewInvitee() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1, noelisA2)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -635,8 +635,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyInviteesAddingExistingAndNew() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1, noelisA2)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -681,8 +681,8 @@ public class SatStartModelTests {
    */
   @Test
   public void testModifyInviteesRemovingExistingAndNew() {
-    EventRep newEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    EventRep newEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, noelisA1)));
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
