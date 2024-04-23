@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import controller.Features;
-import model.CentralSystem;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
 import model.SatStartModel;

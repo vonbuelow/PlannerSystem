@@ -29,7 +29,7 @@ import model.eventfields.Time;
  * This class transfers all information back to the central system.
  * Used when a user wants to upload a file in the central system to be read in this system.
  */
-public class XMLReader implements Reader{
+public class XMLReader implements Reader {
   File file;
 
   public XMLReader(File f) {

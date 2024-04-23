@@ -1,7 +1,5 @@
 package model.eventfields;
 
-import java.util.Objects;
-
 /**
  * Time with a start day, start time, end day, and end time of an event.
  */

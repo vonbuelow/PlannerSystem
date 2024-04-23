@@ -16,18 +16,14 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import model.Event;
 import model.EventRep;
 import model.SatStartEvent;
 import model.Schedule;
 import model.ScheduleRep;
-import model.eventfields.Day;
 import model.eventfields.DayRep;
 import model.eventfields.Location;
 import model.eventfields.SatStartDay;
 import model.eventfields.SatStartTime;
-import model.eventfields.Time;
-import model.eventfields.TimeRep;
 
 /**
  * The class used to read an XML file.
