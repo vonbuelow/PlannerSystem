@@ -20,7 +20,7 @@ public interface TimeRep {
    * Public for XML writer observation.
    * @return the time's start day as a Day
    */
-  Day getStartDayDefault();
+  DayRep getStartDayDefault();
 
   /**
    * Gets a string abbreviation of the current time's start day.
@@ -34,7 +34,7 @@ public interface TimeRep {
    * Public for time observation in EventAdapter.
    * @return the time's start day as a Day
    */
-  Day getEndDayDefault();
+  DayRep getEndDayDefault();
 
   /**
    * Gets a string abbreviation of the current time's end day.

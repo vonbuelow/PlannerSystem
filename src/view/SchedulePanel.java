@@ -79,12 +79,15 @@ public class SchedulePanel extends JPanel {
     drawLines(g);
   }
 
+  /**
+   * Drawing of the events as purple and possibly light purple rectangles.
+   * @param     g The graphic being passed on from paintComponent.
+   */
   private void drawHostEvents(Graphics g) {
     if (selectedUser.equals("")) {
       return;
     }
 
-    System.out.println("correct method to draw host events");
     List<EventRep> events = model.getUserEvents(selectedUser);
     int colSpacing = getWidth() / 7;
     int rowSpacing = getHeight() / 24;
@@ -127,11 +130,15 @@ public class SchedulePanel extends JPanel {
     }
   }
 
-  public static String removeQuotes(String s) {
-    // Replace single and double quotes with nothing
-    s = s.replace("'", "");
-    s = s.replace("\"", ""); // Note the escape character for double quotes
-    return s;
+  /**
+   * Replace the string " with nothing.
+   * Remove quotes.
+   * @param     str the string to remove quotes from.
+   * @return    a string w/o quotes.
+   */
+  private String removeQuotes(String str) {
+    str = str.replace("\"", "");
+    return str;
   }
 
   /**

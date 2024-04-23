@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import model.eventfields.Day;
+import model.eventfields.DayRep;
 
 /**
  * A schedule of a user.
@@ -58,7 +59,7 @@ public class Schedule implements ScheduleRep {
    * @param day day of the week
    * @return string representation of events based on the day of the week.
    */
-  private String eventsOfDay(Day day) {
+  private String eventsOfDay(DayRep day) {
     String ret = "";
     List<EventRep> eventsOfGivenDay = new ArrayList<EventRep>();
 

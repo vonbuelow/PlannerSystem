@@ -6,8 +6,8 @@ import java.util.Objects;
  * Time with a start day, start time, end day, and end time of an event.
  */
 public class Time implements TimeRep {
-  private Day start;
-  private Day end;
+  private DayRep start;
+  private DayRep end;
   private String startTime;
   private String endTime;
 
@@ -22,7 +22,7 @@ public class Time implements TimeRep {
    *     non-null, and different
    *
    */
-  public Time(Day start, String startTime, Day end, String endTime) {
+  public Time(DayRep start, String startTime, DayRep end, String endTime) {
     if (start == null || end == null || startTime == null || endTime == null) {
       throw new IllegalArgumentException("No days or hours can be null");
     }
@@ -146,7 +146,7 @@ public class Time implements TimeRep {
   }
 
   @Override
-  public Day getStartDayDefault() {
+  public DayRep getStartDayDefault() {
     return this.start;
   }
 
@@ -160,13 +160,13 @@ public class Time implements TimeRep {
    * @param day the current time's day
    * @return an abbreviation of the given day's name
    */
-  private String getDayString(Day day) {
+  private String getDayString(DayRep day) {
     int dayLength = day.toString().length();
     return day.toString().substring(0, dayLength - 2);
   }
 
   @Override
-  public Day getEndDayDefault() {
+  public DayRep getEndDayDefault() {
     return this.end;
   }
 

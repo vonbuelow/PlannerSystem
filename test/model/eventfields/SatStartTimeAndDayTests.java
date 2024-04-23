@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
  * Tests functionality of the Time class (parameter of CentralSystem, representing the
  * time of an event).
  */
-public class TimeAndDayTests {
+public class SatStartTimeAndDayTests {
   TimeRep time1;
   TimeRep time2;
   TimeRep time3;
@@ -30,82 +30,106 @@ public class TimeAndDayTests {
 
   @Before
   public void setup() {
-    time1 = new Time(Day.MONDAY, "0900", Day.MONDAY, "1000");
-    time2 = new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130");
-    time3 = new Time(Day.FRIDAY, "1130", Day.TUESDAY, "0950");
-    time4 = new Time(Day.WEDNESDAY, "1600", Day.WEDNESDAY, "1559");
-    time5 = new Time(Day.MONDAY, "0900", Day.MONDAY, "1000");
-    time6 = new Time(Day.MONDAY, "0900", Day.MONDAY, "1000");
-    time7 = new Time(Day.MONDAY, "0900", Day.MONDAY, "0930");
-    time8 = new Time(Day.MONDAY, "0930", Day.MONDAY, "1000");
-    time9 = new Time(Day.MONDAY, "0930", Day.MONDAY, "1030");
-    time10 = new Time(Day.FRIDAY, "0930", Day.SUNDAY, "1030");
-    time11 = new Time(Day.WEDNESDAY, "1600", Day.FRIDAY, "1030");
-    time12 = new Time(Day.FRIDAY, "0930", Day.TUESDAY, "1030");
-    time13 = new Time(Day.WEDNESDAY, "2359", Day.THURSDAY, "1030");
+    time1 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time2 = new SatStartTime(SatStartDay.TUESDAY, "0950",
+            SatStartDay.TUESDAY, "1130");
+    time3 = new SatStartTime(SatStartDay.FRIDAY, "1130",
+            SatStartDay.TUESDAY, "0950");
+    time4 = new SatStartTime(SatStartDay.WEDNESDAY, "1600",
+            SatStartDay.WEDNESDAY, "1559");
+    time5 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time6 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time7 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "0930");
+    time8 = new SatStartTime(SatStartDay.MONDAY, "0930",
+            SatStartDay.MONDAY, "1000");
+    time9 = new SatStartTime(SatStartDay.MONDAY, "0930",
+            SatStartDay.MONDAY, "1030");
+    time10 = new SatStartTime(SatStartDay.FRIDAY, "0930",
+            SatStartDay.SUNDAY, "1030");
+    time11 = new SatStartTime(SatStartDay.WEDNESDAY, "1600",
+            SatStartDay.FRIDAY, "1030");
+    time12 = new SatStartTime(SatStartDay.FRIDAY, "0930",
+            SatStartDay.TUESDAY, "1030");
+    time13 = new SatStartTime(SatStartDay.WEDNESDAY, "2359",
+            SatStartDay.THURSDAY, "1030");
   }
 
   @Test
   public void testConstructorExceptions() {
     assertThrows("Valid time format has to be 4 digits XXXX. "
-            + "You entered: Monday: 05393\nMonday: 2300",
+                    + "You entered: Monday: 05393\nMonday: 2300",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "05393", Day.MONDAY, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, "05393",
+                            SatStartDay.MONDAY, "2300"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 053\nMonday: 2300",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "053", Day.MONDAY, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, "053",
+                            SatStartDay.MONDAY, "2300"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 2300\nMonday: 05393",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", Day.MONDAY, "05393"));
+                    new SatStartTime(SatStartDay.MONDAY, "2300",
+                            SatStartDay.MONDAY, "05393"));
     assertThrows("Valid time format has to be 4 digits XXXX. "
                     + "You entered: Monday: 2300\nMonday: 053",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", Day.MONDAY, "053"));
+                    new SatStartTime(SatStartDay.MONDAY, "2300", SatStartDay.MONDAY,
+                            "053"));
     assertThrows("Start time is NOT IN MILITARY TIME: 0068",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "0068", Day.MONDAY, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, "0068", SatStartDay.MONDAY,
+                            "2300"));
     assertThrows("End time is NOT IN MILITARY TIME: 2400",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", Day.MONDAY, "2400"));
+                    new SatStartTime(SatStartDay.MONDAY, "2300", SatStartDay.MONDAY,
+                            "2400"));
     assertThrows("No days or hours can be null",
             IllegalArgumentException.class, () ->
-                    new Time(null, "2300", Day.MONDAY, "2300"));
+                    new SatStartTime(null, "2300", SatStartDay.MONDAY,
+                            "2300"));
     assertThrows("No days or hours can be null",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", null, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, "2300", null,
+                            "2300"));
     assertThrows("No days or hours can be null",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, null, Day.MONDAY, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, null, SatStartDay.MONDAY,
+                            "2300"));
     assertThrows("No days or hours can be null",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", Day.MONDAY, null));
+                    new SatStartTime(SatStartDay.MONDAY, "2300", SatStartDay.MONDAY,
+                            null));
     assertThrows("start and end times must be different",
             IllegalArgumentException.class, () ->
-                    new Time(Day.MONDAY, "2300", Day.MONDAY, "2300"));
+                    new SatStartTime(SatStartDay.MONDAY, "2300", SatStartDay.MONDAY,
+                            "2300"));
   }
 
   @Test
   public void testDayToString() {
-    assertEquals("Monday: ", Day.MONDAY.toString());
-    assertEquals("Tuesday: ", Day.TUESDAY.toString());
-    assertEquals("Wednesday: ", Day.WEDNESDAY.toString());
-    assertEquals("Thursday: ", Day.THURSDAY.toString());
-    assertEquals("Friday: ", Day.FRIDAY.toString());
-    assertEquals("Saturday: ", Day.SATURDAY.toString());
-    assertEquals("Sunday: ", Day.SUNDAY.toString());
+    assertEquals("Monday: ", SatStartDay.MONDAY.toString());
+    assertEquals("Tuesday: ", SatStartDay.TUESDAY.toString());
+    assertEquals("Wednesday: ", SatStartDay.WEDNESDAY.toString());
+    assertEquals("Thursday: ", SatStartDay.THURSDAY.toString());
+    assertEquals("Friday: ", SatStartDay.FRIDAY.toString());
+    assertEquals("Saturday: ", SatStartDay.SATURDAY.toString());
+    assertEquals("Sunday: ", SatStartDay.SUNDAY.toString());
   }
 
   @Test
   public void testOrderOfDayInWeek() {
-    assertEquals(1, Day.MONDAY.orderOfDayInWeek());
-    assertEquals(2, Day.TUESDAY.orderOfDayInWeek());
-    assertEquals(3, Day.WEDNESDAY.orderOfDayInWeek());
-    assertEquals(4, Day.THURSDAY.orderOfDayInWeek());
-    assertEquals(5, Day.FRIDAY.orderOfDayInWeek());
-    assertEquals(6, Day.SATURDAY.orderOfDayInWeek());
-    assertEquals(0, Day.SUNDAY.orderOfDayInWeek());
+    assertEquals(2, SatStartDay.MONDAY.orderOfDayInWeek());
+    assertEquals(3, SatStartDay.TUESDAY.orderOfDayInWeek());
+    assertEquals(4, SatStartDay.WEDNESDAY.orderOfDayInWeek());
+    assertEquals(5, SatStartDay.THURSDAY.orderOfDayInWeek());
+    assertEquals(6, SatStartDay.FRIDAY.orderOfDayInWeek());
+    assertEquals(0, SatStartDay.SATURDAY.orderOfDayInWeek());
+    assertEquals(1, SatStartDay.SUNDAY.orderOfDayInWeek());
   }
 
   @Test
@@ -144,7 +168,7 @@ public class TimeAndDayTests {
 
   @Test
   public void testObservationsAndReaderAccessors() {
-    assertEquals(Day.MONDAY, time1.getStartDayDefault());
+    assertEquals(SatStartDay.MONDAY, time1.getStartDayDefault());
     assertEquals("Friday", time10.getStartDay());
     assertEquals("Sunday", time10.getEndDay());
     assertEquals("1600", time4.getStartTime());
@@ -152,3 +176,4 @@ public class TimeAndDayTests {
   }
 
 }
+

@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * Time with a start day, start time, end day, and end time of an event.
  */
-public class SatStartTime {
-  private SatStartDay start;
-  private SatStartDay end;
+public class SatStartTime implements TimeRep {
+  private DayRep start;
+  private DayRep end;
   private String startTime;
   private String endTime;
 
@@ -22,7 +22,7 @@ public class SatStartTime {
    *     non-null, and different
    *
    */
-  public SatStartTime(SatStartDay start, String startTime, SatStartDay end, String endTime) {
+  public SatStartTime(DayRep start, String startTime, DayRep end, String endTime) {
     if (start == null || end == null || startTime == null || endTime == null) {
       throw new IllegalArgumentException("No days or hours can be null");
     }
@@ -154,7 +154,7 @@ public class SatStartTime {
    * Public for XML writer observation.
    * @return the time's start day as a Day
    */
-  public SatStartDay getStartDayDefault() {
+  public DayRep getStartDayDefault() {
     return this.start;
   }
 
@@ -172,7 +172,7 @@ public class SatStartTime {
    * @param day the current time's day
    * @return an abbreviation of the given day's name
    */
-  private String getDayString(SatStartDay day) {
+  private String getDayString(DayRep day) {
     int dayLength = day.toString().length();
     return day.toString().substring(0, dayLength - 2);
   }
@@ -182,7 +182,7 @@ public class SatStartTime {
    * Public for time observation in EventAdapter.
    * @return the time's start day as a Day
    */
-  public SatStartDay getEndDayDefault() {
+  public DayRep getEndDayDefault() {
     return this.end;
   }
 

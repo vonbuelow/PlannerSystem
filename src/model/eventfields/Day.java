@@ -4,7 +4,7 @@ package model.eventfields;
  * Days of the week, along with their string representations and number of days they occur
  * after the designated starting day of the week (by default: Sunday).
  */
-public enum Day {
+public enum Day implements DayRep {
   // consider adding a method to mutate the starting day of the week.
   SUNDAY("Sunday", 0),
   MONDAY("Monday", 1),
@@ -28,12 +28,7 @@ public enum Day {
     this.startDayVal = startDayVal;
   }
 
-  /**
-   * Returns the number position of the day of the week relative to the start of the
-   * week. Since Sunday is considered the first day of the week, it has a position of 0.
-   * Monday is one day after the start day, so it has a value of 1.
-   * @return number of days after the starting day for the given day.
-   */
+  @Override
   public int orderOfDayInWeek() {
     return this.startDayVal;
   }
@@ -43,10 +38,7 @@ public enum Day {
     return this.val + ": ";
   }
 
-  /**
-   * Get the actual value associated with a day.
-   * @return    The int with is related to the day.
-   */
+  /*@Override
   public int getLocalDateVal() {
     if (this.equals(Day.SUNDAY)) {
       return 7;
@@ -67,6 +59,5 @@ public enum Day {
       return 5;
     }
     return 6;
-  }
-  // don't need to override equals since it is an Enum and has a given unique hashcode
+  }*/
 }
