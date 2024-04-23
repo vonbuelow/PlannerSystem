@@ -6,10 +6,10 @@ import java.util.Objects;
  * Time with a start day, start time, end day, and end time of an event.
  */
 public class Time implements TimeRep {
-  private DayRep start;
-  private DayRep end;
-  private String startTime;
-  private String endTime;
+  protected DayRep start;
+  protected DayRep end;
+  protected String startTime;
+  protected String endTime;
 
 
   /**

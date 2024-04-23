@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,6 +18,7 @@ import model.CentralSystem;
 import model.Event;
 import model.EventRep;
 import model.NUPlannerSystem;
+import model.SatStartModel;
 import model.Schedule;
 import model.ScheduleRep;
 import model.eventfields.Day;
@@ -37,14 +39,35 @@ public class XMLTest {
   public void testReadingElements() {
     try {
       DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-      XMLReader reader = new XMLReader(new File("C:\\Users\\Owner\\Desktop\\cs3500\\"
-              + "PlannerSystem\\src\\shortProf.xml"));
+      Reader reader = new SatStartXMLReader(new File(".\\src\\shortProf.xml"));
 
       Map<String, ScheduleRep> profLuciaSched = reader.readXML();
       Set<String> keys = profLuciaSched.keySet();
       assertTrue(keys.contains("Prof. Lucia")); // we were able to get the correct user
     }
     catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Test
+  public void testReadingSatElements() {
+    try {
+      DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      Reader reader = new XMLReader(new File(".\\src\\shortProf.xml"));
+
+      Map<String, ScheduleRep> profLuciaSched = reader.readXML();
+      Set<String> keys = profLuciaSched.keySet();
+      assertTrue(keys.contains("Prof. Lucia")); // we were able to get the correct user
+      NUPlannerSystem model = new SatStartModel();
+      model.addUser(new File(".\\src\\prof.xml"));
+      Set<String> list = new HashSet<>();
+      list.add("Prof. Lucia");
+      assertEquals(list, model.usersInSystem());
+    }
+    catch (ParserConfigurationException e) {
+      throw new RuntimeException(e);
+    } catch (IOException e) {
       throw new RuntimeException(e);
     }
   }
