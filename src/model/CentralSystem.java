@@ -10,7 +10,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import model.eventfields.Location;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 import xmlfunc.XMLReader;
 import xmlfunc.XMLWriter;

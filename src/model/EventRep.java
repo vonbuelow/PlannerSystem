@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 
 import model.eventfields.Location;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
 /**

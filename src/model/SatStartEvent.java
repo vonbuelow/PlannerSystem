@@ -5,6 +5,9 @@ import java.util.List;
 import model.eventfields.Location;
 import model.eventfields.TimeRep;
 
+/**
+ * Represents an event that considers the start day of the week as Saturday.
+ */
 public class SatStartEvent extends Event {
 
   /**

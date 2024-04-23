@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.eventfields.Location;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
 /**

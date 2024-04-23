@@ -7,6 +7,9 @@ import java.util.Map;
 import xmlfunc.Reader;
 import xmlfunc.SatStartXMLReader;
 
+/**
+ * Represents a planner system that considers the first day
+ */
 public class SatStartModel extends CentralSystem {
 
   /**

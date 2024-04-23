@@ -2,10 +2,8 @@ import controller.NUController;
 import controller.NUPlannerGUIController;
 import controller.strategy.ScheduleStrat;
 import controller.strategy.StratFactory;
-import model.CentralSystem;
 import model.ModelFactory;
 import model.NUPlannerSystem;
-import model.SatStartModel;
 import view.MainSystemFrame;
 import view.NUPlannerView;
 
