@@ -29,17 +29,14 @@ import model.eventfields.Time;
  * This class transfers all information back to the central system.
  * Used when a user wants to upload a file in the central system to be read in this system.
  */
-public class XMLReader {
+public class XMLReader implements Reader{
   File file;
 
   public XMLReader(File f) {
     this.file = f;
   }
 
-  /**
-   * A public method to be called in the central system to read XML files in a single class.
-   * @return A mapping of the user to a specific schedule created in this class.
-   */
+  @Override
   public Map<String, ScheduleRep> readXML() {
     ArrayList<EventRep> ret = new ArrayList<EventRep>();
     Map<String, ScheduleRep> schedules = new HashMap<>();

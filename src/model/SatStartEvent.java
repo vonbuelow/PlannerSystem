@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Objects;
 
 import model.eventfields.Location;
-import model.eventfields.SatStartTime;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
 public class SatStartEvent implements EventRep {
