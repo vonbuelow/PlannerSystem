@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.eventfields.Location;
-import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 /**
  * Mocks an NUPlannerSystem but logs the inputs given from an NUController to the
@@ -52,7 +52,7 @@ public class MockModel implements NUPlannerSystem {
   }
 
   @Override
-  public void modifyTime(EventRep event, Time time) throws IOException {
+  public void modifyTime(EventRep event, TimeRep time) throws IOException {
     this.addNewLine(this.output.append("Modify").append(event.toString())
             .append(" to have a").append(" new time of").append(time.toString()));
   }
