@@ -7,6 +7,7 @@ import java.util.Map;
 
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 /**
  * The interface of a NUPlannerSystem.
@@ -69,7 +70,7 @@ public interface NUPlannerSystem extends ReadonlyNUPlannerSystem {
    * @throws IllegalStateException if event does not exist in system, or time overlaps
    *     with another event in any invitee's schedule
    */
-  void modifyTime(EventRep event, Time time) throws IOException;
+  void modifyTime(EventRep event, TimeRep time) throws IOException;
 
   /**
    * Modifies the location of the given system event.

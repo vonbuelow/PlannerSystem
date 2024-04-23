@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 /**
  * An event in a user's schedule.
@@ -13,7 +14,7 @@ import model.eventfields.Time;
  */
 public class Event implements EventRep {
   private String name;
-  private Time time;
+  private TimeRep time;
   private Location loc;
   private final List<String> invitees;
 
@@ -25,7 +26,7 @@ public class Event implements EventRep {
    * @param     invitees of the event rep. by a list of strings.
    * @throws IllegalArgumentException if the given list of invitees is null or empty
    */
-  public Event(String name, Time time, Location loc, List<String> invitees) {
+  public Event(String name, TimeRep time, Location loc, List<String> invitees) {
     this.name = Objects.requireNonNull(name);
     this.time = Objects.requireNonNull(time);
     this.loc = Objects.requireNonNull(loc);
@@ -67,7 +68,7 @@ public class Event implements EventRep {
   }
 
   @Override
-  public Time getTime() {
+  public TimeRep getTime() {
     return this.time;
   }
 
@@ -110,7 +111,7 @@ public class Event implements EventRep {
   }
 
   @Override
-  public void modifyTime(Time time) {
+  public void modifyTime(TimeRep time) {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }

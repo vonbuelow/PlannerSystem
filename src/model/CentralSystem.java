@@ -11,6 +11,7 @@ import java.util.Set;
 
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 import xmlfunc.XMLReader;
 import xmlfunc.XMLWriter;
 
@@ -195,7 +196,7 @@ public class CentralSystem implements NUPlannerSystem {
   }
 
   @Override
-  public void modifyTime(EventRep event, Time time) {
+  public void modifyTime(EventRep event, TimeRep time) {
     eventNullException(event);
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");

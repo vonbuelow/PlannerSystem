@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 /**
  * Represents an event in a user's schedule.
@@ -14,7 +15,7 @@ public interface EventRep {
    * Returns the time of the current event.
    * @return military time of the event
    */
-  Time getTime();
+  TimeRep getTime();
 
   /**
    * Determines if the given event overlaps with this one.
@@ -57,7 +58,7 @@ public interface EventRep {
    * @throws IllegalArgumentException if the time is null
    * @throws IllegalStateException if the time is the same as the event's current time
    */
-  void modifyTime(Time time);
+  void modifyTime(TimeRep time);
 
   /**
    * Modifies the location of the current event to the given.

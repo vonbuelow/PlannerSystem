@@ -81,11 +81,13 @@ public class Time implements TimeRep {
 
   @Override
   public boolean equals(Object o) {
-    if (o instanceof Time) {
-      Time e = (Time)o;
+    if (o instanceof TimeRep) {
+      TimeRep e = (Time)o;
 
-      return this.start.equals(e.start) && this.startTime.equals(e.startTime)
-              && this.end.equals(e.end) && this.endTime.equals(e.endTime);
+      return this.start.equals(e.getStartDayDefault())
+              && this.startTime.equals(e.getStartTime())
+              && this.end.equals(e.getEndDayDefault())
+              && this.endTime.equals(e.getEndTime());
     } 
     return false;
   }
@@ -96,15 +98,15 @@ public class Time implements TimeRep {
   }
 
   @Override
-  public boolean overlapsWith(Time time) {
+  public boolean overlapsWith(TimeRep time) {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
     // Convert days to their order in the week
     int thisStartDay = this.start.orderOfDayInWeek();
-    int thatStartDay = time.start.orderOfDayInWeek();
+    int thatStartDay = time.getStartDayDefault().orderOfDayInWeek();
     int thisEndDay = this.end.orderOfDayInWeek();
-    int thatEndDay = time.end.orderOfDayInWeek();
+    int thatEndDay = time.getEndDayDefault().orderOfDayInWeek();
 
     // Adjust for week wrapping
     if (thisEndDay < thisStartDay || (thisEndDay == thisStartDay
@@ -112,15 +114,15 @@ public class Time implements TimeRep {
       thisEndDay += 7;
     }
     if (thatEndDay < thatStartDay || (thatEndDay == thatStartDay
-            && compareTimes(time.startTime, time.endTime) > 0)) {
+            && compareTimes(time.getStartTime(), time.getEndTime()) > 0)) {
       thatEndDay += 7;
     }
 
     // times to minutes since start of the week for comparison
     int thisStartTime = thisStartDay * 24 * 60 + timeToMinutes(this.startTime);
     int thisEndTime = thisEndDay * 24 * 60 + timeToMinutes(this.endTime);
-    int thatStartTime = thatStartDay * 24 * 60 + timeToMinutes(time.startTime);
-    int thatEndTime = thatEndDay * 24 * 60 + timeToMinutes(time.endTime);
+    int thatStartTime = thatStartDay * 24 * 60 + timeToMinutes(time.getStartTime());
+    int thatEndTime = thatEndDay * 24 * 60 + timeToMinutes(time.getEndTime());
 
     // Check for overlap
     return !(thisEndTime <= thatStartTime || thatEndTime <= thisStartTime);

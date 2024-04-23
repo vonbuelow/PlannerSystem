@@ -102,15 +102,15 @@ public class SatStartTime {
    * @return true iff the current time conflicts with the given time
    * @throws IllegalArgumentException if the given time is null
    */
-  public boolean overlapsWith(SatStartTime time) {
+  public boolean overlapsWith(TimeRep time) {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
     // Convert days to their order in the week
     int thisStartDay = this.start.orderOfDayInWeek();
-    int thatStartDay = time.start.orderOfDayInWeek();
+    int thatStartDay = time.getStartDayDefault().orderOfDayInWeek();
     int thisEndDay = this.end.orderOfDayInWeek();
-    int thatEndDay = time.end.orderOfDayInWeek();
+    int thatEndDay = time.getEndDayDefault().orderOfDayInWeek();
 
     // Adjust for week wrapping
     if (thisEndDay < thisStartDay || (thisEndDay == thisStartDay
@@ -118,15 +118,15 @@ public class SatStartTime {
       thisEndDay += 7;
     }
     if (thatEndDay < thatStartDay || (thatEndDay == thatStartDay
-            && compareTimes(time.startTime, time.endTime) > 0)) {
+            && compareTimes(time.getStartTime(), time.getEndTime()) > 0)) {
       thatEndDay += 7;
     }
 
     // times to minutes since start of the week for comparison
     int thisStartTime = thisStartDay * 24 * 60 + timeToMinutes(this.startTime);
     int thisEndTime = thisEndDay * 24 * 60 + timeToMinutes(this.endTime);
-    int thatStartTime = thatStartDay * 24 * 60 + timeToMinutes(time.startTime);
-    int thatEndTime = thatEndDay * 24 * 60 + timeToMinutes(time.endTime);
+    int thatStartTime = thatStartDay * 24 * 60 + timeToMinutes(time.getStartTime());
+    int thatEndTime = thatEndDay * 24 * 60 + timeToMinutes(time.getEndTime());
 
     // Check for overlap
     return !(thisEndTime <= thatStartTime || thatEndTime <= thisStartTime);

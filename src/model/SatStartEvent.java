@@ -5,13 +5,14 @@ import java.util.List;
 import model.eventfields.Location;
 import model.eventfields.SatStartTime;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 public class SatStartEvent implements EventRep {
 
 
 
   @Override
-  public SatStartTime getTime() {
+  public TimeRep getTime() {
     return null;
   }
 
@@ -41,7 +42,7 @@ public class SatStartEvent implements EventRep {
   }
 
   @Override
-  public void modifyTime(Time time) {
+  public void modifyTime(TimeRep time) {
 
   }
 
