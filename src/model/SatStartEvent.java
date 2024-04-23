@@ -51,11 +51,11 @@ public class SatStartEvent implements EventRep {
 
   @Override
   public boolean equals(Object o) {
-    if (o instanceof Event) {
-      Event e = (Event)o;
+    if (o instanceof EventRep) {
+      EventRep e = (SatStartEvent)o;
 
-      return this.name.equals(e.name) && this.time.equals(e.time)
-              && this.loc.equals(e.loc) && this.invitees.equals(e.invitees);
+      return this.name.equals(e.getName()) && this.time.equals(e.getTime())
+              && this.loc.equals(e.getLocation()) && this.invitees.equals(e.getInvitedUsers());
     }
     return false;
   }
