@@ -31,7 +31,7 @@ public class PlannerMain {
         strat = stratFactory.makeStrat("anytime", model);
       }
     }
-    if (args.length == 2) {
+    else if (args.length == 2) {
       // if the second argument is provider
       if (args[1].equalsIgnoreCase("saturday")) {
         model = new ModelFactory().makeModel("saturday");
