@@ -8,7 +8,7 @@ import xmlfunc.Reader;
 import xmlfunc.SatStartXMLReader;
 
 /**
- * Represents a planner system that considers the first day
+ * Represents a planner system that considers the first day of the week Saturday.
  */
 public class SatStartModel extends CentralSystem {
 

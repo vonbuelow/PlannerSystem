@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.SatStartDay;
 import model.eventfields.SatStartTime;
-import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +19,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 /**
- * The testing of event specific functionality.
+ * The testing of event specific functionality, for a week starting on Saturday.
  * Along with silly edge cases.
  */
 public class SatStartEventTests {

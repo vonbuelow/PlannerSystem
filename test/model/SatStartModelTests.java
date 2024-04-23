@@ -22,6 +22,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests for the planner system with a Saturday starting day of the week.
+ */
 public class SatStartModelTests {
   Map<String, ScheduleRep> noUsersMap;
   List<EventRep> noEventsList;
