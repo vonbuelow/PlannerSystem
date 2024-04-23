@@ -24,8 +24,8 @@ import xmlfunc.XMLWriter;
 public class CentralSystem implements NUPlannerSystem {
   // Invariant: all events in the event list are in at least one user's schedule
   // i.e. the size of each event's invitees list is at least one.
-  private final Map<String, ScheduleRep> allSchedules; // all users -> their respective schedules
-  private final List<EventRep> eventList; // list of all events if it is useful -> maintain
+  protected final Map<String, ScheduleRep> allSchedules; // all users -> their respective schedules
+  protected final List<EventRep> eventList; // list of all events if it is useful -> maintain
 
   /**
    * Creates the default central system (empty) for uploading user schedules into.

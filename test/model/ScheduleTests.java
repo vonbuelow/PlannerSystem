@@ -12,6 +12,7 @@ import java.util.Map;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -31,7 +32,7 @@ public class ScheduleTests {
   String noelisA1;
   String noelisA2;
 
-  Time time1;
+  TimeRep time1;
 
   Location loc1;
 

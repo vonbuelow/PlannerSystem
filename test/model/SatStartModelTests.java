@@ -13,6 +13,8 @@ import java.util.Map;
 
 import model.eventfields.Day;
 import model.eventfields.Location;
+import model.eventfields.SatStartDay;
+import model.eventfields.SatStartTime;
 import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
@@ -22,12 +24,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Tests the functionality of CentralSystem's methods implemented from NUPlannerSystem.
- * Contains examples of a CentralSystem and its features such as a set of users and their
- * schedules and lists of events.
- */
-public class CentralSystemTests {
+public class SatStartModelTests {
   Map<String, ScheduleRep> noUsersMap;
   List<EventRep> noEventsList;
   NUPlannerSystem emptySystem;
@@ -64,31 +61,31 @@ public class CentralSystemTests {
   public void setup() {
     noUsersMap = new HashMap<String, ScheduleRep>();
     noEventsList = new ArrayList<EventRep>();
-    emptySystem = new CentralSystem(noUsersMap, noEventsList);
+    emptySystem = new SatStartModel(noUsersMap, noEventsList);
 
     profLucia = "Prof. Lucia";
     emmaVB = "Emma Vonbuelow";
     noelisA1 = "Noelis Aponte";
     noelisA2 = "Noelis Aponte2";
 
-    time1 = new Time(Day.MONDAY, "1500", Day.MONDAY, "2000");
+    time1 = new SatStartTime(SatStartDay.MONDAY, "1500", SatStartDay.MONDAY, "2000");
 
     loc1 = new Location(false, "restaurant");
 
-    event1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    event1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
-    oldEvent1 = new Event("CS3500 Day 1",
-            new Time(Day.TUESDAY, "0950", Day.TUESDAY, "1130"),
+    oldEvent1 = new SatStartEvent("CS3500 Day 1",
+            new SatStartTime(SatStartDay.TUESDAY, "0950", SatStartDay.TUESDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
-    event2 = new Event("CS3500 Day 2",
-            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+    event2 = new SatStartEvent("CS3500 Day 2",
+            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY, "1130"),
             new Location(false, "Churchill Hall 101"),
             new ArrayList<String>(Arrays.asList(profLucia, emmaVB, noelisA1)));
-    event3 = new Event("BBQ",
-            new Time(Day.FRIDAY, "0950", Day.FRIDAY, "1130"),
+    event3 = new SatStartEvent("BBQ",
+            new SatStartTime(SatStartDay.FRIDAY, "0950", SatStartDay.FRIDAY, "1130"),
             new Location(true, "Not Churchill"),
             new ArrayList<String>(Arrays.asList(emmaVB)));
 
@@ -108,7 +105,7 @@ public class CentralSystemTests {
     allEventsInSystem1 = new ArrayList<EventRep>();
     allEventsInSystem1.add(event1);
 
-    system1 = new CentralSystem(allSchedulesInSystem1, allEventsInSystem1);
+    system1 = new SatStartModel(allSchedulesInSystem1, allEventsInSystem1);
   }
 
   /**
@@ -460,7 +457,7 @@ public class CentralSystemTests {
     assertThrows("at least one user has a conflict with the new time",
             IllegalStateException.class, () ->
                     system1.modifyTime(oldEvent1, new Time(Day.FRIDAY, "0950",
-                    Day.TUESDAY, "1130")));
+                            Day.TUESDAY, "1130")));
 
     // therefore event does not change times
     assertEquals(oldEvent1, system1.getUserEvents(profLucia).get(0));
@@ -566,7 +563,7 @@ public class CentralSystemTests {
     assertThrows("event cannot be null",
             IllegalArgumentException.class, () ->
                     system1.modifyInvitees(null, new ArrayList<String>(),
-                    false));
+                            false));
     assertThrows("invitees cannot be null or empty", IllegalArgumentException.class, () ->
             system1.modifyInvitees(event1, null, true));
     assertThrows("invitees cannot be null or empty", IllegalArgumentException.class,() ->

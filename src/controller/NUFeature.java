@@ -13,6 +13,7 @@ import model.NUPlannerSystem;
 import model.eventfields.Day;
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 import view.NUPlannerView;
 
 /**
@@ -136,7 +137,7 @@ public class NUFeature implements Features {
   private EventRep makeEvent(int hour, int min, Day day, String selectedUser) {
     String startTime = String.format("%04d", (hour * 100) + min);
     String endTime = String.format("%04d",(hour * 100) + (min + 1));
-    Time time = new Time(day, startTime, day, endTime);
+    TimeRep time = new Time(day, startTime, day, endTime);
     Location loc = new Location(true, "mock place");
     List<String> invitee = new ArrayList<>(Arrays.asList(selectedUser, "Mock Partier"));
     return new Event("Mock Place", time, loc, invitee);

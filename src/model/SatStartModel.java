@@ -1,11 +1,36 @@
 package model;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 import xmlfunc.Reader;
 import xmlfunc.SatStartXMLReader;
 
 public class SatStartModel extends CentralSystem {
+
+  /**
+   * Creates the default central system (empty) for uploading user schedules into.
+   */
+  public SatStartModel() {
+    super();
+  }
+
+  /**
+   * NEW: new constructor keeping track of a list of schedules.
+   */
+  public SatStartModel(List<Schedule> schedules) {
+    super(schedules);
+  }
+
+  /**
+   * A testing constructor for a system with schedules loaded in.
+   * @param allS all schedules for users in the system
+   * @param events all unique events in the system
+   */
+  public SatStartModel(Map<String, ScheduleRep> allS, List<EventRep> events) {
+    super(allS, events);
+  }
 
   @Override
   public void addUser(File file) {

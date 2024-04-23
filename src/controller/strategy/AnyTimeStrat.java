@@ -9,8 +9,10 @@ import model.Event;
 import model.EventRep;
 import model.NUPlannerSystem;
 import model.eventfields.Day;
+import model.eventfields.DayRep;
 import model.eventfields.Location;
 import model.eventfields.Time;
+import model.eventfields.TimeRep;
 
 /**
  * A strategy to be used with an event that can be placed at anytime.
@@ -33,15 +35,15 @@ public class AnyTimeStrat implements ScheduleStrat {
               "duration must be at least 1 min but can't be 10080 or more");
     }
 
-    List<Day> daysOfTheWeek = new ArrayList<>(
+    List<DayRep> daysOfTheWeek = new ArrayList<>(
             Arrays.asList(Day.SUNDAY, Day.MONDAY, Day.TUESDAY, Day.WEDNESDAY,
                     Day.THURSDAY, Day.FRIDAY, Day.SATURDAY));
 
-    for (Day day : daysOfTheWeek) {
+    for (DayRep day : daysOfTheWeek) {
       for (int hr = 0; hr < 23; hr++) {
         for (int min = 0; min < 59; min++) {
           // hypothetical time of the event to be created
-          Time hypTime = this.setTime(day, hr, min, duration);
+          TimeRep hypTime = this.setTime(day, hr, min, duration);
           EventRep hypEvent = new Event(name, hypTime, loc, invitees);
           if (!this.model.doesOverlap(hypEvent)) { // if no invitees have overlapping
             return hypEvent;
@@ -61,7 +63,7 @@ public class AnyTimeStrat implements ScheduleStrat {
    * @return a Time with the workday as the start day, end day depending on duration
    *     and the starting time as the given hour and minute
    */
-  private Time setTime(Day startDay, int hr, int min, int duration) {
+  private TimeRep setTime(DayRep startDay, int hr, int min, int duration) {
     String convertedHr = convertTimeNum(hr);
     String convertedMin = convertTimeNum(min);
     String startTime = convertedHr + convertedMin;
@@ -76,7 +78,7 @@ public class AnyTimeStrat implements ScheduleStrat {
     String endHrStr = convertTimeNum(endHr);
     String endMinStr = convertTimeNum(endMin);
     int endDayVal = (startDay.orderOfDayInWeek() + numDays) % 7;
-    Day endDay = null;
+    DayRep endDay = null;
 
     if (endDayVal == 0) {
       endDay = Day.SUNDAY;

@@ -11,7 +11,7 @@ public interface DayRep {
    * Monday is one day after the start day, so it has a value of 1.
    * @return number of days after the starting day for the given day.
    */
-  public int orderOfDayInWeek();
+  int orderOfDayInWeek();
 
   //public int getLocalDateVal();
 }
