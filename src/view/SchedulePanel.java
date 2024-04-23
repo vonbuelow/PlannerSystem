@@ -9,8 +9,10 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import controller.Features;
+import model.CentralSystem;
 import model.EventRep;
 import model.ReadonlyNUPlannerSystem;
+import model.SatStartModel;
 
 /**
  * Describes capabilities of schedule panel.
@@ -238,25 +240,48 @@ public class SchedulePanel extends JPanel {
    * @return The index to match the string of the day
    */
   private int dayIndex(String startDay) {
-    switch (startDay) {
-      case "Sunday":
-        return 0;
-      case "Monday":
-        return 1;
-      case "Tuesday":
-        return 2;
-      case "Wednesday":
-        return 3;
-      case "Thursday":
-        return 4;
-      case "Friday":
-        return 5;
-      case "Saturday":
-        return 6;
-      default:
-        break;
+    if (model instanceof SatStartModel)  {
+      switch (startDay) {
+        case "Sunday":
+          return 1;
+        case "Monday":
+          return 2;
+        case "Tuesday":
+          return 3;
+        case "Wednesday":
+          return 4;
+        case "Thursday":
+          return 5;
+        case "Friday":
+          return 6;
+        case "Saturday":
+          return 0;
+        default:
+          break;
+      }
+      return -1;
     }
-    return -1;
+    else {
+      switch (startDay) {
+        case "Sunday":
+          return 0;
+        case "Monday":
+          return 1;
+        case "Tuesday":
+          return 2;
+        case "Wednesday":
+          return 3;
+        case "Thursday":
+          return 4;
+        case "Friday":
+          return 5;
+        case "Saturday":
+          return 6;
+        default:
+          break;
+      }
+      return -1;
+    }
   }
 
   public void paintWithHost(boolean hasToggled) {
