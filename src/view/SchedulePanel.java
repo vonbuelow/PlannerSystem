@@ -18,12 +18,14 @@ import model.ReadonlyNUPlannerSystem;
 public class SchedulePanel extends JPanel {
   private final ReadonlyNUPlannerSystem model;
   private String selectedUser; // is changed
+  private boolean hasToggle;
 
   /**
    * put the content here of the actual schedule, called from the main system frame.
    * @param     model the model of the given schedule system.
    */
   SchedulePanel(ReadonlyNUPlannerSystem model) {
+    this.hasToggle = false;
     this.model = model;
     this.selectedUser = "";
     this.setLayout(new BorderLayout());
@@ -68,8 +70,68 @@ public class SchedulePanel extends JPanel {
   @Override
   protected void paintComponent(Graphics g) {
     super.paintComponent(g);
-    drawEvents(g);
+    if (!hasToggle) {
+      drawEvents(g); // interface(hostColorDecorator) -> decorators??
+    }
+    else {
+      drawHostEvents(g);
+    }
     drawLines(g);
+  }
+
+  private void drawHostEvents(Graphics g) {
+    if (selectedUser.equals("")) {
+      return;
+    }
+
+    System.out.println("correct method to draw host events");
+    List<EventRep> events = model.getUserEvents(selectedUser);
+    int colSpacing = getWidth() / 7;
+    int rowSpacing = getHeight() / 24;
+
+    for (EventRep event : events) {
+      int dayStartIndex = dayIndex(event.getTime().getStartDay());
+      int dayEndIndex = dayIndex(event.getTime().getEndDay());
+      int[] startTime = parseTime(event.getTime().getStartTime());
+      int[] endTime = parseTime(event.getTime().getEndTime());
+
+      int startYPosition = startTime[0] * rowSpacing + (startTime[1] * rowSpacing / 60);
+      int endYPosition = endTime[0] * rowSpacing + (endTime[1] * rowSpacing / 60);
+
+      // Determine the last day to draw the event. It should not go past Saturday.
+      int lastDayToDraw = (dayEndIndex >= dayStartIndex) ? dayEndIndex : 6;
+
+      for (int currentDay = dayStartIndex; currentDay <= lastDayToDraw; currentDay++) {
+        int x = colSpacing * currentDay;
+        int y = (currentDay == dayStartIndex) ? startYPosition : 0;
+        int height = (currentDay == dayEndIndex) ? endYPosition - y : getHeight() - y;
+
+        if (currentDay == dayEndIndex && currentDay != dayStartIndex) {
+          y = 0;
+          height = endYPosition;
+        }
+        if (selectedUser.equals(removeQuotes(event.getInvitedUsers().get(0)))) {
+          g.setColor(new Color(173, 164, 232, 255));
+          g.fillRect(x, y, colSpacing, height);
+        }
+        else {
+          g.setColor(new Color(89, 70, 211, 255));
+          g.fillRect(x, y, colSpacing, height);
+        }
+
+        // If the event spans over to the next week, stop drawing at Saturday
+        if (currentDay == 6) {
+          break;
+        }
+      }
+    }
+  }
+
+  public static String removeQuotes(String s) {
+    // Replace single and double quotes with nothing
+    s = s.replace("'", "");
+    s = s.replace("\"", ""); // Note the escape character for double quotes
+    return s;
   }
 
   /**
@@ -190,4 +252,8 @@ public class SchedulePanel extends JPanel {
     return -1;
   }
 
+  public void paintWithHost(boolean hasToggled) {
+    hasToggle = hasToggled;
+    repaint();
+  }
 }

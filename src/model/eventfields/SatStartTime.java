@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * Time with a start day, start time, end day, and end time of an event.
  */
-public class Time implements TimeRep {
-  private Day start;
-  private Day end;
+public class SatStartTime {
+  private SatStartDay start;
+  private SatStartDay end;
   private String startTime;
   private String endTime;
 
@@ -22,7 +22,7 @@ public class Time implements TimeRep {
    *     non-null, and different
    *
    */
-  public Time(Day start, String startTime, Day end, String endTime) {
+  public SatStartTime(SatStartDay start, String startTime, SatStartDay end, String endTime) {
     if (start == null || end == null || startTime == null || endTime == null) {
       throw new IllegalArgumentException("No days or hours can be null");
     }
@@ -81,12 +81,12 @@ public class Time implements TimeRep {
 
   @Override
   public boolean equals(Object o) {
-    if (o instanceof Time) {
-      Time e = (Time)o;
+    if (o instanceof SatStartTime) {
+      SatStartTime e = (SatStartTime)o;
 
       return this.start.equals(e.start) && this.startTime.equals(e.startTime)
               && this.end.equals(e.end) && this.endTime.equals(e.endTime);
-    } 
+    }
     return false;
   }
 
@@ -95,8 +95,14 @@ public class Time implements TimeRep {
     return Objects.hashCode(this);
   }
 
-  @Override
-  public boolean overlapsWith(Time time) {
+  /**
+   * Returns whether the given time overlaps with the current.
+   * Public for Event's usage of the same logic.
+   * @param time the time whose time is being compared to the current
+   * @return true iff the current time conflicts with the given time
+   * @throws IllegalArgumentException if the given time is null
+   */
+  public boolean overlapsWith(SatStartTime time) {
     if (time == null) {
       throw new IllegalArgumentException("time cannot be null");
     }
@@ -143,12 +149,20 @@ public class Time implements TimeRep {
     return timeToMinutes(first) - timeToMinutes(second);
   }
 
-  @Override
-  public Day getStartDayDefault() {
+  /**
+   * Gets the start day of the current time.
+   * Public for XML writer observation.
+   * @return the time's start day as a Day
+   */
+  public SatStartDay getStartDayDefault() {
     return this.start;
   }
 
-  @Override
+  /**
+   * Gets a string abbreviation of the current time's start day.
+   * Public for writer and panel observation.
+   * @return the time's start day abbreviated
+   */
   public String getStartDay() {
     return getDayString(this.start);
   }
@@ -158,32 +172,49 @@ public class Time implements TimeRep {
    * @param day the current time's day
    * @return an abbreviation of the given day's name
    */
-  private String getDayString(Day day) {
+  private String getDayString(SatStartDay day) {
     int dayLength = day.toString().length();
     return day.toString().substring(0, dayLength - 2);
   }
 
-  @Override
-  public Day getEndDayDefault() {
+  /**
+   * Gets the end day of the current time.
+   * Public for time observation in EventAdapter.
+   * @return the time's start day as a Day
+   */
+  public SatStartDay getEndDayDefault() {
     return this.end;
   }
 
-  @Override
+  /**
+   * Gets a string abbreviation of the current time's end day.
+   * Public for XML writer observation.
+   * @return the time's end day abbreviated
+   */
   public String getEndDay() {
     return getDayString(this.end);
   }
 
-  @Override
+  /**
+   * The start hour of the current time.
+   * Public for XML writer and panels.
+   * @return a copy of the current time's start time
+   */
   public String getStartTime() {
     String st = "";
     st += this.startTime;
     return st;
   }
 
-  @Override
+  /**
+   * The end hour of the current time.
+   * Public for XML writer and panels.
+   * @return a copy of the current time's end time
+   */
   public String getEndTime() {
     String et = "";
     et += this.endTime;
     return et;
   }
 }
+

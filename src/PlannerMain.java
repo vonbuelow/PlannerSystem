@@ -4,11 +4,8 @@ import controller.strategy.ScheduleStrat;
 import controller.strategy.StratFactory;
 import model.CentralSystem;
 import model.NUPlannerSystem;
-import model.adapters.ModelAdapter;
-import provider.view.MainSystemFrameInterface;
 import view.MainSystemFrame;
 import view.NUPlannerView;
-import view.adapter.ViewAdapter;
 
 /**
  * Runs the planner system. Allows uploading schedules and editing user calendars.
@@ -33,18 +30,6 @@ public class PlannerMain {
       else if (args[0].equalsIgnoreCase("anytime")) {
         strat = stratFactory.makeStrat("anytime", model);
       }
-    }
-    // otherwise see if they want the provider view
-    if (args.length == 2) {
-      // if the second argument is provider
-      if (args[1].equalsIgnoreCase("provider")) {
-        MainSystemFrameInterface msf = new provider.view.MainSystemFrame(new ModelAdapter(model));
-        view = new ViewAdapter(msf, new ModelAdapter(model));
-      }
-    }
-    // if the argument is more than 1 or 2 then NO
-    else {
-      throw new IllegalArgumentException("Needs exactly 1-2 arguments");
     }
 
     NUController controller = new NUPlannerGUIController(view);

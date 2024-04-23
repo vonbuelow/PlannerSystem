@@ -1,11 +1,8 @@
 package view;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -30,6 +27,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
   private final SchedulePanel content;
   private JComboBox<String> listOfUsers;
   private Features executer;
+  private boolean hasToggled;
 
   /**
    * This represents a main system frame of a ReadOnlyNUPlannerSystem system as a GUI view.
@@ -37,6 +35,7 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
    */
   public MainSystemFrame(ReadonlyNUPlannerSystem model) {
     super();
+    this.hasToggled = false;
     this.model = model;
     createMSFrame(this);
     createMenu();
@@ -116,8 +115,38 @@ public class MainSystemFrame extends JFrame implements NUPlannerView {
     JButton addSchedule = new JButton("Add Schedule");
     fileButtonListener(addSchedule, frame);
     buttonPanel.add(addSchedule);
+
+    // the host color toggle button
+    JButton hostButton = new JButton("Toggle host color");
+    hostButtonListener(hostButton, frame);
+    buttonPanel.add(hostButton);
+
     buttonPanel.setBackground(new Color(174, 200, 227));
     frame.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * The display on the screen varies if the toggle is off.
+   * Toggle either showing the host vs. non-host events or all events as one uniform color.
+   * @param     hostButton the host button
+   * @param     frame the frame to listen to.
+   */
+  private void hostButtonListener(JButton hostButton, MainSystemFrame frame) {
+    hostButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        hasToggled = !hasToggled;
+        content.paintWithHost(hasToggled);
+        frame.repaint();
+        // toggle color button + field to keep track if a button has been pressed previously
+        // field setting
+        // draw the events how they should be displayed
+
+        // decorator????? here
+        // features -> component inside for schedule panel??
+
+      }
+    });
   }
 
   /**
