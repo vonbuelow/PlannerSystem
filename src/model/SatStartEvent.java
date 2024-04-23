@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,10 +11,9 @@ import model.eventfields.TimeRep;
 
 public class SatStartEvent implements EventRep {
 
-
-  private final String name;
-  private final TimeRep time;
-  private final Location loc;
+  private String name;
+  private TimeRep time;
+  private Location loc;
   private final List<String> invitees;
 
   /**
@@ -36,47 +36,112 @@ public class SatStartEvent implements EventRep {
   }
 
   @Override
-  public TimeRep getTime() {
-    return null;
+  public String toString() {
+    String inviteesList = "";
+
+    for (String i : this.invitees) {
+      inviteesList += i + "\n";
+    }
+
+    return "name: " + this.name
+            + "\n" + this.time.toString()
+            + "\n" + this.loc.toString()
+            + "\ninvitees: " + inviteesList.stripTrailing();
   }
 
   @Override
-  public boolean overlapsWith(EventRep e) {
+  public boolean equals(Object o) {
+    if (o instanceof Event) {
+      Event e = (Event)o;
+
+      return this.name.equals(e.name) && this.time.equals(e.time)
+              && this.loc.equals(e.loc) && this.invitees.equals(e.invitees);
+    }
     return false;
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hashCode(this);
+  }
+
+  @Override
+  public TimeRep getTime() {
+    return this.time;
+  }
+
+  @Override
+  public boolean overlapsWith(EventRep e) {
+    if (e == null) {
+      throw new IllegalArgumentException("event cannot be null");
+    }
+    return this.time.overlapsWith(e.getTime());
+  }
+
+  @Override
   public String getName() {
-    return null;
+    String name = "";
+    name += this.name;
+    return name;
   }
 
   @Override
   public List<String> getInvitedUsers() {
-    return null;
+    List<String> users = new ArrayList<>();
+    users.addAll(this.invitees);
+    return users;
   }
 
   @Override
   public Location getLocation() {
-    return null;
+    return this.loc;
   }
 
   @Override
   public void modifyName(String name) {
-
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException("name cannot be null/empty");
+    }
+    if (name.equals(this.name)) {
+      throw new IllegalStateException("given name cannot be same as the current");
+    }
+    this.name = name;
   }
 
   @Override
   public void modifyTime(TimeRep time) {
-
+    if (time == null) {
+      throw new IllegalArgumentException("time cannot be null");
+    }
+    if (time.equals(this.time)) {
+      throw new IllegalStateException("new time cannot be same as current");
+    }
+    this.time = time;
   }
 
   @Override
   public void modifyLocation(Location loc) {
-
+    if (loc == null) {
+      throw new IllegalArgumentException("not a valid location");
+    }
+    if (loc.equals(this.loc)) {
+      throw new IllegalStateException("new location cannot be same as current");
+    }
+    this.loc = loc;
   }
 
   @Override
   public void modifyInvitees(List<String> invitees, boolean toAdd) {
-
+    if (invitees == null || invitees.isEmpty()) {
+      throw new IllegalArgumentException("invitees cannot be null or empty");
+    }
+    if (toAdd) {
+      this.invitees.addAll(invitees);
+    }
+    else {
+      for (String user: invitees) {
+        this.invitees.remove(user);
+      }
+    }
   }
 }
