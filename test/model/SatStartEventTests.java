@@ -9,6 +9,8 @@ import java.util.List;
 
 import model.eventfields.Day;
 import model.eventfields.Location;
+import model.eventfields.SatStartDay;
+import model.eventfields.SatStartTime;
 import model.eventfields.Time;
 import model.eventfields.TimeRep;
 
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertTrue;
  * The testing of event specific functionality.
  * Along with silly edge cases.
  */
-public class EventTests {
+public class SatStartEventTests {
   TimeRep time1;
   TimeRep time2;
   TimeRep time3;
@@ -62,26 +64,26 @@ public class EventTests {
 
   @Before
   public void setup() {
-    time1 = new Time(Day.MONDAY, "0900",
-            Day.MONDAY, "1000");
-    time2 = new Time(Day.TUESDAY, "0950",
-            Day.TUESDAY, "1130");
-    time3 = new Time(Day.FRIDAY, "1130",
-            Day.TUESDAY, "0950");
-    time4 = new Time(Day.WEDNESDAY, "1600",
-            Day.WEDNESDAY, "1559");
-    time5 = new Time(Day.MONDAY, "0900",
-            Day.MONDAY, "1000");
-    time6 = new Time(Day.MONDAY, "0900",
-            Day.MONDAY, "1000");
-    time7 = new Time(Day.TUESDAY, "1000",
-            Day.TUESDAY, "1100");
-    time8 = new Time(Day.WEDNESDAY, "1400",
-            Day.WEDNESDAY, "1800");
-    time9 = new Time(Day.MONDAY, "0900",
-            Day.MONDAY, "0930");
-    time10 = new Time(Day.WEDNESDAY, "1600",
-            Day.WEDNESDAY, "1800");
+    time1 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time2 = new SatStartTime(SatStartDay.TUESDAY, "0950",
+            SatStartDay.TUESDAY, "1130");
+    time3 = new SatStartTime(SatStartDay.FRIDAY, "1130",
+            SatStartDay.TUESDAY, "0950");
+    time4 = new SatStartTime(SatStartDay.WEDNESDAY, "1600",
+            SatStartDay.WEDNESDAY, "1559");
+    time5 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time6 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "1000");
+    time7 = new SatStartTime(SatStartDay.TUESDAY, "1000",
+            SatStartDay.TUESDAY, "1100");
+    time8 = new SatStartTime(SatStartDay.WEDNESDAY, "1400",
+            SatStartDay.WEDNESDAY, "1800");
+    time9 = new SatStartTime(SatStartDay.MONDAY, "0900",
+            SatStartDay.MONDAY, "0930");
+    time10 = new SatStartTime(SatStartDay.WEDNESDAY, "1600",
+            SatStartDay.WEDNESDAY, "1800");
 
     loc1 = new Location(false, "ur mom's house");
     loc2 = new Location(true, "my mom's house");
@@ -103,17 +105,17 @@ public class EventTests {
     invitees5 = new ArrayList<String>(
             Arrays.asList("Prof. Other", "Other1", "Other2"));
 
-    event1 = new Event("CS3500", time2, loc3, invitees1);
-    event2 = new Event("BBQ", time4, loc1, invitees2);
-    event3 = new Event("CS3500", time2, loc3, invitees1);
-    event4 = new Event("CS3500", time2, loc3, invitees1);
-    event5 = new Event("dilly dally", time7, loc2, invitees2);
-    event6 = new Event("not BBQ", time8, loc2, invitees1); // wed - wed
-    event7 = new Event("my bday party", time1, loc7, invitees3);
-    event8 = new Event("haters' bday party", time9, loc7, invitees4);
-    event9 = new Event("others' bday party", time10, loc7, invitees5);
-    event10 = new Event("dilly dally", time6, loc4, invitees2);
-    event11 = new Event("dilly dally", time3, loc3, invitees1); // fri - tues
+    event1 = new SatStartEvent("CS3500", time2, loc3, invitees1);
+    event2 = new SatStartEvent("BBQ", time4, loc1, invitees2);
+    event3 = new SatStartEvent("CS3500", time2, loc3, invitees1);
+    event4 = new SatStartEvent("CS3500", time2, loc3, invitees1);
+    event5 = new SatStartEvent("dilly dally", time7, loc2, invitees2);
+    event6 = new SatStartEvent("not BBQ", time8, loc2, invitees1); // wed - wed
+    event7 = new SatStartEvent("my bday party", time1, loc7, invitees3);
+    event8 = new SatStartEvent("haters' bday party", time9, loc7, invitees4);
+    event9 = new SatStartEvent("others' bday party", time10, loc7, invitees5);
+    event10 = new SatStartEvent("dilly dally", time6, loc4, invitees2);
+    event11 = new SatStartEvent("dilly dally", time3, loc3, invitees1); // fri - tues
   }
 
   @Test
